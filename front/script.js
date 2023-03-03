@@ -42,3 +42,29 @@ function searchFilter(){
     }
 
 }
+
+//what happens when the send email button is clicked
+var msg = document.querySelector("#message-box");
+var sendButton = document.querySelector("#send-button");
+//var sentTick = document.querySelector("#sent-tick");
+sendButton.addEventListener("click",sendMessage);
+//sendButton.addEventListener("mouseover",resetShake);
+function sendMessage(){
+    console.log("sksks");
+    console.log(msg.value);
+    if( msg.value!=""){
+        alert("Message sent lol");
+        //sentTick.classList.add("revealed")
+    }
+    if(msg.value==""){
+        //msg.style.border="solid red 3px";
+        msg.classList.add("shake");
+        setTimeout(resetShake,500);
+    }
+}
+
+//reset shake animation after it plays
+function resetShake(){
+    msg.classList.remove("shake");
+
+}
