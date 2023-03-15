@@ -3,10 +3,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="demo" onload="replace"> <!-- id and onload added by jules-->
     <div class="card">
-        <div class="card-header">Chats</div>
-        <div class="card-body">
+        <!--<div class="card-header">Chats</div>-->
+        <div class="card-body ">
             <chat-messages :messages="messages"></chat-messages>
         </div>
         <div class="card-footer">
@@ -14,4 +14,5 @@
         </div>
     </div>
 </div>
+
 @endsection
