@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jules.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,10 +19,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jules.css') }}" rel="stylesheet">
+
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <div id="app" onload="replace()" >
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="display:none">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -74,10 +77,122 @@
                 </div>
             </div>
         </nav>
+        <!--jules additions-->
+        <div class="container" id="jules">
+            <div id="left-side" onload="searchFilter()">
+                <div id = "search-box">
+                    <input type="text" id="search-bar">
+                </div>
+                <div id = "chats" class="scrollbar">
+                    <div class = "chat new">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOOGOG</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">Logoro</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">Jules</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat new urgent">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                    <div class = "chat urgent">
+                        <img class="pfp" src="img\pfp.png">
+                        <h3 class="username">GOGOO</h3>
+                        <img class="alert" src="img\alert.png">
+                    </div>
+                </div><!--chats-->
+                <div id="settings-box">
+                    <img class="pfp" src="{{ asset('img/pfp.png') }}">
+                    <h3 id="our-user">user name</h3>
+                    <img id="settings-button" src="img\settings.png">
+                    <img id="plus-button" src="img\plus.png">
+                </div>
+            </div><!--left side-->
+            <div id="right-side">
+                <div id="name-box">
+                    <h2>Logoro</h2>
+                </div>
+                <main id= "message-import"class="py-4" style="z-index=999">
+                    @yield('content')
+                </main>
+                <div id="messages" class="scrollbar" style="display:none">
+                    <div class="message">
+                        <img class="pfp" src="img\pfp.png">
+                        <div class="message-text">this is the message</div>
+                    </div>
+                </div>
+                <div id="input">
+                    <img id="attach-button"src="img\attach.png">
+                    <input type="text" id="message-box">
+                    <img id="send-button" src="img\send2.png">
+                </div>
+            </div><!--right side-->
+        </div> <!--jules-->
 
-        <main class="py-4">
-            @yield('content')
-        </main>
     </div>
 </body>
 </html>

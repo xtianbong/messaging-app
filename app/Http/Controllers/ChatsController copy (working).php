@@ -19,7 +19,6 @@ class ChatsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    //original before rooms
     public function index()
     {
         return view('chat');
@@ -45,16 +44,9 @@ class ChatsController extends Controller
     {
         $user = Auth::user();
 
-        // $message = $user->messages()->create([
-        //     'message' => $request->input('message'),
-        //     'room_id' => $request->input('room_id')
-        // ]);
-
-        $message = new Message();
-        $message->message = $request->input('message');
-        $message->user_id = $user->id;
-        $message->room_id = (int) $request->input('room_id'); // assign the room_id from the request
-        $message->save();
+        $message = $user->messages()->create([
+            'message' => $request->input('message')
+        ]);
 
         broadcast(new MessageSent($user, $message))->toOthers();
 

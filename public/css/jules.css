@@ -1,0 +1,406 @@
+*{
+    /*border:red solid 5px;*/
+}
+html{
+    position:absolute;
+    width:100vw;
+    height:100vh;
+    font-family:sans-serif;
+}
+body{
+    background: #06071E;
+    display: flex;
+    padding:0px;
+    margin:0px;
+
+}
+#left-side{
+    width:20%;
+    height: 100vh;
+    background: #23256A;
+}
+#search-box{
+    width:20%;
+    height: 50px;
+    position:  absolute;
+    top:0px;
+    box-sizing: border-box;
+    color:white;
+    padding: 10px;
+    display: flex;
+
+}
+
+#search-bar{
+    height:30px;
+    width:100%;
+    border-radius: 14px;
+    padding:0px 15px;
+    padding-left: 30px;
+    font-size: 17px;
+    margin:auto;
+    background: url(../img/search.png) no-repeat scroll 7px center;
+    background-size: 15px;
+    background-color:#D9D9D9;
+    ;
+}
+
+/*change colors of search higlights*/
+mark.highlight {
+    background-color: white;
+    color:black;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+    }
+#chats{
+    width:100%;
+    height:fit-content;
+    margin:50px auto 0px 0px;
+    overflow-y: scroll;
+    max-height: calc(100vh - 120px);
+}
+
+
+.chat{
+    height:75px;
+    width:100%;
+    background: #06071E;
+    border-top: solid rgb(107, 107, 107) 1px;
+    color:white;
+    padding:7px;
+    box-sizing: border-box;
+    grid-template-columns: 50px auto 40px;
+    display:none;
+}
+.visible{
+    display: grid;
+}
+.chat:hover{
+    background-color: #232442;
+    cursor:pointer;
+}
+.pfp{
+    width:40px;
+    height:40px;
+    border-radius: 100%;
+    margin:auto;
+    grid-column: 1;
+    vertical-align:middle;
+}
+
+.username{
+    grid-column: 2;
+    margin: auto 0px auto 0px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.alert{
+    height:30px;
+    width:30px;
+    margin:auto;
+    display:none;
+}
+.urgent>.alert{
+    display: flex;
+}
+
+#settings-box{
+    width: 20%;
+    height: 70px;
+    background-color: #0C0E3D;
+    position:  absolute;
+    bottom:0px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+#settings-box>*{
+    transform: translateY(-8px);
+}
+#settings-box > .pfp{
+    grid-column: 1;
+}
+#our-user{
+    grid-column: 2;
+    color:white;
+    font-size: 24px;
+    height:fit-content;
+    margin: auto;
+    vertical-align: center;
+}
+#settings-button{
+    grid-column: 3;
+    width:30px;
+    height: 30px;
+    margin:auto;
+}
+#plus-button{
+    grid-column: 4;
+    width:30px;
+    height: 30px;
+    margin:auto;
+}
+#right-side{
+    width:80%;
+    height: 100vh;
+}
+
+#name-box{
+    width:80%;
+    height: 50px;
+    background-color: #353772;
+    position:  absolute;
+    top:0px;
+    box-sizing: border-box;
+    color:white;
+    padding: 10px;
+}
+
+#name-box>h2{
+    margin:0px;
+}
+#messages{
+    margin-top: 50px;
+    padding:10px;
+    overflow-y: scroll;
+    max-height: calc(100vh - 120px);
+}
+.message{
+    color:white;
+    display: grid;
+    grid-template-columns: 50px auto;
+
+}
+.message-text{
+    grid-column: 2;
+    line-height: 40px;
+}
+#input{/*removed so i can use vue chatform*/
+    display:none !important;
+}
+#input,.card-footer{ /*vue chatform elements added to this*/
+    width:80%;
+    height: 70px;
+    background-color: #353772;
+    position:  absolute;
+    bottom:0px;
+    box-sizing: border-box;
+    display: flex;
+    padding:15px
+
+}
+
+.card-footer{
+    width:100%;
+}
+
+#input>img{
+    height:30px;
+    width:30px;
+    margin:0px 10px;
+}
+#send-button,#btn-chat{/*vue chatform elements added to this*/
+    transform: translatey(2px);
+}
+
+#btn-chat{  /*vue chatform elements added to this*/
+    height:30px;
+    width:60px;
+    margin:0px 10px;
+    background-color:#353772;
+    border:white 1px solid;
+}
+#btn-chat:hover{
+    background-color: white;
+    color: #353772;
+}
+#send-button:hover{
+    cursor:pointer;
+    content:url("img/send2hover.png");
+    transition-delay: 1000ms;
+}
+#attach-button{
+    transform: translatey(2px);
+}
+#attach-button:hover{
+    cursor:pointer;
+    content:url("img/attachhover.png")
+}
+#message-box,#btn-input{ /*vue chatform elements added to this*/
+    height:30px;
+    width:90%;
+    border-radius: 14px;
+    padding:0px 15px;
+    font-size: 17px;
+}
+
+#btn-input{
+    flex: none; /* override the flex attribute from app.css:3296 so I can modify the vue chatform input width*/
+    width:92%;
+}
+
+
+/*removes blue outline when input boxes are in focus*/
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.shake{ /*objects with this class name shake*/
+    /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: 1;
+}
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+    }
+
+/* Custom scrollbar style for WebKit-based browsers */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #06071E;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #353772
+;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #353772
+;
+}
+
+/* Custom scrollbar style for Firefox-based browsers */
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #353772 #06071E;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #353772
+;
+  border-radius: 5px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #353772
+;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: #06071E;
+}
+
+.scrollbar::-moz-scrollbar-thumb {
+  background-color: #353772
+;
+  border-radius: 5px;
+}
+
+.scrollbar::-moz-scrollbar-thumb:hover {
+  background-color: #353772
+;
+}
+
+.scrollbar::-moz-scrollbar-track {
+  background-color: #06071E;
+}
+
+
+/* added after merginng with larave
+*{
+    border:red solid 2px;
+}*/
+#app{
+    min-width: 100%;
+    width:100%;
+}
+#jules{
+    margin:0px;
+    padding:0px;
+    width:100vw;
+    min-width: 100%;
+}
+body{
+    width:100vw;
+}
+#left-side{
+    height:calc(100vh - 120px);
+}
+#right-side{
+    width:80%;
+    position:absolute;
+    left:20%;
+    top:0%;
+}
+#name-box{
+    width:100%;
+}
+#input{
+    width:100%;
+}
+
+#message-import{
+    width:100%;
+    position:absolute;
+    margin-top:50px;
+    padding:0px !important; /*!Jules: important to override the padding in app.css*/
+}
+.container{
+
+    min-width:80vw;
+    margin:0px;
+    padding:0px;
+    height:calc(100vh - 50px);
+}
+
+.card{
+    border:none;
+    border-radius: 0px;
+    min-width:100%;
+    height:100%;
+}
+
+.card-body{
+    min-width:100%;
+    height:calc(100vh - 190px);
+    max-height:calc(100vh - 120px);
+
+    padding:0px;
+    background-color: #0C0E3D;
+    color:white;
+}
+
+.card-body>ul{
+    height:calc(100vh - 120px);
+    overflow-y: scroll;
+    margin:0px;
+}
+
+.card-footer{
+    border:none;
+    border-radius: 0;
+}
+
+/*message input modifications*/
+

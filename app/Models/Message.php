@@ -9,7 +9,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['message'];
+    protected $fillable = ['message']; //changed for rooms to work
 
     /**
      * A message belong to a user
@@ -20,4 +20,5 @@ class Message extends Model
     {
         return $this->belongsTo(User::class);
     }
+
 }
