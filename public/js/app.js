@@ -2140,28 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["messages", "roomId"],
-  computed: {
-    fetchMessages: function fetchMessages() {
-      var _this = this;
-      axios.get("/api/rooms/".concat(this.roomId, "/messages")).then(function (response) {
-        _this.messages = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    }
-  },
-  created: function created() {
-    this.fetchMessages();
-  },
-  methods: {
-    fetchMessages: function fetchMessages() {
-      var _this2 = this;
-      axios.get("/api/messages?room_id=".concat(this.roomId)).then(function (response) {
-        _this2.messages = response.data;
-      });
-    }
-  }
+  props: ["messages"]
 });
 
 /***/ }),
@@ -44167,7 +44146,7 @@ var render = function() {
   return _c(
     "ul",
     { staticClass: "scrollbar" },
-    _vm._l(_vm.filteredMessages, function(message) {
+    _vm._l(_vm.messages, function(message) {
       return _c("li", { key: message.id, staticClass: "left clearfix" }, [
         _c("div", { staticClass: "clearfix" }, [
           _c("div", { staticClass: "header" }, [
