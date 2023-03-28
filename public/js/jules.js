@@ -1,5 +1,6 @@
 //added by jules
 
+
 //make all the demo stuff invisible
 var oldStuff = document.querySelector("#demo");
 var newStuff = document.querySelector("#jules");
@@ -121,3 +122,5 @@ function bottomScroll(){
 
 // Send a message
 
+//declare room-messages component
+Vue.component('room-messages', ((/*! ./components/RoomMessages.vue */ "./resources/js/components/RoomMessages.vue")["default"]));

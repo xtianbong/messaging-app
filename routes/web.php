@@ -23,3 +23,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/chat', [App\Http\Controllers\ChatsController::class, 'index']);
 Route::get('/messages', [App\Http\Controllers\ChatsController::class, 'fetchMessages']);
 Route::post('/messages', [App\Http\Controllers\ChatsController::class, 'sendMessage']);
+
+//Jules' personal addition so we have different chat rooms
+
+use App\Http\Controllers\RoomController;
+Route::get('/room/{room_id}', [App\Http\Controllers\RoomController::class, 'index'])->name('room');;
+//Route::get('/room/{room_id}', [RoomController::class, 'fetchMessages'])->middleware('auth');
+
+
+//Route::get('/rooms/{room_id}/messages', 'RoomController@getMessages');//added for rooms to work -Jules
