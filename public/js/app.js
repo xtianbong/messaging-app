@@ -2209,30 +2209,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['messages', 'currentUser'],
+  props: {
+    messages: Array,
+    currentUser: Object,
+    roomId: Number
+  },
   data: function data() {
     return {
-      roomId: 0
+      // add any component-specific data here
     };
   },
-  computed: {
-    filteredMessages: function filteredMessages() {
-      var _this = this;
-      if (this.roomId === null) {
-        return this.messages;
-      }
-      return this.messages.filter(function (message) {
-        return message.room_id === _this.roomId;
-      });
-    }
+  methods: {
+    // add any component-specific methods here
   },
-  created: function created() {
-    this.roomId = this.$route.params;
-    console.log('Room ID:', this.roomId);
-  } // other options for the component go here
+  mounted: function mounted() {
+    // add any code to run when the component is mounted here
+  }
 });
 
 /***/ }),
@@ -44367,24 +44361,20 @@ var render = function() {
   return _c(
     "ul",
     { staticClass: "scrollbar" },
-    _vm._l(_vm.filteredMessages, function(message) {
+    _vm._l(_vm.messages, function(message) {
       return _c("li", { key: message.id, staticClass: "left clearfix" }, [
         _c("div", { staticClass: "clearfix" }, [
           _c("div", { staticClass: "header" }, [
             _c("strong", [
               _vm._v(
-                "\n                    " +
-                  _vm._s(message.user.name) +
-                  "\n                "
+                "\n          " +
+                  _vm._s(message.user ? message.user.name : "Unknown") +
+                  "\n        "
               )
             ])
           ]),
           _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "\n                " + _vm._s(message.message) + "\n            "
-            )
-          ])
+          _c("p", [_vm._v("\n        " + _vm._s(message.message) + "\n      ")])
         ])
       ])
     }),

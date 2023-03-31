@@ -4,7 +4,7 @@
 <div class="container" id="demo">
     <div class="card room" :id="roomId">
         <div class="card-body">
-            <room-messages :messages="messages" :currentUser="currentUser" :roomId="roomId"></room-messages>
+            <room-messages :messages="{{$filteredMessages}}" :current-user="{{$user}}" :room-id="{{$room_id}}"></room-messages>
         </div>
         <div class="card-footer">
             <chat-form v-on:messagesent="addMessage" :user="{{ Auth::user() }}"></chat-form>

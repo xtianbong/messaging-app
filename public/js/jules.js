@@ -122,5 +122,4 @@ function bottomScroll(){
 
 // Send a message
 
-//declare room-messages component
-Vue.component('room-messages', ((/*! ./components/RoomMessages.vue */ "./resources/js/components/RoomMessages.vue")["default"]));
+
