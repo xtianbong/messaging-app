@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\MessageSent;
 use App\Models\Message;
+use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,30 +14,25 @@ class RoomController extends Controller
 {
     public function index(Request $request, $room_id)
     {
-        $filteredMessages = Message::where('room_id', $room_id)->get();
+        //left side
+        $rooms = Room::with('user')->get();
+        //dd($rooms);
+        //right side
+        $filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
         $user = $request->user();
-        return view('room', compact('filteredMessages', 'user', 'room_id'));
+        return view('room', compact('rooms','filteredMessages', 'user', 'room_id'));
+    }
+
+    public function left(Request $request)
+    {
+        $rooms = Room::with('user')->get();
     }
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    public function index2(Request $request, $room_id)//for testing
-    {
-        $messages = Message::where('room_id', $room_id)->get();
-        $user = $request->user();
 
-        // Log the messages to the console
-        Log::debug('test log');
-        Log::debug($messages);
-
-        $filteredMessages = $messages->filter(function ($message) use ($room_id) {
-            return $message->room_id == $room_id;
-        });
-        //dd($filteredMessages);
-        return view('room', compact('filteredMessages', 'user', 'room_id'));
-    }
 
 
     public function fetchMessages($room_id)
@@ -64,6 +60,22 @@ class RoomController extends Controller
         broadcast(new MessageSent($user, $message))->toOthers();
 
         return ['status' => 'Message Sent!'];
+    }
+
+    public function index2(Request $request, $room_id)//for testing
+    {
+        $messages = Message::where('room_id', $room_id)->with('user')->get();
+        $user = $request->user();
+
+        // Log the messages to the console
+        Log::debug('test log');
+        Log::debug($messages);
+
+        $filteredMessages = $messages->filter(function ($message) use ($room_id) {
+            return $message->room_id == $room_id;
+        });
+        //dd($filteredMessages);
+        return view('room', compact('filteredMessages', 'user', 'room_id'));
     }
 }
 

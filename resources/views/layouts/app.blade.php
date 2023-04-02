@@ -84,88 +84,21 @@
                     <input type="text" id="search-bar">
                 </div>
                 <div id = "chats" class="scrollbar">
-                    <a href="../room/1">
-                    <div class = "chat new">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOOGOG</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
+                    <a href="../room/0">
+                        <div class = "chat new">
+                            <img class="pfp" src="img\pfp.png">
+                            <h3 class="username">GOOGOG</h3>
+                            <img class="alert" src="img\alert.png">
+                        </div>
                     </a>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">Logoro</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">Jules</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat new urgent">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
-                    <div class = "chat urgent">
-                        <img class="pfp" src="img\pfp.png">
-                        <h3 class="username">GOGOO</h3>
-                        <img class="alert" src="img\alert.png">
-                    </div>
+                    <a href="../room/1">
+                        <div class = "chat">
+                            <img class="pfp" src="img\pfp.png">
+                            <h3 class="username">Logoro</h3>
+                            <img class="alert" src="img\alert.png">
+                        </div>
+                    </a>
+
                 </div><!--chats-->
                 <div id="settings-box">
                     <img class="pfp" src="{{ asset('img/pfp.png') }}">
