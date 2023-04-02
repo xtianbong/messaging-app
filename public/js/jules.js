@@ -21,6 +21,7 @@ var allChats = document.querySelectorAll(".chat");
 //run function every time there is input in the search bar and also when the page loads
 searchBar.addEventListener("input",searchFilter);
 window.addEventListener("load",searchFilter)
+document.addEventListener("DOMContentLoaded", searchFilter)
 
 function searchFilter(){
     console.log("search ran");

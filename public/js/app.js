@@ -2209,12 +2209,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     messages: Array,
     currentUser: Object,
-    roomId: Number
+    roomId: Number,
+    rooms: Array,
+    currentRoom: Object
   },
   data: function data() {
     return {
@@ -44358,30 +44390,104 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "ul",
-    { staticClass: "scrollbar" },
-    _vm._l(_vm.messages, function(message) {
-      return _c("li", { key: message.id, staticClass: "left clearfix" }, [
-        _c("div", { staticClass: "clearfix" }, [
-          _c("div", { staticClass: "header" }, [
-            _c("strong", [
-              _vm._v(
-                "\n          " +
-                  _vm._s(message.user ? message.user.name : "Unknown") +
-                  "\n        "
+  return _c("div", [
+    _c("div", { attrs: { id: "left-side", onload: "searchFilter()" } }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "rooms scrollbar chats", attrs: { id: "room-list" } },
+        _vm._l(_vm.rooms, function(room) {
+          return _c("li", { key: room.id }, [
+            _c("a", { attrs: { href: "../room/" + room.id } }, [
+              _c(
+                "div",
+                { staticClass: "chat room", attrs: { id: "roomdiv" } },
+                [
+                  _c("img", {
+                    staticClass: "pfp",
+                    attrs: { src: "img\\pfp.png" }
+                  }),
+                  _vm._v(" "),
+                  _c("h3", { staticClass: "username" }, [
+                    _vm._v(_vm._s(room.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("img", {
+                    staticClass: "alert",
+                    attrs: { src: "img\\alert.png" }
+                  })
+                ]
               )
             ])
-          ]),
-          _vm._v(" "),
-          _c("p", [_vm._v("\n        " + _vm._s(message.message) + "\n      ")])
-        ])
-      ])
-    }),
-    0
-  )
+          ])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _vm._m(1)
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "right-side" } }, [
+      _c("div", { attrs: { id: "name-box" } }, [
+        _c("h2", [_vm._v(_vm._s(_vm.currentRoom.name))])
+      ]),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "scrollbar", attrs: { id: "message-list" } },
+        _vm._l(_vm.messages, function(message) {
+          return _c("li", { key: message.id, staticClass: "left clearfix" }, [
+            _c("div", { staticClass: "clearfix" }, [
+              _c("div", { staticClass: "header" }, [
+                _c("strong", [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(message.user ? message.user.name : "Unknown") +
+                      "\n                "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(message.message) +
+                    "\n            "
+                )
+              ])
+            ])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "search-box" } }, [
+      _c("input", { attrs: { type: "text", id: "search-bar" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "settings-box" } }, [
+      _c("img", { staticClass: "pfp", attrs: { src: "img/pfp.png" } }),
+      _vm._v(" "),
+      _c("h3", { attrs: { id: "our-user" } }, [_vm._v("user name")]),
+      _vm._v(" "),
+      _c("img", { attrs: { id: "settings-button", src: "img\\settings.png" } }),
+      _vm._v(" "),
+      _c("img", { attrs: { id: "plus-button", src: "img\\plus.png" } })
+    ])
+  }
+]
 render._withStripped = true
 
 

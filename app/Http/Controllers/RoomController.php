@@ -16,11 +16,11 @@ class RoomController extends Controller
     {
         //left side
         $rooms = Room::with('user')->get();
-        //dd($rooms);
         //right side
+        $currentRoom = Room::where('id',$room_id)->first();
         $filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
         $user = $request->user();
-        return view('room', compact('rooms','filteredMessages', 'user', 'room_id'));
+        return view('room', compact('rooms','currentRoom','filteredMessages', 'user', 'room_id'));
     }
 
     public function left(Request $request)
