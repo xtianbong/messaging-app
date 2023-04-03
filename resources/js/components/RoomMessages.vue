@@ -2,7 +2,7 @@
     <div>
         <div id="left-side" onload="searchFilter()">
                 <div id = "search-box">
-                    <input type="text" id="search-bar">
+                    <input type="text" id="rsearch-bar" class="search-bar"><!-- room search bar-->
                 </div>
                 <ul id="room-list" class="rooms scrollbar chats">
                     <li v-for="room in rooms" :key="room.id">
@@ -18,8 +18,26 @@
                 <div id="settings-box">
                     <img class="pfp" src="img/pfp.png">
                     <h3 id="our-user">user name</h3>
-                    <img id="settings-button" src="img\settings.png">
-                    <img id="plus-button" src="img\plus.png">
+                    <img id="settings-button" src="img\settings.png" alt="settings">
+                    <img id="plus-button" src="img\plus.png" alt="add chat">
+                    <div id="new-room">
+                        <div id="rname-box">
+                            <input type="text" id="rname" class ="resizing-input" placeholder="New Room" maxlength="20">
+                            <img src="img\edit.png">
+                        </div>
+                        <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
+                        <!--list of friends-->
+                        <ul id="friend-list" class="scrollbar">
+                            <li class="left clearfix" v-for="friend in friends" :key="friend.id">
+                                <div class="friend">
+                                    <h4>{{ friend.name }}</h4>
+                                    <img class="add-button" src="img\plus.png" alt="add friend">
+                                    <img class="added-button" src="img\tick.png" alt="friend added">
+                                </div>
+                            </li>
+                            <button id="create-room">Create Room</button>
+                        </ul>
+                    </div>
                 </div>
             </div><!--left side-->
         <div id="right-side">
@@ -53,6 +71,7 @@ export default {
     roomId: Number,
     rooms:Array,
     currentRoom:Object,
+    friends:Array,
   },
   data() {
     return {

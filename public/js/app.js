@@ -2239,6 +2239,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -2246,7 +2264,8 @@ __webpack_require__.r(__webpack_exports__);
     currentUser: Object,
     roomId: Number,
     rooms: Array,
-    currentRoom: Object
+    currentRoom: Object,
+    friends: Array
   },
   data: function data() {
     return {
@@ -44425,7 +44444,65 @@ var render = function() {
         0
       ),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { attrs: { id: "settings-box" } }, [
+        _c("img", { staticClass: "pfp", attrs: { src: "img/pfp.png" } }),
+        _vm._v(" "),
+        _c("h3", { attrs: { id: "our-user" } }, [_vm._v("user name")]),
+        _vm._v(" "),
+        _c("img", {
+          attrs: {
+            id: "settings-button",
+            src: "img\\settings.png",
+            alt: "settings"
+          }
+        }),
+        _vm._v(" "),
+        _c("img", {
+          attrs: { id: "plus-button", src: "img\\plus.png", alt: "add chat" }
+        }),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "new-room" } }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "search-bar",
+            attrs: { type: "text", id: "fsearch-bar" }
+          }),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "scrollbar", attrs: { id: "friend-list" } },
+            [
+              _vm._l(_vm.friends, function(friend) {
+                return _c(
+                  "li",
+                  { key: friend.id, staticClass: "left clearfix" },
+                  [
+                    _c("div", { staticClass: "friend" }, [
+                      _c("h4", [_vm._v(_vm._s(friend.name))]),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "add-button",
+                        attrs: { src: "img\\plus.png", alt: "add friend" }
+                      }),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "added-button",
+                        attrs: { src: "img\\tick.png", alt: "friend added" }
+                      })
+                    ])
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c("button", { attrs: { id: "create-room" } }, [
+                _vm._v("Create Room")
+              ])
+            ],
+            2
+          )
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c("div", { attrs: { id: "right-side" } }, [
@@ -44470,21 +44547,28 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { attrs: { id: "search-box" } }, [
-      _c("input", { attrs: { type: "text", id: "search-bar" } })
+      _c("input", {
+        staticClass: "search-bar",
+        attrs: { type: "text", id: "rsearch-bar" }
+      })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "settings-box" } }, [
-      _c("img", { staticClass: "pfp", attrs: { src: "img/pfp.png" } }),
+    return _c("div", { attrs: { id: "rname-box" } }, [
+      _c("input", {
+        staticClass: "resizing-input",
+        attrs: {
+          type: "text",
+          id: "rname",
+          placeholder: "New Room",
+          maxlength: "20"
+        }
+      }),
       _vm._v(" "),
-      _c("h3", { attrs: { id: "our-user" } }, [_vm._v("user name")]),
-      _vm._v(" "),
-      _c("img", { attrs: { id: "settings-button", src: "img\\settings.png" } }),
-      _vm._v(" "),
-      _c("img", { attrs: { id: "plus-button", src: "img\\plus.png" } })
+      _c("img", { attrs: { src: "img\\edit.png" } })
     ])
   }
 ]

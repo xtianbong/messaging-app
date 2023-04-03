@@ -32,7 +32,7 @@ body{
 
 }
 
-#search-bar{
+.search-bar{
     height:30px;
     width:100%;
     border-radius: 14px;
@@ -433,6 +433,81 @@ ul{
 
 #message-list{
     margin-top:50px;
+}
+
+#new-room{
+    width:350px;
+    height:400px;
+    position:absolute;
+    bottom:0px;
+    transform: translateY(0px);
+    left:20vw;
+    background-color: #06071E;
+    z-index: 9999;
+
+}
+#rname-box{
+    width:fit-content;
+    margin:10px auto;
+}
+
+#rname{
+    font-size: large;
+    background-color: #06071E;
+    color:white;
+    border:none;
+    text-decoration: underline;
+}
+
+#fsearch-bar{
+    position: relative;
+    display: block;
+    width:280px;
+    margin:20px auto;
+}
+
+#friend-list{
+    width:fit-content;
+    height:fit-content;
+    max-height: 200px;
+    margin:10px auto;
+    padding:0px;
+    justify-content: space-between;
+}
+
+.friend{
+    width:300px;
+    height:40px;
+    display: flex;
+    padding:5px 20px;
+    border-radius: 5px;
+}
+.friend:hover{
+    background-color: #141641;
+}
+.friend>img{
+    margin-left:auto;
+    margin-right:0px;
+    float:right;
+}
+
+#create-room{
+    display: block;
+    width:200px;
+    height:40px;
+    margin:20px auto;
+    border-radius: 5px;
+    font-size: large;
+    color:white;
+    background-color:#353772;
+    border:none;
+}
+#create-room:hover{
+    background-color: white;
+    color:#353772;
+}
+#create-room:active{
+    background-color:#0C0E3D;
 }
 /*message input modifications*/
 

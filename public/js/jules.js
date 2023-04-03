@@ -16,17 +16,17 @@ function replace(){
 
 //filter chats using the search bar
 
-var searchBar = document.getElementById("search-bar")
+var rSearchBar = document.getElementById("rsearch-bar")
 var allChats = document.querySelectorAll(".chat");
 //run function every time there is input in the search bar and also when the page loads
-searchBar.addEventListener("input",searchFilter);
+rSearchBar.addEventListener("input",searchFilter);
 window.addEventListener("load",searchFilter)
 document.addEventListener("DOMContentLoaded", searchFilter)
 
 function searchFilter(){
     console.log("search ran");
-    //make all chats visible if searchbar is empty
-    if(searchBar.value==""){
+    //make all chats visible if rSearchBar is empty
+    if(rSearchBar.value==""){
         allChats.forEach(c => {
             c.classList.add("visible");
         });
@@ -41,9 +41,9 @@ function searchFilter(){
     else{
 
         allChats.forEach(c => {
-            // Convert to lower case so the searchbar ignores case
+            // Convert to lower case so the rSearchBar ignores case
             const chatName = c.querySelector(".username").textContent;
-            const searchText = searchBar.value.toLowerCase();
+            const searchText = rSearchBar.value.toLowerCase();
 
             if (chatName.toLowerCase().includes(searchText)) {
                 c.classList.add("visible");
@@ -121,6 +121,56 @@ function bottomScroll(){
       }
 };
 
-// Send a message
+//transfer style attributes from one element to the other
+
+function copyStyles(source, destination) {
+    var styles = window.getComputedStyle(source);
+    for (var i = 0; i < styles.length; i++) {
+        var styleName = styles[i];
+        destination.style.setProperty(styleName, styles.getPropertyValue(styleName));
+    }
+    console.log(source.getAttribute('id')+" style copied to "+ destination.getAttribute('id'))
+}
+
+
+//transfer style attributes from room search bar to the friend search bar
+var fSearchBar = document.querySelector('#fsearch-bar');
+//copyStyles(searchBar,fSearchBar)
+
+
+//makes inputs change in size as you type into them
+
+function resizeInputs() {
+    // Select all input elements with class resizing-input
+    let inputs = document.querySelectorAll('.resizing-input');
+
+    // Loop through all input elements
+    inputs.forEach((input) => {
+      // Get the width of the input's placeholder
+      let placeholderWidth = input.placeholder.length * 12.5;
+
+      // Set the initial width of the input to the placeholder width
+    input.style.width = `${placeholderWidth}px`;
+
+      // Add an event listener to the input to resize it as the user types
+    input.addEventListener('input', (event) => {
+        // Get the width of the input's value
+        let valueWidth = event.target.value.length * 9.5;
+        if (event.target.value.length==0){
+            input.setAttribute('placeholder', '');
+        }
+
+        // Set the width of the input to the value width, plus a little extra
+        input.style.width = `${valueWidth + 20}px`;
+    });
+    });
+}
+
+var rName=document.querySelector('#rname');
+//run on page load
+window.addEventListener('load', resizeInputs);
+//run when user types into the rname input
+rname.addEventListener('change', resizeInputs);
+
 
 
