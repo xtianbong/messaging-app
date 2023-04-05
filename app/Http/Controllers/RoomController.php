@@ -22,11 +22,13 @@ class RoomController extends Controller
         //right side
         $currentRoom = Room::where('id',$room_id)->first();
         $filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
-        $user = $request->user();
+        $currentUser = $request->user();
 
         //testing createRoom
-        //$room = $this->createRoom($request, "Example Room", [], []);
-        return view('room', compact('currentRoom','filteredMessages', 'user','rooms', 'room_id','friends'));
+        $users = [];
+        $owners = [];
+        //$exRoom = $this->createRoom($currentUser->id, "Example Room", $users, $owners);
+        return view('room', compact('currentRoom','filteredMessages', 'currentUser','rooms', 'room_id','friends'));
     }
 
     public function left(Request $request)
@@ -69,26 +71,35 @@ class RoomController extends Controller
     }
 
     //create new room
-    public function createRoom(Request $request,$name, $users,$owners){
-        $user = $request->user();
-        array_push($users, $user);//add current user to list of users for this room
-
-        array_push($owners, $user);//add current user to list of owners for this room
+    public function createRoom($currentUserId, $name, $users, $owners){
 
         $userIds = [];
-        foreach ($users as $user) {
-            $userIds[] = $user->id;
+        $ownerIds = [];
+
+        /*
+        $usersArr = json_decode($_POST['users']);
+        $ownersArr = json_decode($_POST['owner']);
+        */
+
+        $usersArr = json_decode($users);
+        $ownersArr = json_decode($owners);
+
+        array_push($userIds,$currentUserId);
+        array_push($ownerIds,$currentUserId);// automatically put current user in both user and owner list
+
+        foreach($usersArr as $u){
+            array_push($userIds,$u);
         }
 
-        $ownerIds = [];
-        foreach ($owners as $owner) {
-            $ownerIds[] = $owner->id;
+        foreach($ownersArr as $u){
+            array_push($ownerIds,$u);
         }
 
         $room = new Room();
         $room -> name = $name;
-        $room ->user_ids = $userIds;
-        $room -> owner_ids = $ownerIds;
+        $room->user_ids = json_encode($userIds);
+        $room->owner_ids = json_encode($ownerIds);
+        $room->message_ids = json_encode([]);
 
         $room->save();
         return $room;

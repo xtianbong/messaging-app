@@ -125,7 +125,7 @@ mark.highlight {
 #settings-box > .pfp{
     grid-column: 1;
 }
-#our-user{
+.current-user{
     grid-column: 2;
     color:white;
     font-size: 24px;
@@ -439,9 +439,9 @@ ul{
     width:350px;
     height:400px;
     position:absolute;
-    bottom:0px;
     transform: translateY(0px);
-    left:20vw;
+    left:calc(50vw - 175px);
+    bottom:calc(50vh - 200px);
     background-color: #06071E;
     z-index: 9999;
 
@@ -491,7 +491,7 @@ ul{
     float:right;
 }
 
-#create-room{
+#create-room-btn{
     display: block;
     width:200px;
     height:40px;
@@ -502,11 +502,11 @@ ul{
     background-color:#353772;
     border:none;
 }
-#create-room:hover{
+#create-room-btn:hover{
     background-color: white;
     color:#353772;
 }
-#create-room:active{
+#create-room-btn:active{
     background-color:#0C0E3D;
 }
 /*message input modifications*/
