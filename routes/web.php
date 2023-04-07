@@ -32,5 +32,6 @@ Route::get('/room/{room_id}/i', [App\Http\Controllers\RoomController::class, 'in
 Route::get('/room/{room_id}/j', [App\Http\Controllers\RoomController::class, 'fetchMessages']);//so can see the messages in json for troubleshooting
 //Route::get('/room/{room_id}', [RoomController::class, 'fetchMessages'])->middleware('auth');
 
+Route::post('/room/create-room', [App\Http\Controllers\RoomController::class, 'createRoom']);//add new rooms
 
 //Route::get('/rooms/{room_id}/messages', 'RoomController@getMessages');//added for rooms to work -Jules

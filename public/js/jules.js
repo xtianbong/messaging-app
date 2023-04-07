@@ -173,4 +173,60 @@ window.addEventListener('load', resizeInputs);
 rname.addEventListener('change', resizeInputs);
 
 
+//retrieve data for room creation from the form
 
+//get array of friend divs in the html
+var friendDivs = document.querySelectorAll("div.friend");
+console.log(friendDivs);
+
+function createNewRoom(){
+    console.log("new room ran");
+    var currentUserId = document.querySelector(".current-user").getAttribute("id");//id of user creating the room
+    var currentUserName = document.querySelector(".current-user").innerHTML;//name of user creating the room
+    //console.log(currentUserName)
+    var name = document.querySelector('#rname').value;//name of room
+    var users = []; // list of user ids
+    var owners = [1,2]; // list of owner ids
+    for(var div of friendDivs){
+        users.push(parseInt(div.getAttribute("id")))
+    }
+    console.log(users);
+    console.log(owners);
+    if(users.length>0){
+        console.log(name)
+        createRoomPHP(currentUserId,name, users, owners);
+    }
+
+
+}
+
+
+//run the createRoom function in RoomController.php
+function createRoomPHP(currentUserId,name, users, owners) {
+    console.log("createRoomPHP ran");
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: '/room/create-room',
+        type: 'POST',
+        data: {
+            currentUserId: currentUserId,
+            name: name,
+            users: users,
+            owners: owners,//convert the arrays to json before passing them to the php function
+        },
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(xhr) {
+            console.error(xhr);
+        }
+    });
+    console.log("createRoomPHP ended");
+}
+
+
+const createRoomBtn = document.querySelector('#create-room-btn');
+
+createRoomBtn.addEventListener('click', createNewRoom);

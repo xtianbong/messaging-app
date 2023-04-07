@@ -25,7 +25,7 @@ class RoomController extends Controller
         $user = $request->user();
 
         //testing createRoom
-        //$room = $this->createRoom($request, "Example Room", [], []);
+        //$this->createRoom($user->id, "Example Room", [], []);
         return view('room', compact('currentRoom','filteredMessages', 'user','rooms', 'room_id','friends'));
     }
 
@@ -65,33 +65,27 @@ class RoomController extends Controller
 
         broadcast(new MessageSent($user, $message))->toOthers();
 
+        //testing createRoom
+        //$room = $this->createRoom($request, "Example Room", [], []);
+
         return ['status' => 'Message Sent!'];
     }
 
     //create new room
-    public function createRoom(Request $request,$name, $users,$owners){
-        $user = $request->user();
-        array_push($users, $user);//add current user to list of users for this room
+    public function createRoom($currentUserId,$name, $userIds,$ownerIds){
 
-        array_push($owners, $user);//add current user to list of owners for this room
+        array_push($userIds, $currentUserId);//add current user to list of users for this room
 
-        $userIds = [];
-        foreach ($users as $user) {
-            $userIds[] = $user->id;
-        }
-
-        $ownerIds = [];
-        foreach ($owners as $owner) {
-            $ownerIds[] = $owner->id;
-        }
+        array_push($ownerIds, $currentUserId);//add current user to list of owners for this room
 
         $room = new Room();
         $room -> name = $name;
-        $room ->user_ids = $userIds;
-        $room -> owner_ids = $ownerIds;
+        $room ->user_ids = json_encode($userIds) ;
+        $room -> owner_ids = json_encode($ownerIds);
+        $room -> message_ids = json_encode([]);
 
         $room->save();
-        return $room;
+        //return $room;
     }
 
     public function index2(Request $request, $room_id)//for testing
