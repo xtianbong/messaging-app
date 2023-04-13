@@ -205,11 +205,9 @@ function createNewRoom(){
 function createRoomPHP(currentUserId,name, users, owners) {
     console.log("createRoomPHP ran");
     $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: '/room/create-room',
-        type: 'POST',
+
+        url: "{{ route('create.room') }}",
+        type: 'GET',
         data: {
             currentUserId: currentUserId,
             name: name,

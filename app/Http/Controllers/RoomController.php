@@ -72,20 +72,25 @@ class RoomController extends Controller
     }
 
     //create new room
-    public function createRoom($currentUserId,$name, $userIds,$ownerIds){
+    public function createRoom(Request $request){
+        dd($request);
+        $currentUserId = $request->query('currentUserId');
+        $name = $request->query('name');
+        $userIds=$request->query('users');
+        $ownerIds=$request->query('owners');
 
         array_push($userIds, $currentUserId);//add current user to list of users for this room
 
         array_push($ownerIds, $currentUserId);//add current user to list of owners for this room
 
         $room = new Room();
-        $room -> name = $name;
-        $room ->user_ids = json_encode($userIds) ;
-        $room -> owner_ids = json_encode($ownerIds);
-        $room -> message_ids = json_encode([]);
-
+        $room->name = $name;
+        $room->user_ids = json_encode($userIds) ;
+        $room->owner_ids = json_encode($ownerIds);
+        $room->message_ids = json_encode([]);
+        //dd($room);
         $room->save();
-        //return $room;
+        return $room;
     }
 
     public function index2(Request $request, $room_id)//for testing
