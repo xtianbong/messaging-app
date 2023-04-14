@@ -385,7 +385,7 @@ body{
     height:100%;
 }
 
-.card-body{
+.room>.card-body{
     min-width:100%;
     width:100vw;
     height:calc(100vh - 190px);
@@ -396,13 +396,13 @@ body{
     color:white;
 }
 
-.card-body>div>ul{
+.room>.card-body>div>ul{
     height:calc(100vh - 120px);
     overflow-y: scroll;
     margin:0px;
 }
 
-.card-footer{
+.room>.card-footer{
     border:none;
     border-radius: 0;
     width:80vw;
@@ -444,11 +444,16 @@ ul{
     bottom:calc(50vh - 200px);
     background-color: #06071E;
     z-index: 9999;
-
+    display:none;
 }
 #rname-box{
     width:fit-content;
     margin:10px auto;
+}
+
+#rname-box>img{
+    width:15px;
+    height:15px;
 }
 
 #rname{
@@ -509,5 +514,37 @@ ul{
 #create-room-btn:active{
     background-color:#0C0E3D;
 }
+
+#tint{
+    position:fixed;
+    height:110vh;
+    width:100vw;
+    top:0;
+    right:0;
+    background-color: rgba(red, green, blue, 0.5);
+    z-index: 999;
+    overflow: hidden;
+    display:none;
+}
 /*message input modifications*/
 
+/*formatting the auxilliary pages like the home page and sign in page
+
+/*row div on the home page*/
+#home-row, #login-row,.row{
+    width:100vw;
+    margin:50px 0px;
+}
+
+#home-card, #login-card,.card{
+    background-color:#141641;
+    color:white;
+}
+
+#home-card>.card-header,#login-card>.card-header,.card>.card-header{
+    background-color: #353772;
+}
+
+.form-group.row{
+    width:100%;
+}

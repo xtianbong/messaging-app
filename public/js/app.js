@@ -2257,6 +2257,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -44509,7 +44511,7 @@ var render = function() {
                 [
                   _c("img", {
                     staticClass: "pfp",
-                    attrs: { src: "img\\pfp.png" }
+                    attrs: { src: "/img/pfp.png" }
                   }),
                   _vm._v(" "),
                   _c("h3", { staticClass: "username" }, [
@@ -44518,7 +44520,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("img", {
                     staticClass: "alert",
-                    attrs: { src: "img\\alert.png" }
+                    attrs: { src: "/img/alert.png" }
                   })
                 ]
               )
@@ -44529,7 +44531,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { attrs: { id: "settings-box" } }, [
-        _c("img", { staticClass: "pfp", attrs: { src: "img/pfp.png" } }),
+        _c("img", { staticClass: "pfp", attrs: { src: "/img/pfp.png" } }),
         _vm._v(" "),
         _c(
           "h3",
@@ -44540,14 +44542,16 @@ var render = function() {
         _c("img", {
           attrs: {
             id: "settings-button",
-            src: "img\\settings.png",
+            src: "/img/settings.png",
             alt: "settings"
           }
         }),
         _vm._v(" "),
         _c("img", {
-          attrs: { id: "plus-button", src: "img\\plus.png", alt: "add chat" }
+          attrs: { id: "plus-button", src: "/img/plus.png", alt: "add chat" }
         }),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "tint" } }),
         _vm._v(" "),
         _c("div", { attrs: { id: "new-room" } }, [
           _vm._m(1),
@@ -44574,12 +44578,12 @@ var render = function() {
                         _vm._v(" "),
                         _c("img", {
                           staticClass: "add-button",
-                          attrs: { src: "img\\plus.png", alt: "add friend" }
+                          attrs: { src: "/img/plus.png", alt: "add friend" }
                         }),
                         _vm._v(" "),
                         _c("img", {
                           staticClass: "added-button",
-                          attrs: { src: "img\\tick.png", alt: "friend added" }
+                          attrs: { src: "/img/tick.png", alt: "friend added" }
                         })
                       ]
                     )
@@ -44660,7 +44664,7 @@ var staticRenderFns = [
         }
       }),
       _vm._v(" "),
-      _c("img", { attrs: { src: "img\\edit.png" } })
+      _c("img", { attrs: { src: "/img/edit.png" } })
     ])
   }
 ]

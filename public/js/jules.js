@@ -118,6 +118,7 @@ window.addEventListener("load", function() {
 
 
 function bottomScroll(){
+    console.log("bottom scroll ran");
     if (ulElement) {
         ulElement.scrollTop = ulElement.scrollHeight;
       }
@@ -235,3 +236,36 @@ function createRoomPHP(currentUserId,name, users, owners) {
 const createRoomBtn = document.querySelector('#create-room-btn');
 
 createRoomBtn.addEventListener('click', createNewRoom);
+
+
+//make an object appear/disappear when a button is pressed
+const tint = document.querySelector("#tint");
+function displayToggle(target,display='block'){ //change display attribute to whatever is needed
+    console.log("display toggle ran")
+    if(target.style.display=='none'){
+        if(display!='block'){
+            target.style.display=display;
+            tint.style.display='block';
+        }
+        else{
+            target.style.display='block';
+            tint.style.display='block';
+        }
+    }
+    else{
+        target.style.display='none';
+        tint.style.display='none';
+    }
+}
+
+
+var newRoom = document.querySelector("#new-room");
+var plusButton = document.querySelector("#plus-button");
+
+plusButton.addEventListener('click', function() { //apply newRoom function to plus button and new room div
+    displayToggle(newRoom);
+  });
+
+tint.addEventListener('click', function() { //hide object when you click anywhere outside it
+    displayToggle(newRoom);
+});

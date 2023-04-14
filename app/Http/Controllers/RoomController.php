@@ -28,6 +28,14 @@ class RoomController extends Controller
         $users = [];
         $owners = [];
         //$exRoom = $this->createRoom($currentUser->id, "Example Room", $users, $owners);
+
+        //testing addFriend
+        $friendIdString="[1,2,3]";
+        $currentUserId= $currentUser->id;
+        //$this->addFriend($request,$currentUserId,$friendIdString);
+
+        //testing logout
+        //$this->logout($request);
         return view('room', compact('currentRoom','filteredMessages', 'currentUser','rooms', 'room_id','friends'));
     }
 
@@ -103,6 +111,28 @@ class RoomController extends Controller
 
         $room->save();
         return $room;
+    }
+
+    public function addFriend(Request $request,$currentUserId, $friendIdString){
+        $currentUser = User::where('id',$currentUserId)->first();
+        //dd($currentUser);
+        $friends = json_decode($currentUser->friends);
+        $newFriends = json_decode($friendIdString);
+
+        //add new friends to list of old friends
+        forEach($newFriends as $n){
+            array_push($friends,$n);
+        }
+        $currentUser->friends =  json_encode($friends);
+        $currentUser->save();
+        //dd($currentUser);
+    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
 
     public function index2(Request $request, $room_id)//for testing

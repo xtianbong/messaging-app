@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" id="home-row">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" id="home-card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
@@ -15,7 +15,7 @@
                     @endif
 
                     {{ __('You are logged in!') }}
-                    <a href="{{ url('/chat') }}">Chat</a>
+                    <a href="{{ url('/room/0') }}">Chat</a>
                 </div>
             </div>
         </div>

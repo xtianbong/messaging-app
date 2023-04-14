@@ -8,22 +8,24 @@
                     <li v-for="room in rooms" :key="room.id">
                         <a :href="'../room/' + room.id">
                             <div class="chat room" id="roomdiv">
-                                <img class="pfp" src="img\pfp.png">
+                                <img class="pfp" src="/img/pfp.png">
                                 <h3 class="username">{{ room.name }}</h3>
-                                <img class="alert" src="img\alert.png">
+                                <img class="alert" src="/img/alert.png">
                             </div>
                         </a>
                     </li>
                 </ul>
                 <div id="settings-box">
-                    <img class="pfp" src="img/pfp.png">
+                    <img class="pfp" src="/img/pfp.png">
                     <h3 :id=currentUser.id class="current-user">{{currentUser.name}}</h3>
-                    <img id="settings-button" src="img\settings.png" alt="settings">
-                    <img id="plus-button" src="img\plus.png" alt="add chat">
+                    <img id="settings-button" src="/img/settings.png" alt="settings">
+                    <img id="plus-button" src="/img/plus.png" alt="add chat" >
+                    <!-- <button id="plus-button"  alt="add chat"> </button> -->
+                    <div id="tint"></div>
                     <div id="new-room">
                         <div id="rname-box">
                             <input type="text" id="rname" class ="resizing-input" placeholder="New Room" maxlength="20">
-                            <img src="img\edit.png">
+                            <img src="/img/edit.png">
                         </div>
                         <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
                         <!--list of friends-->
@@ -31,8 +33,8 @@
                             <li class="left clearfix" v-for="friend in friends" :key="friend.id">
                                 <div :id = friend.id class="friend">
                                     <h4>{{ friend.name }}</h4>
-                                    <img class="add-button" src="img\plus.png" alt="add friend">
-                                    <img class="added-button" src="img\tick.png" alt="friend added">
+                                    <img class="add-button" src="/img/plus.png" alt="add friend">
+                                    <img class="added-button" src="/img/tick.png" alt="friend added">
                                 </div>
                             </li>
                             <button id="create-room-btn">Create Room</button>
