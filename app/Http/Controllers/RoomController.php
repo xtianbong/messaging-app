@@ -16,13 +16,23 @@ class RoomController extends Controller
 {
     public function index(Request $request, $room_id)
     {
+        $currentUser = $request->user();
+
         //left side
-        $rooms = Room::with('user')->get();
+        //get rooms the user is in
+        $allRooms = Room::with('user')->get();
+        $roomsArr = json_decode($currentUser -> rooms);//get array of room ids that this user is in
+        $rooms=[];
+        foreach($roomsArr as $r){
+            array_push($rooms,Room::where('id',$r)->first());
+        }
+        $rooms=json_encode($rooms);
+        //dd($rooms);
         $friends = User::with('messages')->get();
         //right side
         $currentRoom = Room::where('id',$room_id)->first();
         $filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
-        $currentUser = $request->user();
+
 
         //testing createRoom
         $users = [];

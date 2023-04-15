@@ -77,7 +77,7 @@ mark.highlight {
     display:none;
 }
 .visible{
-    display: grid;
+    display: flex !important;
 }
 .chat:hover{
     background-color: #232442;
@@ -87,7 +87,7 @@ mark.highlight {
     width:40px;
     height:40px;
     border-radius: 100%;
-    margin:auto;
+    margin: auto 10px;
     grid-column: 1;
     vertical-align:middle;
 }
@@ -486,6 +486,7 @@ ul{
     display: flex;
     padding:5px 20px;
     border-radius: 5px;
+    display: none;
 }
 .friend:hover{
     background-color: #141641;
@@ -494,6 +495,18 @@ ul{
     margin-left:auto;
     margin-right:0px;
     float:right;
+}
+
+.added-button{
+    display: none;
+}
+
+.added>.added-button{
+    display:block;
+}
+
+.added>.add-button{
+    display:none;
 }
 
 #create-room-btn{
@@ -526,6 +539,8 @@ ul{
     overflow: hidden;
     display:none;
 }
+
+
 /*message input modifications*/
 
 /*formatting the auxilliary pages like the home page and sign in page
@@ -547,4 +562,14 @@ ul{
 
 .form-group.row{
     width:100%;
+}
+
+
+.not-selectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

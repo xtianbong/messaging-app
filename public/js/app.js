@@ -44553,51 +44553,58 @@ var render = function() {
         _vm._v(" "),
         _c("div", { attrs: { id: "tint" } }),
         _vm._v(" "),
-        _c("div", { attrs: { id: "new-room" } }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "search-bar",
-            attrs: { type: "text", id: "fsearch-bar" }
-          }),
-          _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "scrollbar", attrs: { id: "friend-list" } },
-            [
-              _vm._l(_vm.friends, function(friend) {
-                return _c(
-                  "li",
-                  { key: friend.id, staticClass: "left clearfix" },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "friend", attrs: { id: friend.id } },
-                      [
-                        _c("h4", [_vm._v(_vm._s(friend.name))]),
-                        _vm._v(" "),
-                        _c("img", {
-                          staticClass: "add-button",
-                          attrs: { src: "/img/plus.png", alt: "add friend" }
-                        }),
-                        _vm._v(" "),
-                        _c("img", {
-                          staticClass: "added-button",
-                          attrs: { src: "/img/tick.png", alt: "friend added" }
-                        })
-                      ]
-                    )
-                  ]
-                )
-              }),
-              _vm._v(" "),
-              _c("button", { attrs: { id: "create-room-btn" } }, [
-                _vm._v("Create Room")
-              ])
-            ],
-            2
-          )
-        ])
+        _c(
+          "div",
+          { staticStyle: { display: "none" }, attrs: { id: "new-room" } },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "search-bar",
+              attrs: { type: "text", id: "fsearch-bar" }
+            }),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "scrollbar", attrs: { id: "friend-list" } },
+              [
+                _vm._l(_vm.friends, function(friend) {
+                  return _c(
+                    "li",
+                    { key: friend.id, staticClass: "left clearfix" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "friend not-selectable",
+                          attrs: { id: friend.id }
+                        },
+                        [
+                          _c("h3", [_vm._v(_vm._s(friend.name))]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "add-button",
+                            attrs: { src: "/img/plus.png", alt: "add friend" }
+                          }),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "added-button",
+                            attrs: { src: "/img/tick.png", alt: "friend added" }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c("button", { attrs: { id: "create-room-btn" } }, [
+                  _vm._v("Create Room")
+                ])
+              ],
+              2
+            )
+          ]
+        )
       ])
     ]),
     _vm._v(" "),

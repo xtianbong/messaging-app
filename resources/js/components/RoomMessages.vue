@@ -22,7 +22,7 @@
                     <img id="plus-button" src="/img/plus.png" alt="add chat" >
                     <!-- <button id="plus-button"  alt="add chat"> </button> -->
                     <div id="tint"></div>
-                    <div id="new-room">
+                    <div id="new-room" style="display: none;">
                         <div id="rname-box">
                             <input type="text" id="rname" class ="resizing-input" placeholder="New Room" maxlength="20">
                             <img src="/img/edit.png">
@@ -31,8 +31,8 @@
                         <!--list of friends-->
                         <ul id="friend-list" class="scrollbar">
                             <li class="left clearfix" v-for="friend in friends" :key="friend.id">
-                                <div :id = friend.id class="friend">
-                                    <h4>{{ friend.name }}</h4>
+                                <div :id = friend.id class="friend not-selectable">
+                                    <h3>{{ friend.name }}</h3>
                                     <img class="add-button" src="/img/plus.png" alt="add friend">
                                     <img class="added-button" src="/img/tick.png" alt="friend added">
                                 </div>

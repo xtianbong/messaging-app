@@ -16,33 +16,32 @@ function replace(){
 
 //filter chats using the search bar
 
-var rSearchBar = document.getElementById("rsearch-bar")
-var allChats = document.querySelectorAll(".chat");
 
-
-function searchFilter(){
+function searchFilter(searchBar,targetList){//searchBar,targetList
     console.log("search ran");
-    //make all chats visible if rSearchBar is empty
-    if(rSearchBar.value==""){
+    var allChats = targetList.querySelectorAll("div");
+    //make all chats visible if searchBar is empty
+    if(searchBar.value==""){
         allChats.forEach(c => {
+            console.log(c);
             c.classList.add("visible");
         });
-        var chatDivs = document.querySelector("#room-list");
-        var highlightedElements = chatDivs.querySelectorAll(".highlight");
+        var highlightedElements = targetList.querySelectorAll(".highlight");
         highlightedElements.forEach(element => {
             const parent = element.parentNode;
             parent.replaceChild(document.createTextNode(element.textContent), element);
         });
     }
-    //if not, filter them by the name of the chatter
+    //if not, filter them by the name of the room
     else{
 
         allChats.forEach(c => {
-            // Convert to lower case so the rSearchBar ignores case
-            const chatName = c.querySelector(".username").textContent;
-            const searchText = rSearchBar.value.toLowerCase();
+            // Convert to lower case so the searchBar ignores case
+            const chatName = c.querySelector("h3").textContent;
+            const searchText = searchBar.value.toLowerCase();
 
             if (chatName.toLowerCase().includes(searchText)) {
+                console.log(c);
                 c.classList.add("visible");
                 //highlight the text in the name that corresponds to the query
                 const regex = new RegExp(searchText, 'gi');
@@ -50,7 +49,7 @@ function searchFilter(){
                     return `<mark class="highlight">${match}</mark>`;
                 });
 
-                c.querySelector(".username").innerHTML = highlightedText;
+                c.querySelector("h3").innerHTML = highlightedText;
             } else {
                 c.classList.remove("visible");
             }
@@ -59,12 +58,36 @@ function searchFilter(){
 
 }
 
-//run function every time there is input in the search bar and also when the page loads
-rSearchBar.addEventListener("input",searchFilter);
-window.addEventListener("load",searchFilter)
-document.addEventListener("DOMContentLoaded", searchFilter)
+//run function every time there is input in the room search bar and also when the page loads
+var rSearchBar = document.getElementById("rsearch-bar")
+var chatDivs = document.querySelector("#room-list");
 
+rSearchBar.addEventListener("input", function() {
+    searchFilter(rSearchBar, chatDivs);
+});
 
+window.addEventListener("load", function() {
+    searchFilter(rSearchBar, chatDivs);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    searchFilter(rSearchBar, chatDivs);
+});
+
+var fSearchBar = document.getElementById("fsearch-bar");
+var fDivs = document.querySelector("#friend-list");
+
+fSearchBar.addEventListener("input", function() {
+    searchFilter(fSearchBar, fDivs);
+});
+
+window.addEventListener("load", function() {
+    searchFilter(fSearchBar, fDivs);
+});
+
+document.addEventListener("load", function() {
+    searchFilter(fSearchBar, fDivs);
+});
 
 //reset shake animation after it plays
 function resetShake(){
@@ -180,12 +203,20 @@ rname.addEventListener('change', resizeInputs);
 
 
 
-//retrieve data for room creation from the form
-
+//make create-rooms div react to input
 //get array of friend divs in the html
 var friendDivs = document.querySelectorAll("div.friend");
-console.log(friendDivs);
+friendDivs.forEach(f => f.addEventListener('click',function(){
+    if(f.classList.contains('added')){
+        f.classList.remove('added');
+    }
+    else{
+        f.classList.add('added');
+    }
+}));
 
+
+//retrieve data for room creation from the form
 function createNewRoom(){
     var currentUserId = document.querySelector(".current-user").getAttribute("id");//id of user creating the room
     var currentUserName = document.querySelector(".current-user").innerHTML;//name of user creating the room
@@ -242,7 +273,7 @@ createRoomBtn.addEventListener('click', createNewRoom);
 const tint = document.querySelector("#tint");
 function displayToggle(target,display='block'){ //change display attribute to whatever is needed
     console.log("display toggle ran")
-    if(target.style.display=='none'){
+    if(target.style.display==='none'){
         if(display!='block'){
             target.style.display=display;
             tint.style.display='block';
