@@ -2259,6 +2259,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -44555,9 +44590,39 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticStyle: { display: "none" }, attrs: { id: "new-room" } },
+          {
+            staticClass: "overlay",
+            staticStyle: { display: "none" },
+            attrs: { id: "settings" }
+          },
           [
-            _vm._m(1),
+            _c("div", { staticClass: "name-box", attrs: { id: "uname-box" } }, [
+              _c("input", {
+                staticClass: "resizing-input",
+                attrs: {
+                  type: "text",
+                  id: "uname",
+                  placeholder: _vm.currentUser.name,
+                  maxlength: "20"
+                }
+              }),
+              _vm._v(" "),
+              _c("img", { attrs: { src: "/img/edit.png" } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "overlay",
+            staticStyle: { display: "none" },
+            attrs: { id: "new-room" }
+          },
+          [
+            _vm._m(2),
             _vm._v(" "),
             _c("input", {
               staticClass: "search-bar",
@@ -44597,20 +44662,103 @@ var render = function() {
                   )
                 }),
                 _vm._v(" "),
-                _c("button", { attrs: { id: "create-room-btn" } }, [
-                  _vm._v("Create Room")
-                ])
+                _c(
+                  "button",
+                  {
+                    staticClass: "overlay-btn",
+                    attrs: { id: "create-room-btn" }
+                  },
+                  [_vm._v("Create Room")]
+                )
               ],
               2
             )
           ]
-        )
+        ),
+        _vm._v(" "),
+        _vm._m(3)
       ])
     ]),
     _vm._v(" "),
     _c("div", { attrs: { id: "right-side" } }, [
       _c("div", { attrs: { id: "name-box" } }, [
-        _c("h2", [_vm._v(_vm._s(_vm.currentRoom.name))])
+        _c("h2", [_vm._v(_vm._s(_vm.currentRoom.name))]),
+        _vm._v(" "),
+        _c("img", { attrs: { id: "edit-room-btn", src: "/img/options.png" } }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "overlay",
+            staticStyle: { display: "none" },
+            attrs: { id: "edit-room" }
+          },
+          [
+            _c("div", { staticClass: "name-box", attrs: { id: "rname-box" } }, [
+              _c("input", {
+                staticClass: "resizing-input",
+                attrs: {
+                  type: "text",
+                  id: "rname",
+                  placeholder: _vm.currentRoom.name,
+                  maxlength: "20"
+                }
+              }),
+              _vm._v(" "),
+              _c("img", { attrs: { src: "/img/edit.png" } })
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "search-bar",
+              attrs: { type: "text", id: "fsearch-bar" }
+            }),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "scrollbar", attrs: { id: "friend-list" } },
+              [
+                _vm._l(_vm.friends, function(friend) {
+                  return _c(
+                    "li",
+                    { key: friend.id, staticClass: "left clearfix" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "friend not-selectable visible",
+                          attrs: { id: friend.id }
+                        },
+                        [
+                          _c("h3", [_vm._v(_vm._s(friend.name))]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "add-button",
+                            attrs: { src: "/img/plus.png", alt: "add friend" }
+                          }),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "added-button",
+                            attrs: { src: "/img/tick.png", alt: "friend added" }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "overlay-btn",
+                    attrs: { id: "create-room-btn" }
+                  },
+                  [_vm._v("Save Changes")]
+                )
+              ],
+              2
+            )
+          ]
+        )
       ]),
       _vm._v(" "),
       _c(
@@ -44660,7 +44808,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "rname-box" } }, [
+    return _c(
+      "div",
+      {
+        staticClass: "overlay",
+        staticStyle: { display: "none" },
+        attrs: { id: "select-new" }
+      },
+      [
+        _c(
+          "button",
+          { staticClass: "overlay-btn", attrs: { id: "add-room-btn" } },
+          [_vm._v("New Room")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "overlay-btn", attrs: { id: "add-friend-btn" } },
+          [_vm._v("Add Friend")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "name-box", attrs: { id: "rname-box" } }, [
       _c("input", {
         staticClass: "resizing-input",
         attrs: {
@@ -44673,6 +44847,27 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("img", { attrs: { src: "/img/edit.png" } })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "overlay",
+        staticStyle: { display: "none" },
+        attrs: { id: "add-friend" }
+      },
+      [
+        _c("input", {
+          staticClass: "email-bar",
+          attrs: { type: "text", id: "new-friend-email", placeholder: "E-mail" }
+        }),
+        _vm._v(" "),
+        _c("button", { staticClass: "overlay-btn" }, [_vm._v("Add Friend")])
+      ]
+    )
   }
 ]
 render._withStripped = true

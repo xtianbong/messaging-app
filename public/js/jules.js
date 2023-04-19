@@ -277,26 +277,75 @@ function displayToggle(target,display='block'){ //change display attribute to wh
         if(display!='block'){
             target.style.display=display;
             tint.style.display='block';
+            //console.log(1);
         }
         else{
             target.style.display='block';
             tint.style.display='block';
+            //console.log(2);
         }
     }
     else{
         target.style.display='none';
         tint.style.display='none';
+        //console.log(3);
     }
+}
+//funciton that turns off target display no matter what
+var targets = document.querySelectorAll(".overlay")
+function displayOff(){
+    console.log(targets);
+    for(var t of targets){
+        console.log(t);
+        t.style.display='none';
+    }
+    tint.style.display='none';
+
 }
 
 
-var newRoom = document.querySelector("#new-room");
-var plusButton = document.querySelector("#plus-button");
 
+var plusButton = document.querySelector("#plus-button");
+var selectNew = document.querySelector("#select-new");
 plusButton.addEventListener('click', function() { //apply newRoom function to plus button and new room div
+    displayToggle(selectNew);
+});
+
+
+
+var addRoomButton = document.querySelector("#add-room-btn")
+var newRoom = document.querySelector("#new-room");
+
+addRoomButton.addEventListener('click', function(){
+    displayOff();
     displayToggle(newRoom);
-  });
+});
+
+var editRoomButton = document.querySelector("#edit-room-btn")
+var editRoom = document.querySelector("#edit-room");
+
+editRoomButton.addEventListener('click', function(){
+    displayOff();
+    displayToggle(editRoom);
+});
+
+var addFriendButton = document.querySelector("#add-friend-btn")
+var addFriend = document.querySelector("#add-friend");
+
+addFriendButton.addEventListener('click', function(){
+    displayOff();
+    displayToggle(addFriend);
+});
+
+var settingsButton = document.querySelector("#settings-button");
+var settingsDiv = document.querySelector("#settings");
+
+settingsButton.addEventListener('click', function() { //apply newRoom function to plus button and new room div
+    displayToggle(settingsDiv);
+});
+
+
 
 tint.addEventListener('click', function() { //hide object when you click anywhere outside it
-    displayToggle(newRoom);
+    displayOff();
 });

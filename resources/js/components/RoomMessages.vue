@@ -22,8 +22,20 @@
                     <img id="plus-button" src="/img/plus.png" alt="add chat" >
                     <!-- <button id="plus-button"  alt="add chat"> </button> -->
                     <div id="tint"></div>
-                    <div id="new-room" style="display: none;">
-                        <div id="rname-box">
+                    <!--hidden divs-->
+                    <div id="settings" class="overlay" style="display: none;">
+                        <div id="uname-box" class="name-box">
+                            <input type="text" id="uname" class ="resizing-input" :placeholder=currentUser.name maxlength="20">
+                            <img src="/img/edit.png">
+                        </div>
+
+                    </div>
+                    <div id="select-new" class="overlay" style="display: none;">
+                        <button id="add-room-btn" class="overlay-btn">New Room</button>
+                        <button id="add-friend-btn" class="overlay-btn">Add Friend</button>
+                    </div>
+                    <div id="new-room" class="overlay" style="display: none;">
+                        <div id="rname-box" class="name-box">
                             <input type="text" id="rname" class ="resizing-input" placeholder="New Room" maxlength="20">
                             <img src="/img/edit.png">
                         </div>
@@ -37,14 +49,37 @@
                                     <img class="added-button" src="/img/tick.png" alt="friend added">
                                 </div>
                             </li>
-                            <button id="create-room-btn">Create Room</button>
+                            <button id="create-room-btn" class="overlay-btn">Create Room</button>
                         </ul>
                     </div>
-                </div>
+                    <div id="add-friend" class="overlay" style="display: none;">
+                        <input type="text" id="new-friend-email" class="email-bar" placeholder="E-mail">
+                        <button class="overlay-btn">Add Friend</button>
+                    </div>
+                </div><!--settings-box-->
             </div><!--left side-->
         <div id="right-side">
             <div id="name-box">
                 <h2>{{currentRoom.name}}</h2>
+                <img id="edit-room-btn" src="/img/options.png" >
+                <div id="edit-room" class="overlay" style="display: none;">
+                    <div id="rname-box" class="name-box">
+                        <input type="text" id="rname" class ="resizing-input" :placeholder="currentRoom.name" maxlength="20">
+                        <img src="/img/edit.png">
+                    </div>
+                    <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
+                    <!--list of friends-->
+                    <ul id="friend-list" class="scrollbar">
+                        <li class="left clearfix" v-for="friend in friends" :key="friend.id">
+                            <div :id = friend.id class="friend not-selectable visible">
+                                <h3>{{ friend.name }}</h3>
+                                <img class="add-button" src="/img/plus.png" alt="add friend">
+                                <img class="added-button" src="/img/tick.png" alt="friend added">
+                            </div>
+                        </li>
+                        <button id="create-room-btn" class="overlay-btn">Save Changes</button>
+                    </ul>
+                </div>
             </div>
             <ul id="message-list" class="scrollbar">
             <li class="left clearfix" v-for="message in messages" :key="message.id">

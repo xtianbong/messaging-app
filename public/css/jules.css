@@ -43,7 +43,6 @@ body{
     background: url(../img/search.png) no-repeat scroll 7px center;
     background-size: 15px;
     background-color:#D9D9D9;
-    ;
 }
 
 /*change colors of search higlights*/
@@ -138,13 +137,16 @@ mark.highlight {
     width:30px;
     height: 30px;
     margin:auto;
+    cursor: pointer;
 }
 #plus-button{
     grid-column: 4;
     width:30px;
     height: 30px;
     margin:auto;
+    cursor: pointer;
 }
+
 #right-side{
     width:80%;
     height: 100vh;
@@ -159,11 +161,28 @@ mark.highlight {
     box-sizing: border-box;
     color:white;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 #name-box>h2{
     margin:0px;
 }
+
+#edit-room-btn{
+    width:30px;
+    height: 30px;
+    position: absolute;
+    right:20px;
+    top:10px;
+    cursor: pointer;
+}
+
+#edit-room{
+    left: calc(50vw - 350px);
+    bottom: calc(-50vh - 200px);
+}
+
 #messages{
     margin-top: 50px;
     padding:10px;
@@ -385,6 +404,19 @@ body{
     height:100%;
 }
 
+#select-new{
+    height: 110px;
+    width: 220px;
+    left: 83%;
+    bottom: 56px;
+    z-index: 999;
+    border-radius: 0;
+}
+
+#select-new>button{
+    margin:10px auto;
+}
+
 .room>.card-body{
     min-width:100%;
     width:100vw;
@@ -435,7 +467,7 @@ ul{
     margin-top:50px;
 }
 
-#new-room{
+.overlay{
     width:350px;
     height:400px;
     position:absolute;
@@ -443,20 +475,21 @@ ul{
     left:calc(50vw - 175px);
     bottom:calc(50vh - 200px);
     background-color: #06071E;
-    z-index: 9999;
+    z-index: 999;
     display:none;
+    transform:translateY(-8px);
 }
-#rname-box{
+.name-box{
     width:fit-content;
     margin:10px auto;
 }
 
-#rname-box>img{
+.name-box>img{
     width:15px;
     height:15px;
 }
 
-#rname{
+.resizing-input{
     font-size: large;
     background-color: #06071E;
     color:white;
@@ -509,7 +542,7 @@ ul{
     display:none;
 }
 
-#create-room-btn{
+.overlay-btn{
     display: block;
     width:200px;
     height:40px;
@@ -520,11 +553,11 @@ ul{
     background-color:#353772;
     border:none;
 }
-#create-room-btn:hover{
+.overlay-btn:hover{
     background-color: white;
     color:#353772;
 }
-#create-room-btn:active{
+.overlay-btn:active{
     background-color:#0C0E3D;
 }
 
@@ -535,10 +568,31 @@ ul{
     top:0;
     right:0;
     background-color: rgba(red, green, blue, 0.5);
-    z-index: 999;
+    z-index: 998;
     overflow: hidden;
     display:none;
 }
+#add-friend{
+    width:300px;
+    height:120px;
+    display:block;
+    left: 83%;
+    bottom: 56px;
+    padding:10px;
+}
+
+.email-bar{
+    height:30px;
+    width:100%;
+    border-radius: 14px;
+    padding:0px 15px;
+    font-size: 17px;
+    margin:auto;
+    background-size: 15px;
+    background-color:#D9D9D9;
+
+}
+
 
 
 /*message input modifications*/
@@ -573,3 +627,4 @@ ul{
     -ms-user-select: none;
     user-select: none;
 }
+
