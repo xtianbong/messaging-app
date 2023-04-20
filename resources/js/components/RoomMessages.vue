@@ -28,6 +28,7 @@
                             <input type="text" id="uname" class ="resizing-input" :placeholder=currentUser.name maxlength="20">
                             <img src="/img/edit.png">
                         </div>
+                        <button id="log-out-btn" class="overlay-btn">Logout</button>
 
                     </div>
                     <div id="select-new" class="overlay" style="display: none;">
@@ -60,7 +61,7 @@
             </div><!--left side-->
         <div id="right-side">
             <div id="name-box">
-                <h2>{{currentRoom.name}}</h2>
+                <h2 :id=currentRoom.id >{{currentRoom.name}}</h2>
                 <img id="edit-room-btn" src="/img/options.png" >
                 <div id="edit-room" class="overlay" style="display: none;">
                     <div id="rname-box" class="name-box">

@@ -44,7 +44,7 @@ class ChatsController extends Controller
     public function sendMessage(Request $request)
     {
         $user = Auth::user();
-
+        //dd($user);
         // $message = $user->messages()->create([
         //     'message' => $request->input('message'),
         //     'room_id' => $request->input('room_id')
@@ -52,6 +52,7 @@ class ChatsController extends Controller
 
         $message = new Message();
         $message->message = $request->input('message');
+        //$message->message = "Test";
         $message->user_id = $user->id;
         $message->room_id = (int) $request->input('room_id'); // assign the room_id from the request
         $message->save();

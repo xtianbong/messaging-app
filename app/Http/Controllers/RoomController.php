@@ -16,6 +16,8 @@ class RoomController extends Controller
 {
     public function index(Request $request, $room_id)
     {
+
+
         $currentUser = $request->user();
 
         //left side
@@ -31,6 +33,7 @@ class RoomController extends Controller
         $friends = User::with('messages')->get();
         //right side
         $currentRoom = Room::where('id',$room_id)->first();
+        //dd($currentRoom);
         $filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
 
 
@@ -70,6 +73,7 @@ class RoomController extends Controller
     }
     public function sendMessage(Request $request)
     {
+
         $user = Auth::user();
 
         // $message = $user->messages()->create([
@@ -79,8 +83,9 @@ class RoomController extends Controller
 
         $message = new Message();
         $message->message = $request->input('message');
+        //$message->message = "Test";
         $message->user_id = $user->id;
-        $message->room_id = (int) $request->input('room_id'); // assign the room_id from the request
+        $message->room_id = $request->input('room_id'); // assign the room_id from the request
         $message->save();
 
         broadcast(new MessageSent($user, $message))->toOthers();

@@ -22,7 +22,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/chat', [App\Http\Controllers\ChatsController::class, 'index']);
 Route::get('/messages', [App\Http\Controllers\ChatsController::class, 'fetchMessages']);
-Route::post('/messages', [App\Http\Controllers\ChatsController::class, 'sendMessage']);
+//Route::post('/messages', [App\Http\Controllers\ChatsController::class, 'sendMessage']);
+Route::post('/messages', [App\Http\Controllers\RoomController::class, 'sendMessage']);
 
 //Jules' additions so we have different chat rooms
 

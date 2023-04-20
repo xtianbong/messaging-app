@@ -417,6 +417,23 @@ body{
     margin:10px auto;
 }
 
+#settings{
+    height:fit-content;
+    width:200px;
+    bottom: 56px;
+    left: 63%;
+}
+#settings>button{
+    width:90%;
+}
+#uname-box{
+    display: none;
+}
+#uname{
+    height:40px;
+    font-size: 30px;
+}
+
 .room>.card-body{
     min-width:100%;
     width:100vw;
@@ -580,6 +597,8 @@ ul{
     bottom: 56px;
     padding:10px;
 }
+
+
 
 .email-bar{
     height:30px;
