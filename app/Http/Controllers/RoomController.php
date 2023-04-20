@@ -45,7 +45,7 @@ class RoomController extends Controller
         //$this->addFriend($request,$currentUserId,$friendIdString);
 
         //testing logout
-        $this->logout($request);
+        //$this->logout($request);
         return view('room', compact('currentRoom','filteredMessages', 'currentUser','rooms', 'room_id','friends'));
     }
 

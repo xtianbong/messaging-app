@@ -8,7 +8,7 @@
                     <li v-for="room in rooms" :key="room.id">
                         <a :href="'../room/' + room.id">
                             <div class="chat room" id="roomdiv">
-                                <img class="pfp" src="/img/pfp.png">
+                                <img class="pfp" src="\img\pfp.png">
                                 <h3 class="username">{{ room.name }}</h3>
                                 <img class="alert" src="/img/alert.png">
                             </div>

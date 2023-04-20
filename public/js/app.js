@@ -44546,7 +44546,7 @@ var render = function() {
                 [
                   _c("img", {
                     staticClass: "pfp",
-                    attrs: { src: "/img/pfp.png" }
+                    attrs: { src: "\\img\\pfp.png" }
                   }),
                   _vm._v(" "),
                   _c("h3", { staticClass: "username" }, [
