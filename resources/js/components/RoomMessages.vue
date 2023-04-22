@@ -1,3 +1,4 @@
+// resources/assets/js/components/RoomMessages.vue
 <template>
     <div>
         <div id="left-side" onload="searchFilter()">
@@ -83,18 +84,18 @@
                 </div>
             </div>
             <ul id="message-list" class="scrollbar">
-            <li class="left clearfix" v-for="message in messages" :key="message.id">
-                <div class="clearfix">
-                <div class="header">
-                    <strong>
-                    {{ message.user ? message.user.name : 'Unknown' }}
-                    </strong>
-                </div>
-                <p>
-                    {{ message.message }}
-                </p>
-                </div>
-            </li>
+                <li class="left clearfix" v-for="message in messages" :key="message.id">
+                    <div class="clearfix">
+                    <div class="header">
+                        <strong>
+                        {{ message.user ? message.user.name : 'Unknown' }}
+                        </strong>
+                    </div>
+                    <p>
+                        {{ message.message }}
+                    </p>
+                    </div>
+                </li>
             </ul>
         </div><!--right side-->
 
@@ -124,3 +125,44 @@ export default {
   },
 };
 </script>
+
+<script>
+import axios from 'axios';
+import Echo from 'laravel-echo';
+
+export default {
+  props: ['messages', 'current-user', 'room-id', 'rooms', 'current-room', 'friends'],
+  data: function () {
+    return {
+      message: ''
+    }
+  },
+  created: function () {
+    this.fetchMessages();
+    window.Echo.private('chat-room.' + this.roomId).listen('MessageSent', (e) => {
+      this.messages.push({
+        message: e.message.message,
+        user: e.user
+      });
+    });
+  },
+  methods: {
+    fetchMessages: function () {
+      axios.get('/messages/' + this.roomId).then(response => {
+        this.messages = response.data;
+      });
+    },
+    addMessage: function () {
+      let messageData = {
+        message: this.message,
+        user_id: this.currentUser.id,
+        room_id: this.roomId
+      }
+      axios.post('/messages', messageData).then(response => {
+        this.message = '';
+      });
+    }
+  },
+};
+</script>
+

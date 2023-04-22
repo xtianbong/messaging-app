@@ -2192,6 +2192,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2296,25 +2324,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    messages: Array,
-    currentUser: Object,
-    roomId: Number,
-    rooms: Array,
-    currentRoom: Object,
-    friends: Array
-  },
+  props: ['messages', 'current-user', 'room-id', 'rooms', 'current-room', 'friends'],
   data: function data() {
     return {
-      // add any component-specific data here
+      message: ''
     };
   },
-  methods: {
-    // add any component-specific methods here
+  created: function created() {
+    var _this = this;
+    this.fetchMessages();
+    window.Echo["private"]('chat-room').listen('MessageSent', function (e) {
+      _this.messages.push({
+        message: e.message.message,
+        user: e.user
+      });
+    });
   },
-  mounted: function mounted() {
-    // add any code to run when the component is mounted here
+  methods: {
+    fetchMessages: function fetchMessages() {
+      var _this2 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/messages/' + this.roomId).then(function (response) {
+        _this2.messages = response.data;
+      });
+    },
+    addMessage: function addMessage() {
+      var _this3 = this;
+      var messageData = {
+        message: this.message,
+        user_id: this.currentUser.id,
+        room_id: this.roomId
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/messages', messageData).then(function (response) {
+        _this3.message = '';
+      });
+    }
   }
 });
 
@@ -44448,7 +44494,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "ul",
-    { staticClass: "scrollbar" },
+    { staticClass: "scrollbar", attrs: { id: "all-chats" } },
     _vm._l(_vm.messages, function(message) {
       return _c("li", { key: message.id, staticClass: "left clearfix" }, [
         _c("div", { staticClass: "clearfix" }, [
@@ -44784,18 +44830,18 @@ var render = function() {
               _c("div", { staticClass: "header" }, [
                 _c("strong", [
                   _vm._v(
-                    "\n                " +
+                    "\n                    " +
                       _vm._s(message.user ? message.user.name : "Unknown") +
-                      "\n                "
+                      "\n                    "
                   )
                 ])
               ]),
               _vm._v(" "),
               _c("p", [
                 _vm._v(
-                  "\n                " +
+                  "\n                    " +
                     _vm._s(message.message) +
-                    "\n            "
+                    "\n                "
                 )
               ])
             ])
@@ -57120,6 +57166,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/

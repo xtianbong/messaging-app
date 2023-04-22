@@ -647,3 +647,7 @@ ul{
     user-select: none;
 }
 
+#all-chats{
+    max-height: calc(100vh - 120px);
+}
+

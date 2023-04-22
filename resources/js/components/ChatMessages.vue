@@ -1,7 +1,7 @@
 // resources/assets/js/components/ChatMessages.vue
 
 <template>
-  <ul class="scrollbar">
+  <ul id="all-chats" class="scrollbar" >
     <li class="left clearfix" v-for="message in messages" :key="message.id">
       <div class="clearfix">
         <div class="header">
@@ -22,3 +22,4 @@ export default {
   props: ["messages"],
 };
 </script>
+
