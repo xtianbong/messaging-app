@@ -2336,7 +2336,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.fetchMessages();
-    window.Echo["private"]('chat-room').listen('MessageSent', function (e) {
+    window.Echo["private"]('chat-room' ).listen('MessageSent', function (e) {//maybe add + this.roomId to the string depending on the final implementation of fetchMessages
       _this.messages.push({
         message: e.message.message,
         user: e.user
@@ -2346,7 +2346,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fetchMessages: function fetchMessages() {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/messages/' + this.roomId).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/messages/' ).then(function (response) {//maybe add + this.roomId to the string depending on the final implementation of fetchMessages
         _this2.messages = response.data;
       });
     },
