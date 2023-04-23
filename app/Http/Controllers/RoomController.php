@@ -35,7 +35,7 @@ class RoomController extends Controller
         $currentRoom = Room::where('id',$room_id)->first();
         //dd($currentRoom);
         $filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
-
+        //dd($filteredMessages);
 
         //testing createRoom
         $users = [];
@@ -69,6 +69,8 @@ class RoomController extends Controller
         $messages = Message::where('room_id', $room_id)->get();
         Log::debug('test log');
         Log::debug($messages);
+
+
         return $messages;
     }
     public function sendMessage(Request $request)

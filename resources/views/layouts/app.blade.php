@@ -15,9 +15,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- Bootstrap 4+ dependency -->
+    <!-- Bootstrap 4+ dependency
     <script src="popper.min.js"></script>
-    <script src="bootstrap.min.js"></script>
+    <script src="bootstrap.min.js"></script>-->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,7 +26,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jules.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    {{-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> --}}
 
 </head>
 <body>

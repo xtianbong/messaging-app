@@ -83,7 +83,9 @@
                     </ul>
                 </div>
             </div>
+            <div :id=currentRoom.id class="room-id-carrier" style="display:none;">Find</div>
             <ul id="message-list" class="scrollbar">
+
                 <li class="left clearfix" v-for="message in messages" :key="message.id">
                     <div class="clearfix">
                     <div class="header">
@@ -125,10 +127,14 @@ export default {
   },
 };
 </script>
-
+<!--
 <script>
 import axios from 'axios';
 import Echo from 'laravel-echo';
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-CSRF-TOKEN"]) = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+console.log((axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-CSRF-TOKEN"]));
 
 export default {
   props: ['messages', 'current-user', 'room-id', 'rooms', 'current-room', 'friends'],
@@ -164,5 +170,6 @@ export default {
     }
   },
 };
-</script>
+</script> -->
+
 

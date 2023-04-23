@@ -2228,6 +2228,7 @@ var app = new Vue({
     var _this = this;
     this.fetchMessages();
     window.Echo["private"]('chat').listen('MessageSent', function (e) {
+
       _this.messages.push({
         message: e.message.message,
         user: e.user
