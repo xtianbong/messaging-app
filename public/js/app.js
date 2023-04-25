@@ -2382,7 +2382,9 @@ var app = new Vue({
   methods: {
     fetchMessages: function fetchMessages() {
       var _this2 = this;
-      axios.get('/messages').then(function (response) {
+      var roomId = document.querySelector("#name-box").querySelector("h2").id; //get room id from the room title's id attribute
+      console.log(document.querySelector("#name-box"));
+      axios.get('/messages/' + roomId).then(function (response) {
         _this2.messages = response.data;
       });
     },
@@ -2397,6 +2399,9 @@ var app = new Vue({
         console.log(response.data);
       });
     }
+  },
+  mounted: function mounted() {
+    this.fetchMessages();
   }
 });
 

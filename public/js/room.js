@@ -2210,7 +2210,7 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
-Vue.component('chat-messages', (__webpack_require__(/*! ./components/ChatMessages.vue */ "./resources/js/components/ChatMessages.vue")["default"]));
+Vue.component('room-messages', (__webpack_require__(/*! ./components/ChatMessages.vue */ "./resources/js/components/RoomMessages.vue")["default"]));
 Vue.component('chat-form', (__webpack_require__(/*! ./components/ChatForm.vue */ "./resources/js/components/ChatForm.vue")["default"]));
 
 /**
@@ -2238,6 +2238,7 @@ var app = new Vue({
   methods: {
     fetchMessagess: function fetchMessages() {
       var _this2 = this;
+      //var roomId =
       axios.get('/messages').then(function (response) {
         _this2.messages = response.data;
       });

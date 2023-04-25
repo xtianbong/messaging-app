@@ -54,22 +54,27 @@ const app = new Vue({
 
     methods: {
         fetchMessages() {
-            axios.get('/messages').then(response => {
+            var roomId=document.querySelector("#name-box").querySelector("h2").id;//get room id from the room title's id attribute
+            console.log(document.querySelector("#name-box"));
+            axios.get('/messages/'+roomId).then(response => {
                 this.messages = response.data;
             });
         },
 
         addMessage(message) {
             var roomId=document.querySelector("#name-box").querySelector("h2").id;//get room id from the room title's id attribute
-        console.log(roomId);
-        this.messages.push(message);
-        axios.post('/messages', {
-            message: message.message,
-            room_id: roomId
-        }).then(function (response) {
-        console.log(response.data);
-        });
+            console.log(roomId);
+            this.messages.push(message);
+            axios.post('/messages', {
+                message: message.message,
+                room_id: roomId
+            }).then(function (response) {
+            console.log(response.data);
+            });
         }
+    },
+    mounted() {
+        this.fetchMessages();
     }
 });
 

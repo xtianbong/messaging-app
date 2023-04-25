@@ -34,7 +34,7 @@ class RoomController extends Controller
         //right side
         $currentRoom = Room::where('id',$room_id)->first();
         //dd($currentRoom);
-        $filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
+        //$filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
         //dd($filteredMessages);
 
         //testing createRoom
@@ -49,7 +49,7 @@ class RoomController extends Controller
 
         //testing logout
         //$this->logout($request);
-        return view('room', compact('currentRoom','filteredMessages', 'currentUser','rooms', 'room_id','friends'));
+        return view('room', compact('currentRoom', 'currentUser','rooms', 'room_id','friends'));
     }
 
     public function left(Request $request)
@@ -66,11 +66,7 @@ class RoomController extends Controller
 
     public function fetchMessages($room_id)
     {
-        $messages = Message::where('room_id', $room_id)->get();
-        Log::debug('test log');
-        Log::debug($messages);
-
-
+        $messages = Message::where('room_id', $room_id)->with('user')->get();
         return $messages;
     }
     public function sendMessage(Request $request)
