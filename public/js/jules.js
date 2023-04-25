@@ -74,6 +74,8 @@ document.addEventListener("DOMContentLoaded", function() {
     searchFilter(rSearchBar, chatDivs);
 });
 
+//do that same for the friend search bar
+
 var fSearchBar = document.getElementById("fsearch-bar");
 var fDivs = document.querySelector("#friend-list");
 
@@ -98,7 +100,7 @@ function resetShake(){
 
 //add the scrollbar class to the ul of messages because putting it in html isn't enough for some reason
 const cardBody = document.querySelector('.card-body');
-const ulElement = cardBody.querySelector('ul');
+const ulElement = cardBody.querySelector("#message-list");
 
 window.addEventListener("load", function() {
     if (ulElement) {
@@ -119,7 +121,7 @@ window.addEventListener("load", bottomScroll());
 
 window.addEventListener("load", function() {
 
-    const ulElement = document.querySelector("ul.scrollbar");
+    //const ulElement = document.querySelector("#message-list");
     if (ulElement) {
       // Set its scrollTop property to its maximum value
       ulElement.scrollTop = ulElement.scrollHeight;
