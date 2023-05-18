@@ -54,6 +54,10 @@
                             <button id="create-room-btn" class="overlay-btn">Create Room</button>
                         </ul>
                     </div>
+                    <div id="new-room-alert" class="overlay" style="display: none;">
+                        <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the room  has been created">
+                        <h1>New room created</h1>
+                    </div>
                     <div id="add-friend" class="overlay" style="display: none;">
                         <input type="text" id="new-friend-email" class="email-bar" placeholder="E-mail">
                         <button class="overlay-btn">Add Friend</button>
@@ -118,6 +122,11 @@ export default {
     return {
       // add any component-specific data here
     };
+  },
+  computed: {
+    actualFriends: function() {
+        return this.friends.filter(friend => friend.id != this.currentUser.id);
+  }
   },
   methods: {
     // add any component-specific methods here

@@ -2231,6 +2231,7 @@ var app = new Vue({
 
       _this.messages.push({
         message: e.message.message,
+        //message: "rtrt",
         user: e.user
       });
     });

@@ -18,12 +18,12 @@ function replace(){
 
 
 function searchFilter(searchBar,targetList){//searchBar,targetList
-    console.log("search ran");
+    //console.log("search ran");
     var allChats = targetList.querySelectorAll("div");
     //make all chats visible if searchBar is empty
     if(searchBar.value==""){
         allChats.forEach(c => {
-            console.log(c);
+            //console.log(c);
             c.classList.add("visible");
         });
         var highlightedElements = targetList.querySelectorAll(".highlight");
@@ -41,7 +41,7 @@ function searchFilter(searchBar,targetList){//searchBar,targetList
             const searchText = searchBar.value.toLowerCase();
 
             if (chatName.toLowerCase().includes(searchText)) {
-                console.log(c);
+                //console.log(c);
                 c.classList.add("visible");
                 //highlight the text in the name that corresponds to the query
                 const regex = new RegExp(searchText, 'gi');
@@ -116,10 +116,10 @@ window.addEventListener("load", function() {
 var msg = document.querySelector("#btn-input");
 var sendButton = document.querySelector("#btn-chat");
 
-sendButton.addEventListener("click",bottomScroll());
-window.addEventListener("load", bottomScroll());
-
-window.addEventListener("load", function() {
+sendButton.addEventListener("click", bottomScroll);
+window.addEventListener("load", bottomScroll);
+document.addEventListener("load", bottomScroll);
+window.addEventListener("DOMContentLoaded", function() {
 
     //const ulElement = document.querySelector("#message-list");
     if (ulElement) {
@@ -143,7 +143,6 @@ window.addEventListener("load", function() {
 
 
 function bottomScroll(){
-    console.log("bottom scroll ran");
     if (ulElement) {
         ulElement.scrollTop = ulElement.scrollHeight;
       }
@@ -157,7 +156,7 @@ function copyStyles(source, destination) {
         var styleName = styles[i];
         destination.style.setProperty(styleName, styles.getPropertyValue(styleName));
     }
-    console.log(source.getAttribute('id')+" style copied to "+ destination.getAttribute('id'))
+    //console.log(source.getAttribute('id')+" style copied to "+ destination.getAttribute('id'))
 }
 
 
@@ -202,9 +201,6 @@ window.addEventListener('load', resizeInputs);
 rname.addEventListener('change', resizeInputs);
 
 
-
-
-
 //make create-rooms div react to input
 //get array of friend divs in the html
 var friendDivs = document.querySelectorAll("div.friend");
@@ -225,23 +221,56 @@ function createNewRoom(){
     //console.log(currentUserName)
     var name = document.querySelector('#rname').value;//name of room
     var users = []; // list of user ids
-    var owners = [1,2]; // list of owner ids
+    var owners = []; // list of owner ids
+
+    //always put the user that created the room first in the users and owners list
+    users.push(parseInt(currentUserId));
+    owners.push(parseInt(currentUserId));
+    //add user id's from list of selected friends in the form
     for(var div of friendDivs){
-        users.push(parseInt(div.getAttribute("id")))
+        if(div.classList.contains("added")){
+            users.push(parseInt(div.getAttribute("id")))
+        }
     }
-    console.log(users);
-    console.log(owners);
+
+    //console.log(users);
+    //console.log(owners);
     if(users.length>0){
         console.log(name)
         createRoomPHP(currentUserId,name, users, owners);
     }
-
-
 }
 
-
 //run the createRoom function in RoomController.php
-function createRoomPHP(currentUserId,name, users, owners) {
+function createRoomPHP(currentUserId,name, users, owners){
+    axios.post('/room/create-room', {
+        currentUserId: currentUserId,
+        name: name,
+        users: users,
+        owners: owners,//convert the arrays to json before passing them to the php function
+    }).then(function (response) {
+    console.log(response.data);
+    });
+
+    //clear all the user input in the form
+    rName.value="";
+    for(var div of friendDivs){
+        div.classList.remove("added");
+    }
+
+    //alert the user that the room has been created succesfully
+    var roomAlert = document.querySelector("#new-room-alert");
+    displayOff();//remove create room overlay
+    displayToggle(roomAlert);//show new room alert
+
+    //remove alert after a few seconds
+    setTimeout(function(){
+        if(roomAlert.style.display!="none"){
+            displayOff
+        }
+    },3000);
+}
+function createRoomPHPref(currentUserId,name, users, owners) {
     console.log("createRoomPHP ran");
     $.ajax({
         headers: {
@@ -351,3 +380,4 @@ settingsButton.addEventListener('click', function() { //apply newRoom function t
 tint.addEventListener('click', function() { //hide object when you click anywhere outside it
     displayOff();
 });
+

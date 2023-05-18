@@ -10,7 +10,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Arr;
-
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Contracts\Queue\OnQueue;
 
 class RoomController extends Controller
 {
@@ -72,12 +81,7 @@ class RoomController extends Controller
     public function sendMessage(Request $request)
     {
 
-        $user = Auth::user();
-        // $message = $user->messages()->create([
-        //     'message' => $request->input('message'),
-        //     'room_id' => $request->input('room_id')
-        // ]);
-
+        $user = $request->user();
         $message = new Message();
         $message->message = $request->input('message');
         //$message->message = "Test";
@@ -85,43 +89,45 @@ class RoomController extends Controller
         $message->room_id = (int) $request->input('room_id'); // assign the room_id from the request
         $message->save();
 
+
         broadcast(new MessageSent($user, $message))->toOthers();
 
         return ['status' => 'Message Sent!'];
     }
 
     //create new room
-    public function createRoom($currentUserId, $name, $users, $owners){
+    public function createRoom(Request $request){
+        //get room info from the post request
+        $currentUserId = $request->input('currentUserId');
+        $name = $request->input('name');
+        $users = $request->input('users');//json_decode($request->input('users'), true);
+        $owners = $request->input('owners');//json_decode($request->input('owners'), true);
 
-        $userIds = [];
-        $ownerIds = [];
+        //remove duplicates from user list and owner list
+        $users = array_unique($users);
+        $owners = array_unique($owners);
 
-        /*
-        $usersArr = json_decode($_POST['users']);
-        $ownersArr = json_decode($_POST['owner']);
-        */
-
-        $usersArr = json_decode($users);
-        $ownersArr = json_decode($owners);
-
-        array_push($userIds,$currentUserId);
-        array_push($ownerIds,$currentUserId);// automatically put current user in both user and owner list
-
-        foreach($usersArr as $u){
-            array_push($userIds,$u);
-        }
-
-        foreach($ownersArr as $u){
-            array_push($ownerIds,$u);
-        }
-
+        //save that room to the database
         $room = new Room();
         $room -> name = $name;
-        $room->user_ids = json_encode($userIds);
-        $room->owner_ids = json_encode($ownerIds);
+        $room->user_ids = json_encode($users);
+        $room->owner_ids = json_encode($owners);
         $room->message_ids = json_encode([]);
 
         $room->save();
+
+        //add room to the rooms array of every user involved
+
+        forEach($users as $uid){
+            $user = User::where('id',$uid)->first();
+            $rooms = $user->rooms;
+            //update rooms with the one we just created
+            $aRooms = json_decode($rooms);
+            $uRooms = "";
+            array_push($aRooms,$room->id);
+            $uRooms = json_encode($aRooms);
+            User::where('id',$uid)->update(['rooms'=>$uRooms]);
+        };
         return $room;
     }
 

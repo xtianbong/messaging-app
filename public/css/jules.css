@@ -612,7 +612,21 @@ ul{
 
 }
 
+#new-room-alert{
+    height:200px;
+    bottom:40vh;
+    border-radius: 14px;
+}
+#new-room-alert>*{
+    height:100px;
+    width:100px;
+    margin:10px auto;
+    display: block;
+}
 
+#new-room-alert>h1{
+    width:fit-content;
+}
 
 /*message input modifications*/
 

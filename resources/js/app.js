@@ -41,15 +41,24 @@ const app = new Vue({
     },
 
     created() {
+        console.log("created ran");
         this.fetchMessages();
 
         window.Echo.private('chat')
-            .listen('MessageSent', (e) => {
+        .listen('MessageSent', (e) => {
+            console.log("Echo heard");
+            console.log('Data received on chat channel:', e);
+            console.log(e);
+            //if(e.room_id == this.room_id){
+            if(true){
                 this.messages.push({
                     message: e.message.message,
+                    //message: "rtrt",
                     user: e.user
                 });
-            });
+            }
+
+        });
     },
 
     methods: {
@@ -67,6 +76,7 @@ const app = new Vue({
             this.messages.push(message);
             axios.post('/messages', {
                 message: message.message,
+                //message: "rtrt",
                 room_id: roomId
             }).then(function (response) {
             console.log(response.data);

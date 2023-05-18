@@ -44,6 +44,7 @@ const app = new Vue({
             .listen('MessageSent', (e) => {
                 this.messages.push({
                     message: e.message.message,
+                    //message: "rtrt",
                     user: e.user
                 });
             });
