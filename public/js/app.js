@@ -2302,6 +2302,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -45374,7 +45377,15 @@ var render = function() {
           ])
         }),
         0
-      )
+      ),
+      _vm._v(" "),
+      _vm.currentRoom.id == 0
+        ? _c("div", { attrs: { id: "landing-room" } }, [
+            _c("h1", [_vm._v("Welcome!")]),
+            _vm._v(" "),
+            _vm._m(5)
+          ])
+        : _vm._e()
     ])
   ])
 }
@@ -45478,6 +45489,17 @@ var staticRenderFns = [
         _c("button", { staticClass: "overlay-btn" }, [_vm._v("Add Friend")])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", [
+      _vm._v("Please select a chat room on the left side of the screen or "),
+      _c("a", { attrs: { id: "landing-new-room" } }, [
+        _vm._v("create a new room.")
+      ])
+    ])
   }
 ]
 render._withStripped = true

@@ -17,9 +17,9 @@ class CreateRoomsTable extends Migration
             $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->json("user_ids");
-            $table->json("owner_ids");
-            $table->json("message_ids");//maybe set a default value for this. Handling that in RoomController for now- Jules
+            $table->json("user_ids")->default('[]');
+            $table->json("owner_ids")->default('[]');
+            $table->json("message_ids")->default('[]');//maybe set a default value for this. Handling that in RoomController for now- Jules
         });
     }
 

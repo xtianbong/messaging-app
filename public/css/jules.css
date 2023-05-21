@@ -628,6 +628,16 @@ ul{
     width:fit-content;
 }
 
+/*formatting the landing page that shows up when the user is not in any rooms*/
+#landing-room{
+    padding:10%;
+}
+
+#landing-new-room{
+    text-decoration:underline;
+    cursor:pointer;
+}
+
 /*message input modifications*/
 
 /*formatting the auxilliary pages like the home page and sign in page

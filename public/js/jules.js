@@ -381,3 +381,20 @@ tint.addEventListener('click', function() { //hide object when you click anywher
     displayOff();
 });
 
+
+//customizing the landing page that users go to when they are not in a particular chat room
+var landingRoom = document.querySelector("#landing-room");
+console.log(landingRoom);
+
+//remove the room name and message input box when on the landing page
+if(landingRoom!=null){
+    document.querySelector(".card-footer").style.display="none";
+    document.querySelector("#name-box").style.display="none";
+}
+
+// have the "create new room" text activate the "New room" button when clicked on
+
+var landingNewRoom = document.querySelector("#landing-new-room");
+landingNewRoom.addEventListener('click',function(){
+    addRoomButton.click();
+})

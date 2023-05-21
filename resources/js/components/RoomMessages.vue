@@ -89,7 +89,6 @@
             </div>
             <div :id=currentRoom.id class="room-id-carrier" style="display:none;">Find</div>
             <ul id="message-list" class="scrollbar">
-
                 <li class="left clearfix" v-for="message in messages" :key="message.id">
                     <div class="clearfix">
                     <div class="header">
@@ -103,6 +102,10 @@
                     </div>
                 </li>
             </ul>
+            <div id="landing-room" v-if="currentRoom.id == 0">
+                <h1>Welcome!</h1>
+                <h2>Please select a chat room on the left side of the screen or <a id="landing-new-room">create a new room.</a></h2>
+            </div>
         </div><!--right side-->
 
     </div>
