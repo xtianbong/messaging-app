@@ -45486,7 +45486,11 @@ var staticRenderFns = [
           attrs: { type: "text", id: "new-friend-email", placeholder: "E-mail" }
         }),
         _vm._v(" "),
-        _c("button", { staticClass: "overlay-btn" }, [_vm._v("Add Friend")])
+        _c(
+          "button",
+          { staticClass: "overlay-btn", attrs: { id: "confirm-new-friend" } },
+          [_vm._v("Add Friend")]
+        )
       ]
     )
   },

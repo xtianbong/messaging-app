@@ -143,19 +143,27 @@ class RoomController extends Controller
         return $room;
     }
 
-    public function addFriend(Request $request,$currentUserId, $friendIdString){
+    public function addFriend(Request $request){
+        //get current user id from js
+        $currentUserId = $request->input('currentUserId');
         $currentUser = User::where('id',$currentUserId)->first();
-        //dd($currentUser);
         $friends = json_decode($currentUser->friends);
-        $newFriends = json_decode($friendIdString);
 
-        //add new friends to list of old friends
-        forEach($newFriends as $n){
-            array_push($friends,$n);
-        }
+        //get email from js
+        $email=$request->input('email');
+        $newFriend = User::where('email',$email)->first();
+        $newFriendId = $newFriend -> id;
+
+        //add new friend to list of friends
+        array_push($friends,$newFriendId);
+
+        //make sure there are no duplicates in the friends list
+        $friends = array_unique($friends);
+
         $currentUser->friends =  json_encode($friends);
         $currentUser->save();
         //dd($currentUser);
+        return ['status' => 'Friend Added'];
     }
 
     public function logout(Request $request) {

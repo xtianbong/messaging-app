@@ -60,7 +60,7 @@
                     </div>
                     <div id="add-friend" class="overlay" style="display: none;">
                         <input type="text" id="new-friend-email" class="email-bar" placeholder="E-mail">
-                        <button class="overlay-btn">Add Friend</button>
+                        <button id="confirm-new-friend" class="overlay-btn">Add Friend</button>
                     </div>
                 </div><!--settings-box-->
             </div><!--left side-->

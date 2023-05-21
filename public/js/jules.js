@@ -1,5 +1,7 @@
 //added by jules
 
+//const { forEach } = require("lodash");
+
 
 //make all the demo stuff invisible
 var oldStuff = document.querySelector("#demo");
@@ -92,8 +94,10 @@ document.addEventListener("load", function() {
 });
 
 //reset shake animation after it plays
-function resetShake(){
-    msg.classList.remove("shake");
+function resetShake(shaker){
+    setTimeout(function(){
+        shaker.classList.remove("shake");
+    },1000);
 
 }
 
@@ -249,7 +253,7 @@ function createRoomPHP(currentUserId,name, users, owners){
         users: users,
         owners: owners,//convert the arrays to json before passing them to the php function
     }).then(function (response) {
-    console.log(response.data);
+        console.log(response.data);
     });
 
     //clear all the user input in the form
@@ -270,35 +274,36 @@ function createRoomPHP(currentUserId,name, users, owners){
         }
     },3000);
 }
-function createRoomPHPref(currentUserId,name, users, owners) {
-    console.log("createRoomPHP ran");
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: '/room/create-room',
-        type: 'POST',
-        data: {
-            currentUserId: currentUserId,
-            name: name,
-            users: JSON.stringify(users),
-            owners: JSON.stringify(owners),//convert the arrays to json before passing them to the php function
-        },
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(xhr) {
-            console.error(xhr);
-        }
-    });
-    console.log("createRoomPHP ended");
-}
-
 
 const createRoomBtn = document.querySelector('#create-room-btn');
 
 createRoomBtn.addEventListener('click', createNewRoom);
 
+//take new friend data from the #add-friend form and sends it to the addFriend function in RoomController.php
+function addFriendPHP(){
+    //get email from text input
+    var friendEmail = document.querySelector("#new-friend-email").value;
+    //get current user id from document
+    var currentUserId = document.querySelector(".current-user").getAttribute("id");
+
+    //show error meassge if email is empty
+    if(friendEmail.length==""){
+        document.querySelector("#new-friend-email").classList.add("shake");
+        resetShake(document.querySelector("#new-friend-email"));
+    }
+    else{
+        axios.post('/room/add-friend',{
+            currentUserId: currentUserId,
+            email: friendEmail,
+        }).then(function (response) {
+            console.log(response.data);
+        });
+    }
+}
+
+const confirmNewFriend = document.querySelector("#confirm-new-friend");
+
+confirmNewFriend.addEventListener('click',addFriendPHP);
 
 //make an object appear/disappear when a button is pressed
 const tint = document.querySelector("#tint");
