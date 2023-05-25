@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Room;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +65,33 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //create a landing room the moment the first user signs in
+        $landingRoom = Room::where('id',0)->first();
+        if($landingRoom==null){
+            $landingRoom = new Room();
+            //$landingRoom -> id = 0;
+            $landingRoom -> name = "Landing Room";
+            $landingRoom -> user_ids = "[]";
+            $landingRoom -> owner_ids = "[]";
+            $landingRoom -> message_ids = "[]";
+            $landingRoom -> save();
+
+            $landingRoom -> id = 0;
+            $landingRoom -> update();
+        }
+
+        //add all users to the list of users on the landing room upon creation
+        $allUsers = User::get();
+        //$landingRoom = Room::where('id',0);
+        //dd($landingRoom);
+        $userArray = json_decode($landingRoom->user_ids);
+        foreach($allUsers as $u){
+            array_push($userArray,$u->id);
+            //remove duplicates
+            $userArray = array_unique($userArray);
+        }
+
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

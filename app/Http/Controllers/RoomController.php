@@ -6,6 +6,7 @@ use App\Events\MessageSent;
 use App\Models\Message;
 use App\Models\Room;
 use App\Models\User;
+use GuzzleHttp\Psr7\Header;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -166,10 +167,11 @@ class RoomController extends Controller
         return ['status' => 'Friend Added'];
     }
 
-    public function logout(Request $request) {
+    public function logOut(Request $request) {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        //header("Location: login.html");
         return redirect('/login');
     }
 

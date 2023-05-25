@@ -471,6 +471,9 @@ body{
 .room{
 
 }
+.room:hover>.username{
+    text-decoration:none !important;
+}
 ul{
     list-style: none;
 }
@@ -673,5 +676,10 @@ ul{
 
 #all-chats{
     max-height: calc(100vh - 120px);
+}
+
+/*link from the login page to the register page and vice versa*/
+#login-register{
+    margin-top:30px;
 }
 

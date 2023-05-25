@@ -35,6 +35,7 @@ Route::get('/room/{room_id}/i', [App\Http\Controllers\RoomController::class, 'in
 Route::get('/room/{room_id}/j', [App\Http\Controllers\RoomController::class, 'fetchMessages']);//so can see the messages in json for troubleshooting
 Route::post('/room/create-room', [App\Http\Controllers\RoomController::class, 'createRoom']);//user can create new rooms
 Route::post('/room/add-friend', [App\Http\Controllers\RoomController::class, 'addFriend']);//user can add friends
+Route::post('/room/log-out', [App\Http\Controllers\RoomController::class, 'logOut']);//user can logout
 //Route::get('/room/{room_id}', [RoomController::class, 'fetchMessages'])->middleware('auth');
 
 

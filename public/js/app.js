@@ -2305,6 +2305,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -45107,29 +45108,31 @@ var render = function() {
         "ul",
         { staticClass: "rooms scrollbar chats", attrs: { id: "room-list" } },
         _vm._l(_vm.rooms, function(room) {
-          return _c("li", { key: room.id }, [
-            _c("a", { attrs: { href: "../room/" + room.id } }, [
-              _c(
-                "div",
-                { staticClass: "chat room", attrs: { id: "roomdiv" } },
-                [
-                  _c("img", {
-                    staticClass: "pfp",
-                    attrs: { src: "\\img\\pfp.png" }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "username" }, [
-                    _vm._v(_vm._s(room.name))
-                  ]),
-                  _vm._v(" "),
-                  _c("img", {
-                    staticClass: "alert",
-                    attrs: { src: "/img/alert.png" }
-                  })
-                ]
-              )
-            ])
-          ])
+          return room.id != 0
+            ? _c("li", { key: room.id }, [
+                _c("a", { attrs: { href: "../room/" + room.id } }, [
+                  _c(
+                    "div",
+                    { staticClass: "chat room", attrs: { id: "roomdiv" } },
+                    [
+                      _c("img", {
+                        staticClass: "pfp",
+                        attrs: { src: "\\img\\pfp.png" }
+                      }),
+                      _vm._v(" "),
+                      _c("h3", { staticClass: "username" }, [
+                        _vm._v(_vm._s(room.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "alert",
+                        attrs: { src: "/img/alert.png" }
+                      })
+                    ]
+                  )
+                ])
+              ])
+            : _vm._e()
         }),
         0
       ),
@@ -45207,46 +45210,41 @@ var render = function() {
             _c(
               "ul",
               { staticClass: "scrollbar", attrs: { id: "friend-list" } },
-              [
-                _vm._l(_vm.friends, function(friend) {
-                  return _c(
-                    "li",
-                    { key: friend.id, staticClass: "left clearfix" },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "friend not-selectable",
-                          attrs: { id: friend.id }
-                        },
-                        [
-                          _c("h3", [_vm._v(_vm._s(friend.name))]),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "add-button",
-                            attrs: { src: "/img/plus.png", alt: "add friend" }
-                          }),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "added-button",
-                            attrs: { src: "/img/tick.png", alt: "friend added" }
-                          })
-                        ]
-                      )
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "overlay-btn",
-                    attrs: { id: "create-room-btn" }
-                  },
-                  [_vm._v("Create Room")]
+              _vm._l(_vm.friends, function(friend) {
+                return _c(
+                  "li",
+                  { key: friend.id, staticClass: "left clearfix" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "friend not-selectable",
+                        attrs: { id: friend.id }
+                      },
+                      [
+                        _c("h3", [_vm._v(_vm._s(friend.name))]),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticClass: "add-button",
+                          attrs: { src: "/img/plus.png", alt: "add friend" }
+                        }),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticClass: "added-button",
+                          attrs: { src: "/img/tick.png", alt: "friend added" }
+                        })
+                      ]
+                    )
+                  ]
                 )
-              ],
-              2
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "overlay-btn", attrs: { id: "create-room-btn" } },
+              [_vm._v("Create Room")]
             )
           ]
         ),
@@ -45259,11 +45257,17 @@ var render = function() {
     _vm._v(" "),
     _c("div", { attrs: { id: "right-side" } }, [
       _c("div", { attrs: { id: "name-box" } }, [
-        _c("h2", { attrs: { id: _vm.currentRoom.id } }, [
-          _vm._v(_vm._s(_vm.currentRoom.name))
-        ]),
+        _vm.currentRoom.id != 0
+          ? _c("h2", { attrs: { id: _vm.currentRoom.id } }, [
+              _vm._v(_vm._s(_vm.currentRoom.name))
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c("img", { attrs: { id: "edit-room-btn", src: "/img/options.png" } }),
+        _vm.currentRoom.id != 0
+          ? _c("img", {
+              attrs: { id: "edit-room-btn", src: "/img/options.png" }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",

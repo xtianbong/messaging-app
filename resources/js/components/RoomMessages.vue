@@ -6,7 +6,7 @@
                     <input type="text" id="rsearch-bar" class="search-bar"><!-- room search bar-->
                 </div>
                 <ul id="room-list" class="rooms scrollbar chats">
-                    <li v-for="room in rooms" :key="room.id">
+                    <li v-for="room in rooms" v-if="room.id!=0" :key="room.id">
                         <a :href="'../room/' + room.id">
                             <div class="chat room" id="roomdiv">
                                 <img class="pfp" src="\img\pfp.png">
@@ -51,8 +51,9 @@
                                     <img class="added-button" src="/img/tick.png" alt="friend added">
                                 </div>
                             </li>
-                            <button id="create-room-btn" class="overlay-btn">Create Room</button>
+
                         </ul>
+                        <button id="create-room-btn" class="overlay-btn">Create Room</button>
                     </div>
                     <div id="new-room-alert" class="overlay" style="display: none;">
                         <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the room  has been created">
@@ -65,9 +66,9 @@
                 </div><!--settings-box-->
             </div><!--left side-->
         <div id="right-side">
-            <div id="name-box">
-                <h2 :id=currentRoom.id >{{currentRoom.name}}</h2>
-                <img id="edit-room-btn" src="/img/options.png" >
+            <div id="name-box" >
+                <h2 :id=currentRoom.id v-if="currentRoom.id != 0">{{currentRoom.name}}</h2>
+                <img id="edit-room-btn" src="/img/options.png" v-if="currentRoom.id != 0">
                 <div id="edit-room" class="overlay" style="display: none;">
                     <div id="rname-box" class="name-box">
                         <input type="text" id="rname" class ="resizing-input" :placeholder="currentRoom.name" maxlength="20">

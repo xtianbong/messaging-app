@@ -253,26 +253,28 @@ function createRoomPHP(currentUserId,name, users, owners){
         users: users,
         owners: owners,//convert the arrays to json before passing them to the php function
     }).then(function (response) {
+        var createRoomResponse = response.data
         console.log(response.data);
-    });
 
-    //clear all the user input in the form
-    rName.value="";
-    for(var div of friendDivs){
-        div.classList.remove("added");
-    }
-
-    //alert the user that the room has been created succesfully
-    var roomAlert = document.querySelector("#new-room-alert");
-    displayOff();//remove create room overlay
-    displayToggle(roomAlert);//show new room alert
-
-    //remove alert after a few seconds
-    setTimeout(function(){
-        if(roomAlert.style.display!="none"){
-            displayOff
+        //clear all the user input in the form
+        rName.value="";
+        for(var div of friendDivs){
+            div.classList.remove("added");
         }
-    },3000);
+
+        //alert the user that the room has been created succesfully
+        var roomAlert = document.querySelector("#new-room-alert");
+        displayOff();//remove create room overlay
+        displayToggle(roomAlert);//show new room alert
+
+        //remove alert after a few seconds and redirect to new room
+        setTimeout(function(){
+            if(roomAlert.style.display!="none"){
+                displayOff();
+                window.location.href="/room/"+createRoomResponse.id;//get room id from the response to the post request
+            }
+        },3000);
+    });
 }
 
 const createRoomBtn = document.querySelector('#create-room-btn');
@@ -301,12 +303,30 @@ function addFriendPHP(){
     }
 }
 
+
 const confirmNewFriend = document.querySelector("#confirm-new-friend");
 
 confirmNewFriend.addEventListener('click',addFriendPHP);
 
+
+
+//let users log-out with a button press
+function logOutPHP(){
+    console.log("dedededede")
+    //run the logout function in the room controller
+    axios.post('/room/log-out').then(function (response) {
+        console.log("Logged out");
+    });
+    //return to login page after logging out
+    window.location.href="/login";
+}
+
+const confirmLogout = document.querySelector("#log-out-btn");
+console.log(confirmLogout);
+confirmLogout.addEventListener('click',logOutPHP);
+
 //make an object appear/disappear when a button is pressed
-const tint = document.querySelector("#tint");
+var tint = document.querySelector("#tint");
 function displayToggle(target,display='block'){ //change display attribute to whatever is needed
     console.log("display toggle ran")
     if(target.style.display==='none'){
@@ -327,12 +347,12 @@ function displayToggle(target,display='block'){ //change display attribute to wh
         //console.log(3);
     }
 }
-//funciton that turns off target display no matter what
+//funciton that hides all elements in the overlay class
 var targets = document.querySelectorAll(".overlay")
 function displayOff(){
     console.log(targets);
     for(var t of targets){
-        console.log(t);
+        //console.log(t);
         t.style.display='none';
     }
     tint.style.display='none';
@@ -383,19 +403,22 @@ settingsButton.addEventListener('click', function() { //apply newRoom function t
 
 
 tint.addEventListener('click', function() { //hide object when you click anywhere outside it
+    console.log("tint clicked")
     displayOff();
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    //customizing the landing page that users go to when they are not in a particular chat room
+    var landingRoom = document.querySelector("#landing-room");
+    console.log(landingRoom);
 
-//customizing the landing page that users go to when they are not in a particular chat room
-var landingRoom = document.querySelector("#landing-room");
-console.log(landingRoom);
-
-//remove the room name and message input box when on the landing page
-if(landingRoom!=null){
-    document.querySelector(".card-footer").style.display="none";
-    document.querySelector("#name-box").style.display="none";
-}
+    //remove the room name and message input box when on the landing page
+    if(landingRoom!=null){
+        console.log("Landing page")
+        document.querySelector(".card-footer").style.display="none";
+        document.querySelector("#name-box").style.display="none";
+    }
+});
 
 // have the "create new room" text activate the "New room" button when clicked on
 
