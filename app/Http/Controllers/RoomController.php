@@ -49,24 +49,9 @@ class RoomController extends Controller
         else{
             $currentRoom = Room::where('id',$room_id)->first();
         }
-        //dd($currentRoom);
-        //$filteredMessages = Message::where('room_id', $room_id)->with('user')->get();
-        //dd($filteredMessages);
 
 
 
-        //testing createRoom
-        $users = [];
-        $owners = [];
-        //$exRoom = $this->createRoom($currentUser->id, "Example Room", $users, $owners);
-
-        //testing addFriend
-        $friendIdString="[1,2,3]";
-        $currentUserId= $currentUser->id;
-        //$this->addFriend($request,$currentUserId,$friendIdString);
-
-        //testing logout
-        //$this->logout($request);
         return view('room', compact('currentRoom', 'currentUser','rooms', 'room_id','friends'));
     }
 
@@ -141,6 +126,21 @@ class RoomController extends Controller
             $uRooms = json_encode($aRooms);
             User::where('id',$uid)->update(['rooms'=>$uRooms]);
         };
+
+        //make sure every User->rooms array is free of duplicates
+        $allUsers = User::get();
+
+        forEach($allUsers as $u){
+            $aRooms = json_decode($u->rooms,false);
+
+            $aRooms = array_unique($aRooms);
+            //renumber the keys of the array elements so that the json_encode ommits the keys when it returns the string
+            $aRooms = array_merge($aRooms,array());
+            $u->rooms = json_encode($aRooms);
+
+            $u->update();
+        }
+
         return $room;
     }
 
@@ -153,7 +153,8 @@ class RoomController extends Controller
         $room = Room::where('id',$roomId)->first();
 
         //save old user and owners list
-
+        $oldUsers = json_decode($room -> user_ids);
+        $oldOwners = json_decode($room -> owner_ids);
 
         //make changes to room
         $users = $newUsers;
@@ -171,7 +172,7 @@ class RoomController extends Controller
         }
         $room->save();
 
-        //add room to the rooms array of every user involved
+        //add room to the rooms array of every user that was added to the room
         forEach($users as $uid){
             $user = User::where('id',$uid)->first();
             $rooms = $user->rooms;
@@ -181,6 +182,35 @@ class RoomController extends Controller
             array_push($aRooms,$room->id);
             $uRooms = json_encode($aRooms);
             User::where('id',$uid)->update(['rooms'=>$uRooms]);
+        };
+
+        //make sure every User->rooms array is free of duplicates
+        $allUsers = User::get();
+
+        forEach($allUsers as $u){
+            $aRooms = json_decode($u->rooms,false);
+
+            $aRooms = array_unique($aRooms);
+            //renumber the keys of the array elements so that the json_encode ommits the keys when it returns the string
+            $aRooms = array_merge($aRooms,array());
+            $u->rooms = json_encode($aRooms);
+
+            $u->update();
+        }
+
+
+        //remove this room from the rooms array of every user that was removed from a room
+        forEach($oldUsers as $uid){
+            if(!in_array($uid,$users)){
+                $user = User::where('id',$uid)->first();
+                $rooms = $user->rooms;
+                $aRooms = json_decode($rooms);
+                $uRooms = "";
+                $i=array_search($roomId,$aRooms);
+                unset($aRooms[$i]);
+                $uRooms = json_encode($aRooms);
+                User::where('id',$uid)->update(['rooms'=>$uRooms]);
+            }
         };
         return $room;
     }
