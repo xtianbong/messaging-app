@@ -2306,6 +2306,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -2319,21 +2324,54 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       // add any component-specific data here
+      addedFriends: [] // new data property to track added friends
     };
   },
+
   computed: {
     actualFriends: function actualFriends() {
       var _this = this;
       return this.friends.filter(function (friend) {
-        return friend.id != _this.currentUser.id;
+        return friend.id !== _this.currentUser.id;
+      });
+    },
+    sortedFriends: function sortedFriends() {
+      var _this2 = this;
+      var actualFriends = this.friends.filter(function (friend) {
+        return friend.id !== _this2.currentUser.id;
+      });
+      return actualFriends.sort(function (a, b) {
+        var addedA = _this2.isAdded(a.id);
+        var addedB = _this2.isAdded(b.id);
+        if (addedA && !addedB) {
+          return -1; // a should appear before b
+        } else if (!addedA && addedB) {
+          return 1; // b should appear before a
+        } else {
+          return 0; // maintain the original order
+        }
       });
     }
   },
+
   methods: {
     // add any component-specific methods here
+    isAdded: function isAdded(id) {
+      return this.addedFriends.includes(id);
+    },
+    toggleFriend: function toggleFriend(id) {
+      if (this.isAdded(id)) {
+        this.addedFriends = this.addedFriends.filter(function (friendId) {
+          return friendId !== id;
+        });
+      } else {
+        this.addedFriends.push(id);
+      }
+    }
   },
   mounted: function mounted() {
     // add any code to run when the component is mounted here
+    console.log(this.friends);
   }
 });
 
@@ -45300,7 +45338,7 @@ var render = function() {
               "ul",
               { staticClass: "scrollbar", attrs: { id: "friend-list" } },
               [
-                _vm._l(_vm.friends, function(friend) {
+                _vm._l(_vm.sortedFriends, function(friend) {
                   return _c(
                     "li",
                     { key: friend.id, staticClass: "left clearfix" },
@@ -45309,6 +45347,9 @@ var render = function() {
                         "div",
                         {
                           staticClass: "friend not-selectable visible",
+                          class: {
+                            added: _vm.currentRoom.user_ids.includes(friend.id)
+                          },
                           attrs: { id: friend.id }
                         },
                         [
@@ -45333,7 +45374,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "overlay-btn",
-                    attrs: { id: "create-room-btn" }
+                    attrs: { id: "confirm-edit-btn" }
                   },
                   [_vm._v("Save Changes")]
                 )
@@ -45341,7 +45382,9 @@ var render = function() {
               2
             )
           ]
-        )
+        ),
+        _vm._v(" "),
+        _vm._m(5)
       ]),
       _vm._v(" "),
       _c(
@@ -45387,7 +45430,7 @@ var render = function() {
         ? _c("div", { attrs: { id: "landing-room" } }, [
             _c("h1", [_vm._v("Welcome!")]),
             _vm._v(" "),
-            _vm._m(5)
+            _vm._m(6)
           ])
         : _vm._e()
     ])
@@ -45456,7 +45499,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "overlay",
+        staticClass: "overlay room-alert",
         staticStyle: { display: "none" },
         attrs: { id: "new-room-alert" }
       },
@@ -45495,6 +45538,30 @@ var staticRenderFns = [
           { staticClass: "overlay-btn", attrs: { id: "confirm-new-friend" } },
           [_vm._v("Add Friend")]
         )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "overlay room-alert",
+        staticStyle: { display: "none" },
+        attrs: { id: "edit-room-alert" }
+      },
+      [
+        _c("img", {
+          staticClass: "confirm-tick",
+          attrs: {
+            src: "/img/tick.png",
+            alt: "tick to siginify that the room  has been edited"
+          }
+        }),
+        _vm._v(" "),
+        _c("h1", [_vm._v("Changes saved")])
       ]
     )
   },

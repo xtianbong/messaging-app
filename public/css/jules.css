@@ -615,30 +615,40 @@ ul{
 
 }
 
-#new-room-alert{
+.room-alert{
     height:200px;
     bottom:40vh;
     border-radius: 14px;
 }
-#new-room-alert>*{
+#edit-room-alert{
+    bottom:-50vh;
+    left: 24vw;
+}
+.room-alert>*{
     height:100px;
     width:100px;
     margin:10px auto;
     display: block;
 }
 
-#new-room-alert>h1{
+.room-alert>h1{
     width:fit-content;
 }
 
 /*formatting the landing page that shows up when the user is not in any rooms*/
 #landing-room{
     padding:10%;
+    user-select: none;
+}
+
+#landing-room>h2{
+    user-select: none;
 }
 
 #landing-new-room{
     text-decoration:underline;
     cursor:pointer;
+    user-select: none;
 }
 
 /*message input modifications*/

@@ -144,6 +144,47 @@ class RoomController extends Controller
         return $room;
     }
 
+    public function editRoom(Request $request){
+        $roomId = $request->input("roomId");
+        $roomName = $request->input("roomName");
+        $newUsers = $request ->input("users");
+
+        //get room from database
+        $room = Room::where('id',$roomId)->first();
+
+        //save old user and owners list
+
+
+        //make changes to room
+        $users = $newUsers;
+        $owners = json_decode($room->owner_ids);
+
+        //remove duplicates from user list and owner list
+        $users = array_unique($users);
+        $owners = array_unique($owners);
+
+        //save changes
+        $room->user_ids = json_encode($users);
+
+        if($roomName!=""){
+            $room->name = $roomName;
+        }
+        $room->save();
+
+        //add room to the rooms array of every user involved
+        forEach($users as $uid){
+            $user = User::where('id',$uid)->first();
+            $rooms = $user->rooms;
+            //update rooms with the one we just created
+            $aRooms = json_decode($rooms);
+            $uRooms = "";
+            array_push($aRooms,$room->id);
+            $uRooms = json_encode($aRooms);
+            User::where('id',$uid)->update(['rooms'=>$uRooms]);
+        };
+        return $room;
+    }
+
     public function addFriend(Request $request){
         //get current user id from js
         $currentUserId = $request->input('currentUserId');

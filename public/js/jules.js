@@ -1,5 +1,6 @@
 //added by jules
-
+document.addEventListener('DOMContentLoaded', function() {
+function initialize() {
 //const { forEach } = require("lodash");
 
 
@@ -281,6 +282,69 @@ const createRoomBtn = document.querySelector('#create-room-btn');
 
 createRoomBtn.addEventListener('click', createNewRoom);
 
+function editRoomPHP(){
+    var roomId = document.querySelector("#name-box").querySelector("h2").getAttribute("id");
+    var roomName = document.querySelector("#edit-room").querySelector("#rname").value;
+    var users = [];
+
+    for(var div of friendDivs){
+        if(div.classList.contains("added")){
+            users.push(parseInt(div.getAttribute("id")))
+        }
+    }
+
+    console.log(roomId);
+    console.log(roomName);
+    console.log(users);
+    axios.post('/room/edit-room',{
+        roomId: roomId,
+        roomName: roomName,
+        users: users,
+    }).then(function (response) {
+        console.log(response.data);
+        var editRoomResponse = response.data;
+
+
+        //clear the user input in the name box
+        document.querySelector("#edit-room").querySelector("#rname").value="";
+
+        //alert the user that the room has been edited succesfully
+        var editRoomAlert = document.querySelector("#edit-room-alert");
+        displayOff();//remove create room overlay
+
+        displayToggle(editRoomAlert);//show new room alert
+        console.log(editRoomAlert);
+
+        //remove alert after a few seconds and redirect to new room
+        setTimeout(function(){
+            if(editRoomAlert.style.display!="none"){
+                displayOff();
+                window.location.href="/room/"+editRoomResponse.id;//get room id from the response to the post request
+            }
+        },3000);
+    });
+}
+
+var confirmEditButton = document.querySelector("#confirm-edit-btn");
+confirmEditButton.addEventListener("click",editRoomPHP);
+
+//make users move to the top of the friends list if they are in the room
+function updateOrder() {
+    const friendList = document.getElementById('friend-list');
+    const addedItems = document.querySelectorAll('.added');
+    console.log(addedItems);
+
+    addedItems.forEach((item) => {
+        console.log(item.parentNode);
+        friendList.prepend(item.parentNode);
+    });
+}
+
+//run this whenever a user in a add room/edit roomfriends list is clicked on
+for(var div of friendDivs){
+    //div.addEventListener("click",updateOrder);
+}
+
 //take new friend data from the #add-friend form and sends it to the addFriend function in RoomController.php
 function addFriendPHP(){
     //get email from text input
@@ -303,7 +367,6 @@ function addFriendPHP(){
     }
 }
 
-
 const confirmNewFriend = document.querySelector("#confirm-new-friend");
 
 confirmNewFriend.addEventListener('click',addFriendPHP);
@@ -312,7 +375,6 @@ confirmNewFriend.addEventListener('click',addFriendPHP);
 
 //let users log-out with a button press
 function logOutPHP(){
-    console.log("dedededede")
     //run the logout function in the room controller
     axios.post('/room/log-out').then(function (response) {
         console.log("Logged out");
@@ -369,7 +431,7 @@ plusButton.addEventListener('click', function() { //apply newRoom function to pl
 
 
 
-var addRoomButton = document.querySelector("#add-room-btn")
+var addRoomButton = document.querySelector("#add-room-btn");
 var newRoom = document.querySelector("#new-room");
 
 addRoomButton.addEventListener('click', function(){
@@ -425,4 +487,10 @@ document.addEventListener("DOMContentLoaded", function() {
 var landingNewRoom = document.querySelector("#landing-new-room");
 landingNewRoom.addEventListener('click',function(){
     addRoomButton.click();
-})
+});
+
+};
+
+initialize();
+
+});//document.addEventListener('DOMContentLoaded', function() {

@@ -55,7 +55,7 @@
                         </ul>
                         <button id="create-room-btn" class="overlay-btn">Create Room</button>
                     </div>
-                    <div id="new-room-alert" class="overlay" style="display: none;">
+                    <div id="new-room-alert" class="overlay room-alert" style="display: none;">
                         <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the room  has been created">
                         <h1>New room created</h1>
                     </div>
@@ -77,15 +77,20 @@
                     <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
                     <!--list of friends-->
                     <ul id="friend-list" class="scrollbar">
-                        <li class="left clearfix" v-for="friend in friends" :key="friend.id">
-                            <div :id = friend.id class="friend not-selectable visible">
+                        <li class="left clearfix" v-for="friend in sortedFriends" :key="friend.id">
+                            <div :id = friend.id class="friend not-selectable visible" :class="{ added: currentRoom.user_ids.includes(friend.id) }">
                                 <h3>{{ friend.name }}</h3>
-                                <img class="add-button" src="/img/plus.png" alt="add friend">
-                                <img class="added-button" src="/img/tick.png" alt="friend added">
+                                <!--display either the add button or the added button based on if the user is already in the room or not-->
+                                <img class="add-button"  src="/img/plus.png" alt="add friend">
+                                <img class="added-button"  src="/img/tick.png" alt="friend added">
                             </div>
                         </li>
-                        <button id="create-room-btn" class="overlay-btn">Save Changes</button>
+                        <button id="confirm-edit-btn" class="overlay-btn">Save Changes</button>
                     </ul>
+                </div>
+                <div id="edit-room-alert" class="overlay room-alert" style="display: none;">
+                    <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the room  has been edited">
+                    <h1>Changes saved</h1>
                 </div>
             </div>
             <div :id=currentRoom.id class="room-id-carrier" style="display:none;">Find</div>
@@ -125,64 +130,44 @@ export default {
   data() {
     return {
       // add any component-specific data here
+      addedFriends: [], // new data property to track added friends
     };
   },
   computed: {
-    actualFriends: function() {
-        return this.friends.filter(friend => friend.id != this.currentUser.id);
-  }
+  actualFriends() {
+    return this.friends.filter(friend => friend.id !== this.currentUser.id);
   },
+  sortedFriends() {
+    const actualFriends = this.friends.filter(friend => friend.id !== this.currentUser.id);
+    return actualFriends.sort((a, b) => {
+      const addedA = this.isAdded(a.id);
+      const addedB = this.isAdded(b.id);
+      if (addedA && !addedB) {
+        return -1; // a should appear before b
+      } else if (!addedA && addedB) {
+        return 1; // b should appear before a
+      } else {
+        return 0; // maintain the original order
+      }
+    });
+  },
+    },
   methods: {
     // add any component-specific methods here
+    isAdded(id) {
+      return this.addedFriends.includes(id);
+    },
+    toggleFriend(id) {
+      if (this.isAdded(id)) {
+        this.addedFriends = this.addedFriends.filter(friendId => friendId !== id);
+      } else {
+        this.addedFriends.push(id);
+      }
+    },
   },
   mounted() {
     // add any code to run when the component is mounted here
+    console.log(this.friends);
   },
 };
 </script>
-<!--
-<script>
-import axios from 'axios';
-import Echo from 'laravel-echo';
-
-(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-CSRF-TOKEN"]) = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-console.log((axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-CSRF-TOKEN"]));
-
-export default {
-  props: ['messages', 'current-user', 'room-id', 'rooms', 'current-room', 'friends'],
-  data: function () {
-    return {
-      message: ''
-    }
-  },
-  created: function () {
-    this.fetchMessages();
-    window.Echo.private('chat-room.' + this.roomId).listen('MessageSent', (e) => {
-      this.messages.push({
-        message: e.message.message,
-        user: e.user
-      });
-    });
-  },
-  methods: {
-    fetchMessages: function () {
-      axios.get('/messages/' + this.roomId).then(response => {
-        this.messages = response.data;
-      });
-    },
-    addMessage: function () {
-      let messageData = {
-        message: this.message,
-        user_id: this.currentUser.id,
-        room_id: this.roomId
-      }
-      axios.post('/messages', messageData).then(response => {
-        this.message = '';
-      });
-    }
-  },
-};
-</script> -->
-
-
