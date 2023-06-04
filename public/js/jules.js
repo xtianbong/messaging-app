@@ -441,15 +441,9 @@ addRoomButton.addEventListener('click', function(){
 
 var editRoomButton = document.querySelector("#edit-room-btn");
 var editRoom = document.querySelector("#edit-room");
-console.log(editRoomButton);
-console.log(editRoom);
-console.log(1);
 editRoomButton.addEventListener('click', function(){
-    console.log(2);
     displayOff();
-    console.log(3);
     displayToggle(editRoom);
-    console.log(4);
 });
 
 var addFriendButton = document.querySelector("#add-friend-btn")
@@ -469,22 +463,22 @@ settingsButton.addEventListener('click', function() { //apply newRoom function t
 
 
 tint.addEventListener('click', function() { //hide object when you click anywhere outside it
-    console.log("tint clicked")
+    console.log("tint clicked");
     displayOff();
 });
 console.log("preland");
-document.addEventListener("DOMContentLoaded", function() {
-    //customizing the landing page that users go to when they are not in a particular chat room
-    var landingRoom = document.querySelector("#landing-room");
-    console.log(landingRoom);
 
-    //remove the room name and message input box when on the landing page
-    if(landingRoom!=null){
-        console.log("Landing page")
-        document.querySelector(".card-footer").style.display="none";
-        document.querySelector("#name-box").style.display="none";
-    }
-});
+//customizing the landing page that users go to when they are not in a particular chat room
+var landingRoom = document.querySelector("#landing-room");
+console.log(landingRoom);
+
+//remove the room name and message input box when on the landing page
+if(landingRoom!=null){
+    console.log("Landing page")
+    document.querySelector(".card-footer").style.display="none";
+    document.querySelector("#name-box").style.display="none";
+
+}
 
 // have the "create new room" text activate the "New room" button when clicked on
 
