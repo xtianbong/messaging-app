@@ -68,7 +68,7 @@
         <div id="right-side">
             <div id="name-box" >
                 <h2 :id=currentRoom.id v-if="currentRoom.id != 0">{{currentRoom.name}}</h2>
-                <img id="edit-room-btn" src="/img/options.png" v-if="currentRoom.id != 0">
+                <img id="edit-room-btn" src="/img/options.png" >
                 <div id="edit-room" class="overlay" style="display: none;">
                     <div id="rname-box" class="name-box">
                         <input type="text" id="rname" class ="resizing-input" :placeholder="currentRoom.name" maxlength="20">

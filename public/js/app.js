@@ -45301,11 +45301,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm.currentRoom.id != 0
-          ? _c("img", {
-              attrs: { id: "edit-room-btn", src: "/img/options.png" }
-            })
-          : _vm._e(),
+        _c("img", { attrs: { id: "edit-room-btn", src: "/img/options.png" } }),
         _vm._v(" "),
         _c(
           "div",
