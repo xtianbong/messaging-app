@@ -2311,6 +2311,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -45248,7 +45253,7 @@ var render = function() {
             _c(
               "ul",
               { staticClass: "scrollbar", attrs: { id: "friend-list" } },
-              _vm._l(_vm.friends, function(friend) {
+              _vm._l(_vm.sortedFriends, function(friend) {
                 return _c(
                   "li",
                   { key: friend.id, staticClass: "left clearfix" },
@@ -45289,7 +45294,9 @@ var render = function() {
         _vm._v(" "),
         _vm._m(3),
         _vm._v(" "),
-        _vm._m(4)
+        _vm._m(4),
+        _vm._v(" "),
+        _vm._m(5)
       ])
     ]),
     _vm._v(" "),
@@ -45333,54 +45340,49 @@ var render = function() {
             _c(
               "ul",
               { staticClass: "scrollbar", attrs: { id: "friend-list" } },
-              [
-                _vm._l(_vm.sortedFriends, function(friend) {
-                  return _c(
-                    "li",
-                    { key: friend.id, staticClass: "left clearfix" },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "friend not-selectable visible",
-                          class: {
-                            added: _vm.currentRoom.user_ids.includes(friend.id)
-                          },
-                          attrs: { id: friend.id }
+              _vm._l(_vm.sortedFriends, function(friend) {
+                return _c(
+                  "li",
+                  { key: friend.id, staticClass: "left clearfix" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "friend not-selectable visible",
+                        class: {
+                          added: _vm.currentRoom.user_ids.includes(friend.id)
                         },
-                        [
-                          _c("h3", [_vm._v(_vm._s(friend.name))]),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "add-button",
-                            attrs: { src: "/img/plus.png", alt: "add friend" }
-                          }),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "added-button",
-                            attrs: { src: "/img/tick.png", alt: "friend added" }
-                          })
-                        ]
-                      )
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "overlay-btn",
-                    attrs: { id: "confirm-edit-btn" }
-                  },
-                  [_vm._v("Save Changes")]
+                        attrs: { id: friend.id }
+                      },
+                      [
+                        _c("h3", [_vm._v(_vm._s(friend.name))]),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticClass: "add-button",
+                          attrs: { src: "/img/plus.png", alt: "add friend" }
+                        }),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticClass: "added-button",
+                          attrs: { src: "/img/tick.png", alt: "friend added" }
+                        })
+                      ]
+                    )
+                  ]
                 )
-              ],
-              2
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "overlay-btn", attrs: { id: "confirm-edit-btn" } },
+              [_vm._v("Save Changes")]
             )
           ]
         ),
         _vm._v(" "),
-        _vm._m(5)
+        _vm._m(6)
       ]),
       _vm._v(" "),
       _c(
@@ -45426,7 +45428,7 @@ var render = function() {
         ? _c("div", { attrs: { id: "landing-room" } }, [
             _c("h1", [_vm._v("Welcome!")]),
             _vm._v(" "),
-            _vm._m(6)
+            _vm._m(7)
           ])
         : _vm._e()
     ])
@@ -45534,6 +45536,30 @@ var staticRenderFns = [
           { staticClass: "overlay-btn", attrs: { id: "confirm-new-friend" } },
           [_vm._v("Add Friend")]
         )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "overlay room-alert",
+        staticStyle: { display: "none" },
+        attrs: { id: "add-friend-alert" }
+      },
+      [
+        _c("img", {
+          staticClass: "confirm-tick",
+          attrs: {
+            src: "/img/tick.png",
+            alt: "tick to siginify that the friend has been added"
+          }
+        }),
+        _vm._v(" "),
+        _c("h1", [_vm._v("New friend addded")])
       ]
     )
   },

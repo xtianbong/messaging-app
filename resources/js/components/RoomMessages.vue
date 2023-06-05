@@ -44,7 +44,7 @@
                         <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
                         <!--list of friends-->
                         <ul id="friend-list" class="scrollbar">
-                            <li class="left clearfix" v-for="friend in friends" :key="friend.id">
+                            <li class="left clearfix" v-for="friend in sortedFriends" :key="friend.id">
                                 <div :id = friend.id class="friend not-selectable">
                                     <h3>{{ friend.name }}</h3>
                                     <img class="add-button" src="/img/plus.png" alt="add friend">
@@ -62,6 +62,10 @@
                     <div id="add-friend" class="overlay" style="display: none;">
                         <input type="text" id="new-friend-email" class="email-bar" placeholder="E-mail">
                         <button id="confirm-new-friend" class="overlay-btn">Add Friend</button>
+                    </div>
+                    <div id="add-friend-alert" class="overlay room-alert" style="display: none;">
+                        <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the friend has been added">
+                        <h1>New friend addded</h1>
                     </div>
                 </div><!--settings-box-->
             </div><!--left side-->
@@ -85,8 +89,9 @@
                                 <img class="added-button"  src="/img/tick.png" alt="friend added">
                             </div>
                         </li>
-                        <button id="confirm-edit-btn" class="overlay-btn">Save Changes</button>
+
                     </ul>
+                    <button id="confirm-edit-btn" class="overlay-btn">Save Changes</button>
                 </div>
                 <div id="edit-room-alert" class="overlay room-alert" style="display: none;">
                     <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the room  has been edited">

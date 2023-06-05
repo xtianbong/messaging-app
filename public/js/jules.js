@@ -363,6 +363,26 @@ function addFriendPHP(){
             email: friendEmail,
         }).then(function (response) {
             console.log(response.data);
+            var addFriendResponse = response.data;
+
+
+            //clear the user input in the name box
+            document.querySelector("#new-friend-email").value="";
+
+            //alert the user that the room has been edited succesfully
+            var addFriendAlert = document.querySelector("#add-friend-alert");
+            displayOff();//remove create room overlay
+
+            displayToggle(addFriendAlert);//show new room alert
+            console.log(addFriendAlert);
+
+            //remove alert after a few seconds and refresh
+            setTimeout(function(){
+                if(addFriendAlert.style.display!="none"){
+                    displayOff();
+                    location.reload();
+                }
+            },3000);
         });
     }
 }
