@@ -81,7 +81,7 @@
                     <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
                     <!--list of friends-->
                     <ul id="friend-list" class="scrollbar">
-                        <li class="left clearfix" v-for="friend in sortedFriends" :key="friend.id">
+                        <li class="left clearfix" v-for="friend in roomUsers" :key="friend.id">
                             <div :id = friend.id class="friend not-selectable visible" :class="{ added: currentRoom.user_ids.includes(friend.id) }">
                                 <h3>{{ friend.name }}</h3>
                                 <!--display either the add button or the added button based on if the user is already in the room or not-->
@@ -131,6 +131,7 @@ export default {
     rooms:Array,
     currentRoom:Object,
     friends:Array,
+    roomUsers:Array,
   },
   data() {
     return {

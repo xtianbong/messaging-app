@@ -39,9 +39,10 @@ class RoomController extends Controller
             array_push($rooms,Room::where('id',$r)->first());
         }
         $rooms=json_encode($rooms);
-        //dd($rooms);
         $friendsArray = json_decode($currentUser -> friends);
         $friends = User::whereIn("id",$friendsArray) ->get();
+
+
         //right side
         //if the user is not in any rooms, they are directed to room 0 which is just a prompt to create a new room
         if(count($roomsArr)==0){
@@ -50,10 +51,11 @@ class RoomController extends Controller
         else{
             $currentRoom = Room::where('id',$room_id)->first();
         }
+        $roomUsers = User::whereIn("id",json_decode($currentRoom->user_ids))->get();
 
 
 
-        return view('room', compact('currentRoom', 'currentUser','rooms', 'room_id','friends'));
+        return view('room', compact('currentRoom', 'currentUser','rooms', 'room_id','friends','roomUsers'));
     }
 
     public function left(Request $request)

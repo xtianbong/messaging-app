@@ -2324,7 +2324,8 @@ __webpack_require__.r(__webpack_exports__);
     roomId: Number,
     rooms: Array,
     currentRoom: Object,
-    friends: Array
+    friends: Array,
+    roomUsers: Array
   },
   data: function data() {
     return {
@@ -45340,7 +45341,7 @@ var render = function() {
             _c(
               "ul",
               { staticClass: "scrollbar", attrs: { id: "friend-list" } },
-              _vm._l(_vm.sortedFriends, function(friend) {
+              _vm._l(_vm.roomUsers, function(friend) {
                 return _c(
                   "li",
                   { key: friend.id, staticClass: "left clearfix" },
