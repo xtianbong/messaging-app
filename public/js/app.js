@@ -2316,6 +2316,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -45309,79 +45327,120 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("img", { attrs: { id: "edit-room-btn", src: "/img/options.png" } }),
+        _c("img", {
+          attrs: { id: "room-details-btn", src: "/img/options.png" }
+        }),
         _vm._v(" "),
         _c(
           "div",
-          {
-            staticClass: "overlay",
-            staticStyle: { display: "none" },
-            attrs: { id: "edit-room" }
-          },
+          { staticClass: "overlay owner", attrs: { id: "room-details" } },
           [
-            _c("div", { staticClass: "name-box", attrs: { id: "rname-box" } }, [
-              _c("input", {
-                staticClass: "resizing-input",
-                attrs: {
-                  type: "text",
-                  id: "rname",
-                  placeholder: _vm.currentRoom.name,
-                  maxlength: "20"
-                }
-              }),
-              _vm._v(" "),
-              _c("img", { attrs: { src: "/img/edit.png" } })
-            ]),
+            _c("h2", [_vm._v(_vm._s(_vm.currentRoom.name))]),
             _vm._v(" "),
-            _c("input", {
-              staticClass: "search-bar",
-              attrs: { type: "text", id: "fsearch-bar" }
-            }),
+            _c("h3", [_vm._v("Members: ")]),
             _vm._v(" "),
             _c(
               "ul",
-              { staticClass: "scrollbar", attrs: { id: "friend-list" } },
-              _vm._l(_vm.roomUsers, function(friend) {
-                return _c(
-                  "li",
-                  { key: friend.id, staticClass: "left clearfix" },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "friend not-selectable visible",
-                        class: {
-                          added: _vm.currentRoom.user_ids.includes(friend.id)
-                        },
-                        attrs: { id: friend.id }
-                      },
-                      [
-                        _c("h3", [_vm._v(_vm._s(friend.name))]),
-                        _vm._v(" "),
-                        _c("img", {
-                          staticClass: "add-button",
-                          attrs: { src: "/img/plus.png", alt: "add friend" }
-                        }),
-                        _vm._v(" "),
-                        _c("img", {
-                          staticClass: "added-button",
-                          attrs: { src: "/img/tick.png", alt: "friend added" }
-                        })
-                      ]
-                    )
-                  ]
-                )
+              { staticClass: "scrollbar", attrs: { id: "user-list" } },
+              _vm._l(_vm.roomUsers, function(u) {
+                return _c("li", { key: u.id, staticClass: "left clearfix" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "friend not-selectable visible",
+                      class: { added: _vm.currentRoom.user_ids.includes(u.id) },
+                      attrs: { id: u.id }
+                    },
+                    [
+                      _c("h3", [_vm._v(_vm._s(u.name))]),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "add-button",
+                        attrs: { src: "/img/plus.png", alt: "add friend" }
+                      }),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "added-button",
+                        attrs: { src: "/img/tick.png", alt: "friend added" }
+                      })
+                    ]
+                  )
+                ])
               }),
               0
             ),
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "overlay-btn", attrs: { id: "confirm-edit-btn" } },
-              [_vm._v("Save Changes")]
+              { staticClass: "overlay-btn", attrs: { id: "goto-edit-btn" } },
+              [_vm._v("Edit Room")]
             )
           ]
         ),
+        _vm._v(" "),
+        _c("div", { staticClass: "overlay", attrs: { id: "edit-room" } }, [
+          _c("div", { staticClass: "name-box", attrs: { id: "rname-box" } }, [
+            _c("input", {
+              staticClass: "resizing-input",
+              attrs: {
+                type: "text",
+                id: "rname",
+                placeholder: _vm.currentRoom.name,
+                maxlength: "20"
+              }
+            }),
+            _vm._v(" "),
+            _c("img", { attrs: { src: "/img/edit.png" } })
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "search-bar",
+            attrs: { type: "text", id: "fsearch-bar" }
+          }),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "scrollbar", attrs: { id: "friend-list" } },
+            _vm._l(_vm.friends, function(friend) {
+              return _c(
+                "li",
+                { key: friend.id, staticClass: "left clearfix" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "friend not-selectable visible",
+                      class: {
+                        added: _vm.currentRoom.user_ids.includes(friend.id)
+                      },
+                      attrs: { id: friend.id }
+                    },
+                    [
+                      _c("h3", [_vm._v(_vm._s(friend.name))]),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "add-button",
+                        attrs: { src: "/img/plus.png", alt: "add friend" }
+                      }),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "added-button",
+                        attrs: { src: "/img/tick.png", alt: "friend added" }
+                      })
+                    ]
+                  )
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "overlay-btn", attrs: { id: "confirm-edit-btn" } },
+            [_vm._v("Save Changes")]
+          )
+        ]),
         _vm._v(" "),
         _vm._m(6)
       ]),

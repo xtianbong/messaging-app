@@ -72,26 +72,44 @@
         <div id="right-side">
             <div id="name-box" >
                 <h2 :id=currentRoom.id v-if="currentRoom.id != 0">{{currentRoom.name}}</h2>
-                <img id="edit-room-btn" src="/img/options.png" >
-                <div id="edit-room" class="overlay" style="display: none;">
-                    <div id="rname-box" class="name-box">
-                        <input type="text" id="rname" class ="resizing-input" :placeholder="currentRoom.name" maxlength="20">
-                        <img src="/img/edit.png">
-                    </div>
-                    <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
-                    <!--list of friends-->
-                    <ul id="friend-list" class="scrollbar">
-                        <li class="left clearfix" v-for="friend in roomUsers" :key="friend.id">
-                            <div :id = friend.id class="friend not-selectable visible" :class="{ added: currentRoom.user_ids.includes(friend.id) }">
-                                <h3>{{ friend.name }}</h3>
+                <img id="room-details-btn" src="/img/options.png" >
+                <div id="room-details" class="overlay owner" >
+                    <h2>{{currentRoom.name}}</h2>
+
+                    <h3>Members: </h3>
+                    <!--list of users in the room-->
+                    <ul id="user-list" class="scrollbar">
+                        <li class="left clearfix" v-for="u in roomUsers" :key="u.id">
+                            <div :id = u.id class="friend not-selectable visible" :class="{ added: currentRoom.user_ids.includes(u.id) }">
+                                <h3>{{ u.name }}</h3>
                                 <!--display either the add button or the added button based on if the user is already in the room or not-->
                                 <img class="add-button"  src="/img/plus.png" alt="add friend">
                                 <img class="added-button"  src="/img/tick.png" alt="friend added">
                             </div>
                         </li>
-
                     </ul>
-                    <button id="confirm-edit-btn" class="overlay-btn">Save Changes</button>
+                    <button id="goto-edit-btn" class="overlay-btn">Edit Room</button>
+                </div>
+
+                <div id="edit-room" class="overlay">
+                    <div id="rname-box" class="name-box">
+                        <input type="text" id="rname" class ="resizing-input" :placeholder="currentRoom.name" maxlength="20">
+                        <img src="/img/edit.png">
+                    </div>
+                    <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
+                        <!--list of friends we could add to the room-->
+                        <ul id="friend-list" class="scrollbar">
+                            <li class="left clearfix" v-for="friend in friends" :key="friend.id">
+                                <div :id = friend.id class="friend not-selectable visible" :class="{ added: currentRoom.user_ids.includes(friend.id) }">
+                                    <h3>{{ friend.name }}</h3>
+                                    <!--display either the add button or the added button based on if the user is already in the room or not-->
+                                    <img class="add-button"  src="/img/plus.png" alt="add friend">
+                                    <img class="added-button"  src="/img/tick.png" alt="friend added">
+                                </div>
+                            </li>
+
+                        </ul>
+                        <button id="confirm-edit-btn" class="overlay-btn">Save Changes</button>
                 </div>
                 <div id="edit-room-alert" class="overlay room-alert" style="display: none;">
                     <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the room  has been edited">

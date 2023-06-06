@@ -459,12 +459,26 @@ addRoomButton.addEventListener('click', function(){
     displayToggle(newRoom);
 });
 
-var editRoomButton = document.querySelector("#edit-room-btn");
+var roomDetailsButton = document.querySelector("#room-details-btn");
+var roomDetails = document.querySelector("#room-details");
+roomDetailsButton.addEventListener('click', function(){
+    displayOff();
+    displayToggle(roomDetails);
+});
+
+var gotoEditButton = document.querySelector("#goto-edit-btn");
 var editRoom = document.querySelector("#edit-room");
-editRoomButton.addEventListener('click', function(){
+gotoEditButton.addEventListener("click",function(){
     displayOff();
     displayToggle(editRoom);
 });
+
+
+
+
+
+
+
 
 var addFriendButton = document.querySelector("#add-friend-btn")
 var addFriend = document.querySelector("#add-friend");

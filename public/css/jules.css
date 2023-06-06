@@ -169,7 +169,7 @@ mark.highlight {
     margin:0px;
 }
 
-#edit-room-btn{
+#edit-room-btn,#room-details-btn{
     width:30px;
     height: 30px;
     position: absolute;
@@ -178,9 +178,46 @@ mark.highlight {
     cursor: pointer;
 }
 
-#edit-room{
+
+#edit-room,#room-details{
     left: calc(50vw - 350px);
     bottom: calc(-50vh - 200px);
+    width: 350px;
+    /*display:inline-block;*/
+}
+
+#room-details{
+    z-index:10000;
+}
+#room-details>h2{
+    text-align: left;
+    margin:10px 30px;
+    font-weight: bolder;
+}
+#room-details>h3{
+    text-align: center;
+    font-size: large;
+}
+/*grey out button if the current user is not an owner of this room*/
+#room-details>#goto-edit-btn{
+    pointer-events: none;
+    background-color:#0C0E3D;
+    color:rgb(71, 71, 71);
+}
+
+#room-details.owner>#goto-edit-btn{
+    pointer-events: auto;
+    background-color:#0C0E3D;
+    color:white;
+    background-color:#353772;
+}
+
+#room-details.owner>#goto-edit-btn:hover{
+    background-color: white;
+    color:#353772;
+}
+#room-details.owner>#goto-edit-btn:active{
+    background-color:#0C0E3D;
 }
 
 #messages{
@@ -524,13 +561,22 @@ ul{
     margin:20px auto;
 }
 
-#friend-list{
+#list-grid{
+    height:200px;
+}
+
+#friend-list,#user-list{
     width:fit-content;
     height:fit-content;
     max-height: 200px;
-    margin:10px auto;
-    padding:0px;
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 20px;
     justify-content: space-between;
+}
+
+#user-list{
+    float:left;
 }
 
 .friend{
@@ -540,6 +586,7 @@ ul{
     padding:5px 20px;
     border-radius: 5px;
     display: none;
+    color:rgb(204, 204, 204);
 }
 .friend:hover{
     background-color: #141641;

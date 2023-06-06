@@ -52,7 +52,7 @@ class RoomController extends Controller
             $currentRoom = Room::where('id',$room_id)->first();
         }
         $roomUsers = User::whereIn("id",json_decode($currentRoom->user_ids))->get();
-
+        //dd($roomUsers);
 
 
         return view('room', compact('currentRoom', 'currentUser','rooms', 'room_id','friends','roomUsers'));
@@ -265,4 +265,3 @@ class RoomController extends Controller
         return view('room', compact('filteredMessages', 'user', 'room_id'));
     }
 }
-
