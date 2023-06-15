@@ -122,6 +122,7 @@ var msg = document.querySelector("#btn-input");
 var sendButton = document.querySelector("#btn-chat");
 
 sendButton.addEventListener("click", bottomScroll);
+//removeAllEventListeners(sendButton);
 window.addEventListener("load", bottomScroll);
 document.addEventListener("load", bottomScroll);
 window.addEventListener("DOMContentLoaded", function() {
@@ -208,7 +209,7 @@ rname.addEventListener('change', resizeInputs);
 
 //make create-rooms div react to input
 //get array of friend divs in the html
-var friendDivs = document.querySelectorAll("div.friend");
+var friendDivs = document.querySelectorAll("div.new-room-friend");
 friendDivs.forEach(f => f.addEventListener('click',function(){
     if(f.classList.contains('added')){
         f.classList.remove('added');
@@ -218,6 +219,97 @@ friendDivs.forEach(f => f.addEventListener('click',function(){
     }
 }));
 
+//make edit-room div react to input
+//get array of member divs in the html
+var memberDivs = document.querySelectorAll("div.member");
+var selectEdit = document.querySelector("#select-edit");
+var makeOwnerButton = document.querySelector("#make-owner-btn");
+var removeUserButton = document.querySelector("#remove-user-btn");
+var undoEdit = document.querySelector("#undo-edit");
+var undoButton = document.querySelector("#undo-btn");
+memberDivs.forEach(m => m.addEventListener('click',function(){
+    //only add or remove a user if they are not an owner
+    if(!m.classList.contains('owner') & !m.classList.contains('changed')){
+        //position the selectEdit div just to the right of the user
+        var mPos = m.getBoundingClientRect();
+        console.log(mPos);
+        /*
+        selectEdit.style.left=mPos.left+'px';
+        selectEdit.style.top=mPos.top+'px';
+        */
+        displayToggle(selectEdit,"grid");
+        //create functions that will run depending on whether the user confirms this decision or not
+        makeOwnerButton.addEventListener("click",function(){
+            function ownerYes(){
+                //original classlist is saved so I can undo the changes
+                var ocl = m.classList;
+                // Create a new DOM element
+                var hiddenMember = document.createElement('div');
+                // Set the class list of the hidden element to match the original class list
+                hiddenMember.classList = ocl;
+                //identify this element and add it to the document so it can be accessed later
+                hiddenMember.style.display="none";
+                hiddenMember.id=m.id;
+                hiddenMember.classList.add("hidden");
+                document.body.appendChild(hiddenMember);
+
+                m.classList.add("owner");
+                m.classList.add("changed");//keep track of what divs were changed in this session so it can be easily undone
+                displayOff(selectEdit);
+            };
+            createConfirmBox("Are you sure you want to make "+m.querySelector("h3").innerHTML+" an owner of this room.",ownerYes);
+            //displayOff(selectEdit);
+            //m.classList.add("owner");
+            //displayToggle(confirmDialogue);
+        });
+        removeUserButton.addEventListener("click",function(){
+            //original classlist is saved so I can undo the changes
+            var ocl = m.classList;
+            // Create a new DOM element
+            var hiddenMember = document.createElement('div');
+            // Set the class list of the hidden element to match the original class list
+            hiddenMember.classList = ocl;
+            //identify this element and add it to the document so it can be accessed later
+            hiddenMember.style.display="none";
+            hiddenMember.id=m.id;
+            hiddenMember.classList.add("hidden");
+            document.body.appendChild(hiddenMember);
+
+            m.classList.add("changed");//keep track of what divs were changed in this session so it can be easily undone
+            m.classList.remove("added");
+            displayOff(selectEdit);
+        })
+    }
+    if(m.classList.contains('changed')){
+        displayToggle(undoEdit);
+        undoButton.addEventListener("click",function(){
+            var hiddenMembers = Array.from(document.querySelectorAll('.hidden' ));
+            var hiddenMember = hiddenMembers.find(x=> x.id==m.id);
+            console.log(hiddenMember);
+            m.classList = hiddenMember.classList;
+            m.classList.remove("hidden");
+            displayOff(undoEdit);
+        });
+    }
+}
+));
+//remove all listeners from an element
+function removeAllEventListeners(element) {
+    // Check if the element has a parent node
+    if (element.parentNode) {
+      // Create a clone of the element
+      const clonedElement = element.cloneNode(true);
+
+      // Replace the element with its clone
+      element.parentNode.replaceChild(clonedElement, element);
+
+      // Return the cloned element
+      return clonedElement;
+    }
+
+    // If the element doesn't have a parent node, return the element itself
+    return element;
+}
 
 //retrieve data for room creation from the form
 function createNewRoom(){
@@ -282,24 +374,37 @@ const createRoomBtn = document.querySelector('#create-room-btn');
 
 createRoomBtn.addEventListener('click', createNewRoom);
 
+//get an array of the divs in the user-list
+//var userDivs = document.querySelector("#user-list").querySelectorAll("div");
 function editRoomPHP(){
     var roomId = document.querySelector("#name-box").querySelector("h2").getAttribute("id");
     var roomName = document.querySelector("#edit-room").querySelector("#rname").value;
     var users = [];
-
-    for(var div of friendDivs){
+    var owners = [];
+    var userDivs = document.querySelectorAll(".member");
+    console.log(userDivs);
+    for(var div of userDivs){
         if(div.classList.contains("added")){
             users.push(parseInt(div.getAttribute("id")))
+        }
+    }
+
+    for(var div of userDivs){
+        if(div.classList.contains("owner")){
+            owners.push(parseInt(div.getAttribute("id")))
         }
     }
 
     console.log(roomId);
     console.log(roomName);
     console.log(users);
+    console.log(owners);
+    /*
     axios.post('/room/edit-room',{
         roomId: roomId,
         roomName: roomName,
         users: users,
+        owners: owners,
     }).then(function (response) {
         console.log(response.data);
         var editRoomResponse = response.data;
@@ -312,19 +417,35 @@ function editRoomPHP(){
         var editRoomAlert = document.querySelector("#edit-room-alert");
         displayOff();//remove create room overlay
 
-        displayToggle(editRoomAlert);//show new room alert
+        displayToggle(editRoomAlert);//show room edited alert
         console.log(editRoomAlert);
 
-        //remove alert after a few seconds and redirect to new room
+        //remove alert after a few seconds and redirect edited room
         setTimeout(function(){
             if(editRoomAlert.style.display!="none"){
                 displayOff();
                 window.location.href="/room/"+editRoomResponse.id;//get room id from the response to the post request
             }
         },3000);
-    });
+    });*/
 }
-
+//close all overlays and refresh page when the user discards a room edit
+var discardEditButton = document.querySelector("#discard-edit-btn");
+discardEditButton.addEventListener("click",function(){
+    var memberDivs = document.querySelectorAll("div.member");
+    console.log(memberDivs);
+    memberDivs.forEach(m=> {
+        if(m.classList.contains("changed")){
+            var hiddenMembers = Array.from(document.querySelectorAll('.hidden' ));
+            var hiddenMember = hiddenMembers.find(x=> x.id==m.id);
+            console.log(hiddenMember);
+            m.classList = hiddenMember.classList;
+            m.classList.remove("hidden");
+        }
+    });
+    displayOff();
+    //location.reload();
+});
 var confirmEditButton = document.querySelector("#confirm-edit-btn");
 confirmEditButton.addEventListener("click",editRoomPHP);
 
@@ -415,22 +536,23 @@ function displayToggle(target,display='block'){ //change display attribute to wh
         if(display!='block'){
             target.style.display=display;
             tint.style.display='block';
-            //console.log(1);
+            console.log(1);
         }
         else{
             target.style.display='block';
             tint.style.display='block';
-            //console.log(2);
+            console.log(2);
         }
     }
     else{
         target.style.display='none';
         tint.style.display='none';
-        //console.log(3);
+        console.log(3);
     }
 }
 //funciton that hides all elements in the overlay class
-var targets = document.querySelectorAll(".overlay")
+var targets = document.querySelectorAll(".overlay");
+
 function displayOff(){
     console.log(targets);
     for(var t of targets){
@@ -440,8 +562,55 @@ function displayOff(){
     tint.style.display='none';
 
 }
+//hide a specific overlay
+
+function displayOff(target='default'){
+    if(target=='default'){
+        console.log(targets);
+        for(var t of targets){
+            //console.log(t);
+            t.style.display='none';
+        }
+        tint.style.display='none';
+    }
+    else{
+        target.style.display='none';
+        tint.style.display='none';
+    }
+
+}
 
 
+//create a dialogue box asking the user to confirm their action takes string dialogue to craft the prompt
+function createConfirmBox(dialogue="Are you sure?",yesFunction){
+    var confirmBox = document.getElementById("confirm-box");
+    var confirmDialogue = document.getElementById("confirm-dialogue");
+    var confirmTint = document.getElementById("confirm-tint");
+    confirmDialogue.innerHTML = dialogue;
+
+    confirmBox.style.display="block";
+    confirmTint.style.display = "block";
+    confirmTint.addEventListener("click",function(){
+        confirmBox.style.display="none";
+        confirmTint.style.display="none";
+    });
+    var yesButton = document.getElementById("yes-btn");
+    var noButton = document.getElementById("no-btn");
+    console.log(noButton);
+    //run respective functions and hide the dialogue box
+    yesButton.addEventListener("click",function(){
+        yesFunction()
+        confirmBox.style.display="none";
+        confirmTint.style.display="none";
+    });
+    noButton.addEventListener("click",function(){
+        console.log(noButton);
+        confirmBox.style.display="none";
+        confirmTint.style.display="none";
+    });
+
+
+}
 
 var plusButton = document.querySelector("#plus-button");
 var selectNew = document.querySelector("#select-new");

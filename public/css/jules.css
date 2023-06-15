@@ -14,6 +14,37 @@ body{
     margin:0px;
 
 }
+
+#confirm-box{
+    height:fit-content;
+    max-height: 300px;
+    padding:10px;
+    z-index: 1001;
+    top:calc(100vh - 600px );
+    border: solid 1.5px white;
+}
+
+
+#confirm-dialogue{
+    text-align: center;
+}
+
+#confirm-tint{
+    position:fixed;
+    height:110vh;
+    width:100vw;
+    top:0;
+    right:0;
+    background-color: rgb(0, 0, 0);
+    opacity:64%;
+    z-index: 999;
+    overflow: hidden;
+    display:none;
+}
+/*elements that the user cannot interact with*/
+.dni{
+    pointer-events: none;
+}
 #left-side{
     width:20vw;
     height: 100vh;
@@ -194,7 +225,7 @@ mark.highlight {
     margin:10px 30px;
     font-weight: bolder;
 }
-#room-details>h3{
+#room-details>h3,#edit-room>h3{
     text-align: center;
     font-size: large;
 }
@@ -218,6 +249,12 @@ mark.highlight {
 }
 #room-details.owner>#goto-edit-btn:active{
     background-color:#0C0E3D;
+}
+
+#goto-edit-btn>img{
+    width:20px;
+    height:20px;
+    transform: translateY(-3px);
 }
 
 #messages{
@@ -532,7 +569,7 @@ ul{
     left:calc(50vw - 175px);
     bottom:calc(50vh - 200px);
     background-color: #06071E;
-    z-index: 999;
+    z-index: 500;
     display:none;
     transform:translateY(-8px);
 }
@@ -580,6 +617,7 @@ ul{
 }
 
 .friend{
+    position: relative;
     width:300px;
     height:40px;
     display: flex;
@@ -597,6 +635,14 @@ ul{
     float:right;
 }
 
+.crown-icon{
+    display: none;
+}
+
+.owner>.crown-icon{
+    display: block;
+}
+
 .added-button{
     display: none;
 }
@@ -609,7 +655,21 @@ ul{
     display:none;
 }
 
-.overlay-btn{
+#select-edit,#undo-edit{
+    height:40px;
+    width:fit-content;
+    display:grid;
+    grid-template-columns: auto auto;
+    left:0vw;
+}
+
+#select-edit>button,#undo-edit>button{
+    width: 115px;
+    height: 30px;
+    margin: 5px 5px;
+}
+
+.overlay-btn,.overlay>button{
     display: block;
     width:200px;
     height:40px;
@@ -620,11 +680,11 @@ ul{
     background-color:#353772;
     border:none;
 }
-.overlay-btn:hover{
+.overlay-btn,.overlay>button:hover{
     background-color: white;
     color:#353772;
 }
-.overlay-btn:active{
+.overlay-btn,.overlay>button:active{
     background-color:#0C0E3D;
 }
 
@@ -635,7 +695,7 @@ ul{
     top:0;
     right:0;
     background-color: rgba(red, green, blue, 0.5);
-    z-index: 998;
+    z-index: 499;
     overflow: hidden;
     display:none;
 }

@@ -2192,6 +2192,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2343,7 +2383,8 @@ __webpack_require__.r(__webpack_exports__);
     rooms: Array,
     currentRoom: Object,
     friends: Array,
-    roomUsers: Array
+    roomUsers: Array,
+    roomOwners: Array
   },
   data: function data() {
     return {
@@ -2375,9 +2416,24 @@ __webpack_require__.r(__webpack_exports__);
           return 0; // maintain the original order
         }
       });
+    },
+    ownerIds: function ownerIds() {
+      var ownerIds = [];
+      var _iterator = _createForOfIteratorHelper(this.roomOwners),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var o = _step.value;
+          ownerIds.push(o.id);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      return ownerIds;
     }
   },
-
   methods: {
     // add any component-specific methods here
     isAdded: function isAdded(id) {
@@ -45163,8 +45219,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
     _c("div", { attrs: { id: "left-side", onload: "searchFilter()" } }, [
-      _vm._m(0),
+      _vm._m(1),
       _vm._v(" "),
       _c(
         "ul",
@@ -45252,7 +45310,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm._m(1),
+        _vm._m(2),
         _vm._v(" "),
         _c(
           "div",
@@ -45262,7 +45320,7 @@ var render = function() {
             attrs: { id: "new-room" }
           },
           [
-            _vm._m(2),
+            _vm._m(3),
             _vm._v(" "),
             _c("input", {
               staticClass: "search-bar",
@@ -45280,7 +45338,7 @@ var render = function() {
                     _c(
                       "div",
                       {
-                        staticClass: "friend not-selectable",
+                        staticClass: "friend not-selectable new-room-friend",
                         attrs: { id: friend.id }
                       },
                       [
@@ -45311,11 +45369,11 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm._m(3),
-        _vm._v(" "),
         _vm._m(4),
         _vm._v(" "),
-        _vm._m(5)
+        _vm._m(5),
+        _vm._v(" "),
+        _vm._m(6)
       ])
     ]),
     _vm._v(" "),
@@ -45347,22 +45405,22 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "friend not-selectable visible",
-                      class: { added: _vm.currentRoom.user_ids.includes(u.id) },
+                      staticClass: "friend dni not-selectable visible",
+                      class: {
+                        added: _vm.currentRoom.user_ids.includes(u.id),
+                        owner: _vm.ownerIds.includes(u.id)
+                      },
                       attrs: { id: u.id }
                     },
                     [
                       _c("h3", [_vm._v(_vm._s(u.name))]),
                       _vm._v(" "),
-                      _c("img", {
-                        staticClass: "add-button",
-                        attrs: { src: "/img/plus.png", alt: "add friend" }
-                      }),
-                      _vm._v(" "),
-                      _c("img", {
-                        staticClass: "added-button",
-                        attrs: { src: "/img/tick.png", alt: "friend added" }
-                      })
+                      _vm.ownerIds.includes(u.id)
+                        ? _c("img", {
+                            staticClass: "crown-icon",
+                            attrs: { src: "/img/crown.png", alt: "crown icon" }
+                          })
+                        : _vm._e()
                     ]
                   )
                 ])
@@ -45370,11 +45428,7 @@ var render = function() {
               0
             ),
             _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "overlay-btn", attrs: { id: "goto-edit-btn" } },
-              [_vm._v("Edit Room")]
-            )
+            _vm._m(7)
           ]
         ),
         _vm._v(" "),
@@ -45400,7 +45454,11 @@ var render = function() {
           _vm._v(" "),
           _c(
             "ul",
-            { staticClass: "scrollbar", attrs: { id: "friend-list" } },
+            {
+              staticClass: "scrollbar",
+              staticStyle: { display: "none" },
+              attrs: { id: "friend-list" }
+            },
             _vm._l(_vm.friends, function(friend) {
               return _c(
                 "li",
@@ -45435,6 +45493,55 @@ var render = function() {
             0
           ),
           _vm._v(" "),
+          _c("h3", [_vm._v(" Members: ")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "scrollbar", attrs: { id: "user-list" } },
+            _vm._l(_vm.roomUsers, function(u) {
+              return _c("li", { key: u.id, staticClass: "left clearfix" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "friend not-selectable visible member",
+                    class: {
+                      added: _vm.currentRoom.user_ids.includes(u.id),
+                      owner: _vm.ownerIds.includes(u.id)
+                    },
+                    attrs: { id: u.id }
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "crown-icon",
+                      attrs: { src: "/img/crown.png", alt: "crown icon" }
+                    }),
+                    _vm._v(" "),
+                    _c("h3", [_vm._v(_vm._s(u.name))]),
+                    _vm._v(" "),
+                    _c("img", {
+                      staticClass: "add-button",
+                      attrs: { src: "/img/plus.png", alt: "add friend" }
+                    }),
+                    _vm._v(" "),
+                    _c("img", {
+                      staticClass: "added-button",
+                      attrs: { src: "/img/tick.png", alt: "friend added" }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(8, true),
+                _vm._v(" "),
+                _vm._m(9, true)
+              ])
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("button", { attrs: { id: "discard-edit-btn" } }, [
+            _vm._v("Discard")
+          ]),
+          _vm._v(" "),
           _c(
             "button",
             { staticClass: "overlay-btn", attrs: { id: "confirm-edit-btn" } },
@@ -45442,7 +45549,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(6)
+        _vm._m(10)
       ]),
       _vm._v(" "),
       _c(
@@ -45459,27 +45566,29 @@ var render = function() {
         "ul",
         { staticClass: "scrollbar", attrs: { id: "message-list" } },
         _vm._l(_vm.messages, function(message) {
-          return _c("li", { key: message.id, staticClass: "left clearfix" }, [
-            _c("div", { staticClass: "clearfix" }, [
-              _c("div", { staticClass: "header" }, [
-                _c("strong", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(message.user ? message.user.name : "Unknown") +
-                      "\n                    "
-                  )
+          return _vm.roomId != 0
+            ? _c("li", { key: message.id, staticClass: "left clearfix" }, [
+                _c("div", { staticClass: "clearfix" }, [
+                  _c("div", { staticClass: "header" }, [
+                    _c("strong", [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(message.user ? message.user.name : "Unknown") +
+                          "\n                "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(message.message) +
+                        "\n            "
+                    )
+                  ])
                 ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(message.message) +
-                    "\n                "
-                )
               ])
-            ])
-          ])
+            : _vm._e()
         }),
         0
       ),
@@ -45488,13 +45597,35 @@ var render = function() {
         ? _c("div", { attrs: { id: "landing-room" } }, [
             _c("h1", [_vm._v("Welcome!")]),
             _vm._v(" "),
-            _vm._m(7)
+            _vm._m(11)
           ])
         : _vm._e()
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { position: "relative", "z-index": "1000" } },
+      [
+        _c("div", { attrs: { id: "confirm-tint" } }),
+        _vm._v(" "),
+        _c("div", { staticClass: "overlay", attrs: { id: "confirm-box" } }, [
+          _c("h2", { attrs: { id: "confirm-dialogue" } }, [
+            _vm._v("Are you sure?")
+          ]),
+          _vm._v(" "),
+          _c("button", { attrs: { id: "yes-btn" } }, [_vm._v(" Yes ")]),
+          _vm._v(" "),
+          _c("button", { attrs: { id: "no-btn" } }, [_vm._v(" No ")])
+        ])
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -45622,6 +45753,65 @@ var staticRenderFns = [
         _c("h1", [_vm._v("New friend addded")])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "overlay-btn", attrs: { id: "goto-edit-btn" } },
+      [
+        _c("img", {
+          staticClass: "crown-icon",
+          attrs: { src: "/img/crown.png", alt: "crown icon" }
+        }),
+        _vm._v("\n                Edit Room\n                "),
+        _c("img", {
+          staticClass: "crown-icon",
+          attrs: { src: "/img/crown.png", alt: "crown icon" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "overlay", attrs: { id: "select-edit" } }, [
+      _c(
+        "button",
+        {
+          staticClass: "overlay-btn select-edit-btn",
+          attrs: { id: "make-owner-btn" }
+        },
+        [_vm._v("Make Owner")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "overlay-btn select-edit-btn",
+          attrs: { id: "remove-user-btn" }
+        },
+        [_vm._v("Remove")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "overlay", attrs: { id: "undo-edit" } }, [
+      _c(
+        "button",
+        {
+          staticClass: "overlay-btn select-edit-btn",
+          attrs: { id: "undo-btn" }
+        },
+        [_vm._v("Undo")]
+      )
+    ])
   },
   function() {
     var _vm = this

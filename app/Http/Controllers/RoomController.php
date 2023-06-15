@@ -52,10 +52,11 @@ class RoomController extends Controller
             $currentRoom = Room::where('id',$room_id)->first();
         }
         $roomUsers = User::whereIn("id",json_decode($currentRoom->user_ids))->get();
-        //dd($roomUsers);
+        $roomOwners = User::whereIn("id",json_decode($currentRoom->owner_ids))->get();
+        //dd($roomOwners);
 
 
-        return view('room', compact('currentRoom', 'currentUser','rooms', 'room_id','friends','roomUsers'));
+        return view('room', compact('currentRoom', 'currentUser','rooms', 'room_id','friends','roomUsers','roomOwners'));
     }
 
     public function left(Request $request)
@@ -151,6 +152,7 @@ class RoomController extends Controller
         $roomId = $request->input("roomId");
         $roomName = $request->input("roomName");
         $newUsers = $request ->input("users");
+        $newOwners = $request ->input("owners");
 
         //get room from database
         $room = Room::where('id',$roomId)->first();
@@ -161,7 +163,7 @@ class RoomController extends Controller
 
         //make changes to room
         $users = $newUsers;
-        $owners = json_decode($room->owner_ids);
+        $owners = $newOwners;
 
         //remove duplicates from user list and owner list
         $users = array_unique($users);
@@ -169,13 +171,14 @@ class RoomController extends Controller
 
         //save changes
         $room->user_ids = json_encode($users);
+        $room->owner_ids = json_encode($owners);
 
         if($roomName!=""){
             $room->name = $roomName;
         }
         $room->save();
 
-        //add room to the rooms array of every user that was added to the room
+        //add room to the User->rooms array of every user that was added to the room
         forEach($users as $uid){
             $user = User::where('id',$uid)->first();
             $rooms = $user->rooms;
@@ -202,7 +205,7 @@ class RoomController extends Controller
         }
 
 
-        //remove this room from the rooms array of every user that was removed from a room
+        //remove this room from the User->rooms array of every user that was removed from a room
         forEach($oldUsers as $uid){
             if(!in_array($uid,$users)){
                 $user = User::where('id',$uid)->first();
