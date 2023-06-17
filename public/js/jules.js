@@ -277,101 +277,54 @@ function undoHandler(m){
     displayOff(undoEdit);
 }
 
-memberDivs.forEach(m => {
-    // Define event handler functions with closures
-    function makeOwnerHandler() {
-      return function() {
-        function ownerYes() {
-          // Original classlist is saved so changes can be undone
-          var ocl = m.classList;
-          // Create a new DOM element
-          var hiddenMember = document.createElement('div');
-          // Set the class list of the hidden element to match the original class list
-          hiddenMember.classList = ocl;
-          // Identify this element and add it to the document so it can be accessed later
-          hiddenMember.style.display = "none";
-          hiddenMember.id = m.id;
-          hiddenMember.classList.add("hidden");
-          document.body.appendChild(hiddenMember);
-
-          m.classList.add("owner");
-          m.classList.add("changed"); // Keep track of what divs were changed in this session so it can be easily undone
-          displayOff(selectEdit);
-        }
-
-        createConfirmBox("Are you sure you want to make " + m.querySelector("h3").innerHTML + " an owner of this room.", ownerYes);
-      }
-    }
-
-    function removeUserHandler() {
-      return function() {
-        // Original classlist is saved so changes can be undone
-        var ocl = m.classList;
-        // Create a new DOM element
-        var hiddenMember = document.createElement('div');
-        // Set the class list of the hidden element to match the original class list
-        hiddenMember.classList = ocl;
-        // Identify this element and add it to the document so it can be accessed later
-        hiddenMember.style.display = "none";
-        hiddenMember.id = m.id;
-        hiddenMember.classList.add("hidden");
-        document.body.appendChild(hiddenMember);
-
-        m.classList.add("changed"); // Keep track of what divs were changed in this session so it can be easily undone
-        m.classList.remove("added");
-        displayOff(selectEdit);
-      }
-    }
-
-    function undoHandler() {
-      return function() {
-        var hiddenMembers = Array.from(document.querySelectorAll('.hidden'));
-        var hiddenMember = hiddenMembers.find(x => x.id == m.id);
-        console.log(hiddenMember);
-        m.classList = hiddenMember.classList;
-        m.classList.remove("hidden");
-        displayOff(undoEdit);
-      }
-    }
-
-    // Add event listener
-    m.addEventListener('click', function() {
-      // Only add or remove a user if they are not an owner
-      if (!m.classList.contains('owner') && !m.classList.contains('changed')) {
-        // Position the selectEdit div just to the right of the user
+memberDivs.forEach(m => m.addEventListener('click',function(){
+    //only add or remove a user if they are not an owner
+    if(!m.classList.contains('owner') & !m.classList.contains('changed')){
+        //position the selectEdit div just to the right of the user
         var mPos = m.getBoundingClientRect();
         console.log(mPos);
         /*
-        selectEdit.style.left = mPos.left + 'px';
-        selectEdit.style.top = mPos.top + 'px';
+        selectEdit.style.left=mPos.left+'px';
+        selectEdit.style.top=mPos.top+'px';
         */
-        console.log(11);
-        displayToggle(selectEdit, "grid");
-        console.log(12);
-        // Remove all listeners that may be on the buttons
-        /*
+        displayToggle(selectEdit,"grid");
+
+        //remove all listeners that may be on the buttons requires redefining the variables in js
+        //beacuse removeAllEventListeners replaces the DOM elements with fresh ones that have no listeners
+        var makeOwnerButton = document.querySelector("#make-owner-btn");
+        var removeUserButton = document.querySelector("#remove-user-btn");
+
         removeAllEventListeners(makeOwnerButton);
         removeAllEventListeners(removeUserButton);
-        removeAllEventListeners(undoButton);
-        */
-        // Add listeners to the buttons in selectEdit
-        makeOwnerButton.addEventListener("click", makeOwnerHandler());
-        removeUserButton.addEventListener("click", removeUserHandler());
-      }
-      if (m.classList.contains('changed')) {
-        displayToggle(undoEdit);
-        undoButton.addEventListener("click", undoHandler());
-      }
-    });
 
-    // Function to remove the event listener
-    function removeClickListener() {
-      m.removeEventListener('click', handleClick);
+        var makeOwnerButton = document.querySelector("#make-owner-btn");
+        var removeUserButton = document.querySelector("#remove-user-btn");
+
+
+        console.log(makeOwnerButton);
+
+        //add listeners to the buttons in selectEdit
+
+        makeOwnerButton.addEventListener("click",function(){
+            makeOwnerHandler(m);
+        });
+        removeUserButton.addEventListener("click",function(){
+            removeUserHandler(m);
+        });
     }
+    if(m.classList.contains('changed')){
+        //same process as for the makeownerbutton and removeowner button replace the dom element with a fresh one and then redefine the var in js
+        var undoButton = document.querySelector("#undo-btn");
+        removeAllEventListeners(undoButton);
+        var undoButton = document.querySelector("#undo-btn");
 
-    // Store the removeClickListener function as a property on the element
-    m.removeClickListener = removeClickListener;
-  });
+        displayToggle(undoEdit);
+        undoButton.addEventListener("click",function(){
+            undoHandler(m);
+        });
+    }
+}
+));
 //remove all listeners from an element
 function removeAllEventListeners(element) {
     // Check if the element has a parent node
