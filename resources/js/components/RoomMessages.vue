@@ -17,7 +17,7 @@
             <ul id="room-list" class="rooms scrollbar chats">
                 <li v-for="room in rooms" v-if="room.id!=0" :key="room.id">
                     <a :href="'../room/' + room.id">
-                        <div class="chat room" id="roomdiv">
+                        <div class="chat room searchable" id="roomdiv">
                             <img class="pfp" src="\img\pfp.png">
                             <h3 class="username">{{ room.name }}</h3>
                             <img class="alert" src="/img/alert.png">
@@ -53,9 +53,9 @@
                     </div>
                     <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
                     <!--list of friends-->
-                    <ul id="friend-list" class="scrollbar">
+                    <ul id="friend-list" class="scrollbar user-list">
                         <li class="left clearfix" v-for="friend in sortedFriends" :key="friend.id">
-                            <div :id = friend.id class="friend not-selectable new-room-friend">
+                            <div :id = friend.id class="friend not-selectable new-room-friend searchable">
                                 <h3>{{ friend.name }}</h3>
                                 <img class="add-button" src="/img/plus.png" alt="add friend">
                                 <img class="added-button" src="/img/tick.png" alt="friend added">
@@ -88,7 +88,7 @@
 
                 <h3>Members: </h3>
                 <!--list of users in the room-->
-                <ul id="user-list" class="scrollbar">
+                <ul id="details-member-list" class="scrollbar user-list">
                     <li class="left clearfix" v-for="u in roomUsers" :key="u.id">
                         <div :id = u.id class="friend dni not-selectable visible" :class="{ added: currentRoom.user_ids.includes(u.id), owner: ownerIds.includes(u.id) }">
                             <h3>{{ u.name }}</h3>
@@ -109,11 +109,11 @@
                     <input type="text" id="rname" class ="resizing-input" :placeholder="currentRoom.name" maxlength="20">
                     <img src="/img/edit.png">
                 </div>
-                <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
+                <input type="text" id="msearch-bar" class="search-bar"> <!-- friend search bar-->
                     <!--list of friends we could add to the room-->
-                    <ul id="friend-list" class="scrollbar" style = "display:none">
+                    <ul id="friend-list" class="scrollbar user-list" style = "display:none">
                         <li class="left clearfix" v-for="friend in friends" :key="friend.id">
-                            <div :id = friend.id class="friend not-selectable visible" :class="{ added: currentRoom.user_ids.includes(friend.id) }">
+                            <div :id = friend.id class="friend not-selectable visible searchable" :class="{ added: currentRoom.user_ids.includes(friend.id) }">
                                 <h3>{{ friend.name }}</h3>
 
                                 <!--display either the add button or the added button based on if the user is already in the room or not-->
@@ -124,9 +124,9 @@
 
                     </ul>
                     <h3> Members: </h3>
-                    <ul id="user-list" class="scrollbar">
+                    <ul id="member-list" class="scrollbar user-list">
                     <li class="left clearfix" v-for="u in roomUsers" :key="u.id">
-                        <div :id = u.id class="friend not-selectable visible member" :class="{ added: currentRoom.user_ids.includes(u.id), owner: ownerIds.includes(u.id) }">
+                        <div :id = u.id class="friend not-selectable visible member searchable" :class="{ added: currentRoom.user_ids.includes(u.id), owner: ownerIds.includes(u.id) }">
                             <!--display a crown icon if the user is an owner of this room -->
                             <img class="crown-icon" src="/img/crown.png" alt="crown icon">
                             <h3>{{ u.name }}</h3>

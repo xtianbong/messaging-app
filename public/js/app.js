@@ -45233,7 +45233,10 @@ var render = function() {
                 _c("a", { attrs: { href: "../room/" + room.id } }, [
                   _c(
                     "div",
-                    { staticClass: "chat room", attrs: { id: "roomdiv" } },
+                    {
+                      staticClass: "chat room searchable",
+                      attrs: { id: "roomdiv" }
+                    },
                     [
                       _c("img", {
                         staticClass: "pfp",
@@ -45329,7 +45332,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "ul",
-              { staticClass: "scrollbar", attrs: { id: "friend-list" } },
+              {
+                staticClass: "scrollbar user-list",
+                attrs: { id: "friend-list" }
+              },
               _vm._l(_vm.sortedFriends, function(friend) {
                 return _c(
                   "li",
@@ -45338,7 +45344,8 @@ var render = function() {
                     _c(
                       "div",
                       {
-                        staticClass: "friend not-selectable new-room-friend",
+                        staticClass:
+                          "friend not-selectable new-room-friend searchable",
                         attrs: { id: friend.id }
                       },
                       [
@@ -45399,7 +45406,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "ul",
-              { staticClass: "scrollbar", attrs: { id: "user-list" } },
+              {
+                staticClass: "scrollbar user-list",
+                attrs: { id: "details-member-list" }
+              },
               _vm._l(_vm.roomUsers, function(u) {
                 return _c("li", { key: u.id, staticClass: "left clearfix" }, [
                   _c(
@@ -45449,13 +45459,13 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             staticClass: "search-bar",
-            attrs: { type: "text", id: "fsearch-bar" }
+            attrs: { type: "text", id: "msearch-bar" }
           }),
           _vm._v(" "),
           _c(
             "ul",
             {
-              staticClass: "scrollbar",
+              staticClass: "scrollbar user-list",
               staticStyle: { display: "none" },
               attrs: { id: "friend-list" }
             },
@@ -45467,7 +45477,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "friend not-selectable visible",
+                      staticClass: "friend not-selectable visible searchable",
                       class: {
                         added: _vm.currentRoom.user_ids.includes(friend.id)
                       },
@@ -45497,13 +45507,17 @@ var render = function() {
           _vm._v(" "),
           _c(
             "ul",
-            { staticClass: "scrollbar", attrs: { id: "user-list" } },
+            {
+              staticClass: "scrollbar user-list",
+              attrs: { id: "member-list" }
+            },
             _vm._l(_vm.roomUsers, function(u) {
               return _c("li", { key: u.id, staticClass: "left clearfix" }, [
                 _c(
                   "div",
                   {
-                    staticClass: "friend not-selectable visible member",
+                    staticClass:
+                      "friend not-selectable visible member searchable",
                     class: {
                       added: _vm.currentRoom.user_ids.includes(u.id),
                       owner: _vm.ownerIds.includes(u.id)

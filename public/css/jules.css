@@ -595,7 +595,7 @@ ul{
     text-decoration: underline;
 }
 
-#fsearch-bar{
+#fsearch-bar,#msearch-bar{
     position: relative;
     display: block;
     width:280px;
@@ -606,7 +606,7 @@ ul{
     height:200px;
 }
 
-#friend-list,#user-list{
+#friend-list,.member-list{
     width:fit-content;
     height:fit-content;
     max-height: 200px;
@@ -616,7 +616,7 @@ ul{
     justify-content: space-between;
 }
 
-#user-list{
+#member-list{
     float:left;
 }
 
@@ -639,12 +639,22 @@ ul{
     float:right;
 }
 
+.changed{
+    background-color: #222573;
+}
+.changed:hover{
+    background-color: #2e3174;
+}
+
 .crown-icon{
     display: none;
+
 }
 
 .owner>.crown-icon{
     display: block;
+    margin:1px 5px;
+
 }
 
 .added-button{

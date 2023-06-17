@@ -21,8 +21,8 @@ function replace(){
 
 
 function searchFilter(searchBar,targetList){//searchBar,targetList
-    //console.log("search ran");
-    var allChats = targetList.querySelectorAll("div");
+    console.log("search ran");
+    var allChats = targetList.querySelectorAll(".searchable");
     //make all chats visible if searchBar is empty
     if(searchBar.value==""){
         allChats.forEach(c => {
@@ -44,6 +44,7 @@ function searchFilter(searchBar,targetList){//searchBar,targetList
             const searchText = searchBar.value.toLowerCase();
 
             if (chatName.toLowerCase().includes(searchText)) {
+                console.log(chatName+" is visible")
                 //console.log(c);
                 c.classList.add("visible");
                 //highlight the text in the name that corresponds to the query
@@ -53,8 +54,10 @@ function searchFilter(searchBar,targetList){//searchBar,targetList
                 });
 
                 c.querySelector("h3").innerHTML = highlightedText;
-            } else {
+            }
+            else {
                 c.classList.remove("visible");
+                console.log(chatName+" is not visible")
             }
         });
     }
@@ -94,6 +97,22 @@ document.addEventListener("load", function() {
     searchFilter(fSearchBar, fDivs);
 });
 
+//search member list in the edit-room div
+var mSearchBar = document.getElementById("msearch-bar");
+var mDivs = document.querySelector("#member-list");
+
+mSearchBar.addEventListener("input",function(){
+    searchFilter(mSearchBar,mDivs);
+})
+
+window.addEventListener("load", function() {
+    searchFilter(mSearchBar, mDivs);
+});
+
+document.addEventListener("load", function() {
+    searchFilter(mSearchBar, mDivs);
+});
+
 //reset shake animation after it plays
 function resetShake(shaker){
     setTimeout(function(){
@@ -109,10 +128,10 @@ const ulElement = cardBody.querySelector("#message-list");
 
 window.addEventListener("load", function() {
     if (ulElement) {
-      ulElement.classList.add("scrollbar");
-      ulElement.scrollTop = ulElement.scrollHeight;
+        ulElement.classList.add("scrollbar");
+        ulElement.scrollTop = ulElement.scrollHeight;
     }
-  });
+});
 
 
 // makes the ul scroll to the bottom on load and when a new message is entered
