@@ -204,13 +204,36 @@ mark.highlight {
     margin:0px;
 }
 
-#edit-room-btn,#room-details-btn{
-    width:30px;
-    height: 30px;
+#buttons-box{
+    height: 40px;
     position: absolute;
     right:20px;
     top:10px;
+}
+
+#buttons-box>img{
+    width:30px;
+    margin-left:5px;
     cursor: pointer;
+}
+
+#add-users{
+
+}
+#add-with-email{
+    display:flex;
+}
+#add-users-email{
+    margin:0px 10px;
+}
+#add-with-email-btn{
+    width:50px;
+    height:30px;
+    margin: 0px 10px 0px 0px;
+}
+
+#room-details-btn{
+    transform: translateY(-1px);
 }
 
 
@@ -571,7 +594,7 @@ ul{
     position:absolute;
     transform: translateY(0px);
     left:calc(50vw - 175px);
-    bottom:calc(50vh - 200px);
+    bottom:-500px;
     background-color: #06071E;
     z-index: 500;
     display:none;
@@ -595,7 +618,7 @@ ul{
     text-decoration: underline;
 }
 
-#fsearch-bar,#msearch-bar{
+#fsearch-bar,#msearch-bar,#asearch-bar{
     position: relative;
     display: block;
     width:280px;
@@ -675,6 +698,7 @@ ul{
     display:grid;
     grid-template-columns: auto auto;
     left:0vw;
+    bottom:186px;
 }
 
 #select-edit>button,#undo-edit>button{

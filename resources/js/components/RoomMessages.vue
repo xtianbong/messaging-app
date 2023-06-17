@@ -82,7 +82,31 @@
     <div id="right-side">
         <div id="name-box" >
             <h2 :id=currentRoom.id v-if="currentRoom.id != 0">{{currentRoom.name}}</h2>
-            <img id="room-details-btn" src="/img/options.png" >
+            <div id="buttons-box">
+                <img id="add-users-btn" src="/img/add-user.png">
+                <img id="room-details-btn" src="/img/options.png" >
+            </div>
+            <div id="add-users" class="overlay">
+                <h2>{{currentRoom.name}}</h2>
+                <h3>Friends: </h3>
+                <input type="text" id="asearch-bar" class="search-bar"> <!-- friend search bar-->
+                <!--list of friends that can be added-->
+                <ul id="add-list" class="scrollbar user-list">
+                    <li class="left clearfix" v-for="friend in sortedFriends" :key="friend.id">
+                        <div :id = friend.id class="friend not-selectable new-room-friend searchable">
+                            <h3>{{ friend.name }}</h3>
+                            <img class="add-button" src="/img/plus.png" alt="add friend">
+                            <img class="added-button" src="/img/tick.png" alt="friend added">
+                        </div>
+                    </li>
+                </ul>
+                <h3>Add users by email:</h3>
+                <div id="add-with-email">
+                    <input type="text" id="add-users-email" placeholder="E-mail" class="email-bar">
+                    <button id="add-with-email-btn" class="overlay-btn">Go</button>
+                </div>
+                <button id="confirm-add-user" class="overlay-btn">Add to room</button>
+            </div>
             <div id="room-details" class="overlay owner" >
                 <h2>{{currentRoom.name}}</h2>
 

@@ -2374,6 +2374,30 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -45392,9 +45416,63 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("img", {
-          attrs: { id: "room-details-btn", src: "/img/options.png" }
-        }),
+        _vm._m(7),
+        _vm._v(" "),
+        _c("div", { staticClass: "overlay", attrs: { id: "add-users" } }, [
+          _c("h2", [_vm._v(_vm._s(_vm.currentRoom.name))]),
+          _vm._v(" "),
+          _c("h3", [_vm._v("Friends: ")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "search-bar",
+            attrs: { type: "text", id: "asearch-bar" }
+          }),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "scrollbar user-list", attrs: { id: "add-list" } },
+            _vm._l(_vm.sortedFriends, function(friend) {
+              return _c(
+                "li",
+                { key: friend.id, staticClass: "left clearfix" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "friend not-selectable new-room-friend searchable",
+                      attrs: { id: friend.id }
+                    },
+                    [
+                      _c("h3", [_vm._v(_vm._s(friend.name))]),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "add-button",
+                        attrs: { src: "/img/plus.png", alt: "add friend" }
+                      }),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "added-button",
+                        attrs: { src: "/img/tick.png", alt: "friend added" }
+                      })
+                    ]
+                  )
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("h3", [_vm._v("Add users by email:")]),
+          _vm._v(" "),
+          _vm._m(8),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "overlay-btn", attrs: { id: "confirm-add-user" } },
+            [_vm._v("Add to room")]
+          )
+        ]),
         _vm._v(" "),
         _c(
           "div",
@@ -45438,7 +45516,7 @@ var render = function() {
               0
             ),
             _vm._v(" "),
-            _vm._m(7)
+            _vm._m(9)
           ]
         ),
         _vm._v(" "),
@@ -45544,9 +45622,9 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(8, true),
+                _vm._m(10, true),
                 _vm._v(" "),
-                _vm._m(9, true)
+                _vm._m(11, true)
               ])
             }),
             0
@@ -45563,7 +45641,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(10)
+        _vm._m(12)
       ]),
       _vm._v(" "),
       _c(
@@ -45611,7 +45689,7 @@ var render = function() {
         ? _c("div", { attrs: { id: "landing-room" } }, [
             _c("h1", [_vm._v("Welcome!")]),
             _vm._v(" "),
-            _vm._m(11)
+            _vm._m(13)
           ])
         : _vm._e()
     ])
@@ -45767,6 +45845,33 @@ var staticRenderFns = [
         _c("h1", [_vm._v("New friend addded")])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "buttons-box" } }, [
+      _c("img", { attrs: { id: "add-users-btn", src: "/img/add-user.png" } }),
+      _vm._v(" "),
+      _c("img", { attrs: { id: "room-details-btn", src: "/img/options.png" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "add-with-email" } }, [
+      _c("input", {
+        staticClass: "email-bar",
+        attrs: { type: "text", id: "add-users-email", placeholder: "E-mail" }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "overlay-btn", attrs: { id: "add-with-email-btn" } },
+        [_vm._v("Go")]
+      )
+    ])
   },
   function() {
     var _vm = this

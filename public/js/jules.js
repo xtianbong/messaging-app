@@ -44,7 +44,7 @@ function searchFilter(searchBar,targetList){//searchBar,targetList
             const searchText = searchBar.value.toLowerCase();
 
             if (chatName.toLowerCase().includes(searchText)) {
-                console.log(chatName+" is visible")
+                //console.log(chatName+" is visible")
                 //console.log(c);
                 c.classList.add("visible");
                 //highlight the text in the name that corresponds to the query
@@ -57,7 +57,7 @@ function searchFilter(searchBar,targetList){//searchBar,targetList
             }
             else {
                 c.classList.remove("visible");
-                console.log(chatName+" is not visible")
+                //console.log(chatName+" is not visible")
             }
         });
     }
@@ -95,6 +95,22 @@ window.addEventListener("load", function() {
 
 document.addEventListener("load", function() {
     searchFilter(fSearchBar, fDivs);
+});
+
+//search friends list in add-users div
+aSearchBar = document.getElementById("asearch-bar");
+aDivs = document.getElementById("add-list");
+
+aSearchBar.addEventListener("input",function(){
+    searchFilter(aSearchBar,aDivs);
+})
+
+window.addEventListener("load", function() {
+    searchFilter(aSearchBar, aDivs);
+});
+
+document.addEventListener("load", function() {
+    searchFilter(aSearchBar, aDivs);
 });
 
 //search member list in the edit-room div
@@ -424,10 +440,42 @@ function createRoomPHP(currentUserId,name, users, owners){
 const createRoomBtn = document.querySelector('#create-room-btn');
 
 createRoomBtn.addEventListener('click', createNewRoom);
+//get all the input from the add-user div
+function addUser(){
+    var roomId = document.querySelector("#name-box").querySelector("h2").getAttribute("id");
+    var roomName = document.querySelector("#edit-room").querySelector("#rname").value;
+    var users = [];
+    var newUsers = [];
+    var owners = [];
+    var userDivs = document.querySelectorAll(".member.visible");//must include .visible here because of the hidden divs hold the old classlists
+    var newUserDivs = document.querySelectorAll(".new-room-friend.visible");
+    console.log(userDivs);
+    for(var div of userDivs){
+        if(div.classList.contains("added")){
+            users.push(parseInt(div.getAttribute("id")))
+        }
+    }
+    for(var div of newUserDivs){
+        if(div.classList.contains("added")){
+            users.push(parseInt(div.getAttribute("id")))
+        }
+    }
+    for(var div of userDivs){
+        if(div.classList.contains("owner")){
+            owners.push(parseInt(div.getAttribute("id")))
+        }
+    }
+    console.log(roomId);
+    console.log(roomName);
+    console.log(users);
+    console.log(owners);
+    editRoomPHP(roomId,roomName,users,owners)
+}
+const confirmAddUser = document.querySelector("#confirm-add-user");
+confirmAddUser.addEventListener("click",addUser);
 
-//get an array of the divs in the user-list
-//var userDivs = document.querySelector("#user-list").querySelectorAll("div");
-function editRoomPHP(){
+//get all the input from the edit-room div
+function editRoom(){
     var roomId = document.querySelector("#name-box").querySelector("h2").getAttribute("id");
     var roomName = document.querySelector("#edit-room").querySelector("#rname").value;
     var users = [];
@@ -445,11 +493,14 @@ function editRoomPHP(){
             owners.push(parseInt(div.getAttribute("id")))
         }
     }
-
-    console.log(roomId);
-    console.log(roomName);
-    console.log(users);
-    console.log(owners);
+    //console.log(roomId);
+    //console.log(roomName);
+    //console.log(users);
+    //console.log(owners);
+    editRoomPHP(roomId,roomName,users,owners)
+}
+//send the info we gathered from the page to the editRoom php function
+function editRoomPHP(roomId,roomName,users,owners){
 
     axios.post('/room/edit-room',{
         roomId: roomId,
@@ -498,7 +549,7 @@ discardEditButton.addEventListener("click",function(){
     //location.reload();
 });
 var confirmEditButton = document.querySelector("#confirm-edit-btn");
-confirmEditButton.addEventListener("click",editRoomPHP);
+confirmEditButton.addEventListener("click",editRoom);
 
 //make users move to the top of the friends list if they are in the room
 function updateOrder() {
@@ -576,8 +627,10 @@ function logOutPHP(){
 }
 
 const confirmLogout = document.querySelector("#log-out-btn");
-console.log(confirmLogout);
-confirmLogout.addEventListener('click',logOutPHP);
+confirmLogout.addEventListener('click',function(){
+    createConfirmBox("Are you sure you want to log out?",logOutPHP);
+});
+
 
 //make an object appear/disappear when a button is pressed
 var tint = document.querySelector("#tint");
@@ -632,7 +685,7 @@ function displayOff(target='default'){
 }
 
 
-//create a dialogue box asking the user to confirm their action takes string dialogue to craft the prompt
+//create a dialogue box asking the user to confirm their action .Takes string dialogue to craft the prompt
 function createConfirmBox(dialogue="Are you sure?",yesFunction){
     var confirmBox = document.getElementById("confirm-box");
     var confirmDialogue = document.getElementById("confirm-dialogue");
@@ -655,12 +708,9 @@ function createConfirmBox(dialogue="Are you sure?",yesFunction){
         confirmTint.style.display="none";
     });
     noButton.addEventListener("click",function(){
-        console.log(noButton);
         confirmBox.style.display="none";
         confirmTint.style.display="none";
     });
-
-
 }
 
 var plusButton = document.querySelector("#plus-button");
@@ -677,6 +727,13 @@ var newRoom = document.querySelector("#new-room");
 addRoomButton.addEventListener('click', function(){
     displayOff();
     displayToggle(newRoom);
+});
+
+var addUserButton = document.querySelector("#add-users-btn");
+var addUser = document.querySelector("#add-users");
+addUserButton.addEventListener('click',function(){
+    displayOff();
+    displayToggle(addUser);
 });
 
 var roomDetailsButton = document.querySelector("#room-details-btn");
