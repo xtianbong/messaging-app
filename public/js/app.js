@@ -45538,15 +45538,15 @@ var render = function() {
             0
           ),
           _vm._v(" "),
-          _c("button", { attrs: { id: "discard-edit-btn" } }, [
-            _vm._v("Discard")
-          ]),
-          _vm._v(" "),
           _c(
             "button",
             { staticClass: "overlay-btn", attrs: { id: "confirm-edit-btn" } },
             [_vm._v("Save Changes")]
-          )
+          ),
+          _vm._v(" "),
+          _c("button", { attrs: { id: "discard-edit-btn" } }, [
+            _vm._v("Discard")
+          ])
         ]),
         _vm._v(" "),
         _vm._m(10)

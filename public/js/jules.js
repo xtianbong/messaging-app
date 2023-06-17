@@ -240,6 +240,7 @@ function makeOwnerHandler(m){
         //identify this element and add it to the document so it can be accessed later
         hiddenMember.style.display="none";
         hiddenMember.id=m.id;
+        hiddenMember.classList.remove("visible");
         hiddenMember.classList.add("hidden");
         document.body.appendChild(hiddenMember);
 
@@ -260,6 +261,7 @@ function removeUserHandler(m){
     //identify this element and add it to the document so it can be accessed later
     hiddenMember.style.display="none";
     hiddenMember.id=m.id;
+    hiddenMember.classList.remove("visible");
     hiddenMember.classList.add("hidden");
     document.body.appendChild(hiddenMember);
 
@@ -274,6 +276,7 @@ function undoHandler(m){
     console.log(hiddenMember);
     m.classList = hiddenMember.classList;
     m.classList.remove("hidden");
+    m.classList.add("visible");
     displayOff(undoEdit);
 }
 
@@ -299,9 +302,6 @@ memberDivs.forEach(m => m.addEventListener('click',function(){
 
         var makeOwnerButton = document.querySelector("#make-owner-btn");
         var removeUserButton = document.querySelector("#remove-user-btn");
-
-
-        console.log(makeOwnerButton);
 
         //add listeners to the buttons in selectEdit
 
@@ -413,7 +413,7 @@ function editRoomPHP(){
     var roomName = document.querySelector("#edit-room").querySelector("#rname").value;
     var users = [];
     var owners = [];
-    var userDivs = document.querySelectorAll(".member");
+    var userDivs = document.querySelectorAll(".member.visible");//must include .visible here because of the hidden divs hold the old classlists
     console.log(userDivs);
     for(var div of userDivs){
         if(div.classList.contains("added")){
@@ -431,7 +431,7 @@ function editRoomPHP(){
     console.log(roomName);
     console.log(users);
     console.log(owners);
-    /*
+
     axios.post('/room/edit-room',{
         roomId: roomId,
         roomName: roomName,
@@ -459,7 +459,7 @@ function editRoomPHP(){
                 window.location.href="/room/"+editRoomResponse.id;//get room id from the response to the post request
             }
         },3000);
-    });*/
+    });
 }
 //close all overlays and refresh page when the user discards a room edit
 var discardEditButton = document.querySelector("#discard-edit-btn");

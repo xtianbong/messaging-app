@@ -15,6 +15,10 @@ body{
 
 }
 
+.hidden{/*objects that are invisible*/
+    display: none !important;
+}
+
 #confirm-box{
     height:fit-content;
     max-height: 300px;

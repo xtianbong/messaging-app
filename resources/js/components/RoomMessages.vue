@@ -145,8 +145,8 @@
 
                     </li>
                 </ul>
-                <button id="discard-edit-btn">Discard</button>
                 <button id="confirm-edit-btn" class="overlay-btn">Save Changes</button>
+                <button id="discard-edit-btn">Discard</button>
             </div>
             <div id="edit-room-alert" class="overlay room-alert" style="display: none;">
                 <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the room  has been edited">
