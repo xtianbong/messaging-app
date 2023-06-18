@@ -1,3 +1,5 @@
+//const { add } = require("lodash");
+
 //added by jules
 document.addEventListener('DOMContentLoaded', function() {
 function initialize() {
@@ -245,14 +247,18 @@ rname.addEventListener('change', resizeInputs);
 //make create-rooms div react to input
 //get array of friend divs in the html
 var friendDivs = document.querySelectorAll("div.new-room-friend");
-friendDivs.forEach(f => f.addEventListener('click',function(){
-    if(f.classList.contains('added')){
-        f.classList.remove('added');
-    }
-    else{
-        f.classList.add('added');
-    }
-}));
+function friendDivsInput(){
+    var friendDivs = document.querySelectorAll("div.new-room-friend");
+    friendDivs.forEach(f => f.addEventListener('click',function(){
+        if(f.classList.contains('added')){
+            f.classList.remove('added');
+        }
+        else{
+            f.classList.add('added');
+        }
+    }));
+}
+window.addEventListener("DOMContentLoaded",friendDivsInput);
 
 //make edit-room div react to input
 //get array of member divs in the html
@@ -404,6 +410,8 @@ function createNewRoom(){
         createRoomPHP(currentUserId,name, users, owners);
     }
 }
+const createRoomBtn = document.querySelector('#create-room-btn');
+createRoomBtn.addEventListener('click', createNewRoom);
 
 //run the createRoom function in RoomController.php
 function createRoomPHP(currentUserId,name, users, owners){
@@ -437,9 +445,53 @@ function createRoomPHP(currentUserId,name, users, owners){
     });
 }
 
-const createRoomBtn = document.querySelector('#create-room-btn');
 
-createRoomBtn.addEventListener('click', createNewRoom);
+
+function addByEmail (){
+    var addUsersEmail = document.querySelector("#add-users-email");
+    email=addUsersEmail.value;
+    axios.post('/room/email-query',{
+        email:email,
+    }).then(function (response){
+        var user = response.data;
+
+        //user is already in the friends list above
+        if(searchUserList(document.querySelector("#add-list"),user.id)){
+            createDialogueBox("The user "+ user.name +" is already in your friends list");
+        }
+        //user is already in the room
+        else if(searchUserList(document.querySelector("#room-details"),user.id)){
+            createDialogueBox("The user "+ user.name +" is already in this chat room.");
+        }
+        //user did not enter an email address
+        else if(email==""){
+        }
+        //no user with that email address
+        else if(response.data=="Not found"){
+            createDialogueBox("We could not find a user at the email address: \n"+email);
+        }
+
+        else{
+            //create a div using the data from this object then add it to the add list
+            //get base from the other list items in add-list
+            var base = document.querySelector(".add-to-room-li");
+            var newLi = base.cloneNode(true);
+            var newDiv = newLi.querySelector("div");
+            newDiv.id = user.id;
+            newDiv.classList.add("added","changed");
+            var newName = newDiv.querySelector("h3");
+            newName.innerHTML = user.name;
+
+            document.getElementById("add-list").appendChild(newLi);
+            //run this so that the div is interactive
+            friendDivsInput();
+        }
+    });
+}
+var addWithEmailBtn = document.querySelector("#add-with-email-btn");
+addWithEmailBtn.addEventListener("click", addByEmail);
+
+
 //get all the input from the add-user div
 function addUser(){
     var roomId = document.querySelector("#name-box").querySelector("h2").getAttribute("id");
@@ -689,7 +741,7 @@ function displayOff(target='default'){
 function createConfirmBox(dialogue="Are you sure?",yesFunction){
     var confirmBox = document.getElementById("confirm-box");
     var confirmDialogue = document.getElementById("confirm-dialogue");
-    var confirmTint = document.getElementById("confirm-tint");
+    var confirmTint = document.getElementById("dialogue-tint");
     confirmDialogue.innerHTML = dialogue;
 
     confirmBox.style.display="block";
@@ -700,7 +752,6 @@ function createConfirmBox(dialogue="Are you sure?",yesFunction){
     });
     var yesButton = document.getElementById("yes-btn");
     var noButton = document.getElementById("no-btn");
-    console.log(noButton);
     //run respective functions and hide the dialogue box
     yesButton.addEventListener("click",function(){
         yesFunction()
@@ -711,6 +762,39 @@ function createConfirmBox(dialogue="Are you sure?",yesFunction){
         confirmBox.style.display="none";
         confirmTint.style.display="none";
     });
+}
+//create a dialogue box with a single option to dismisss it
+function createDialogueBox(dialogue="Default dialogue",option="Ok"){
+    var dialogueBox = document.getElementById("dialogue-box");
+    var dialogueText = document.getElementById("dialogue");
+    var dialogueTint = document.getElementById("dialogue-tint");
+    var okButton = document.getElementById("ok-btn");
+    dialogueText.innerHTML = dialogue;
+    okButton.innerHTML = option;
+
+    //display dialogue box
+    dialogueBox.style.display="block";
+    dialogueTint.style.display = "block";
+
+    //close dialogue box
+    dialogueTint.addEventListener("click",function(){
+        dialogueBox.style.display="none";
+        dialogueTint.style.display="none";
+    });
+    okButton.addEventListener("click",function(){
+        dialogueBox.style.display="none";
+        dialogueTint.style.display="none";
+    });
+}
+//determines whether a user-list contains a user with the specified id (key)
+function searchUserList(list,key){
+    var divs = list.querySelectorAll("div");
+    for(var d of divs){
+        if(d.id==key){
+            return true;
+        }
+    }
+    return false;
 }
 
 var plusButton = document.querySelector("#plus-button");

@@ -3,11 +3,15 @@
     <div>
         <!--wrap these divs in a parent div so that they inherit it's stacking context and are always on top of all other elements-->
         <div style="position:relative;z-index:1000; ">
-            <div id="confirm-tint"></div>
+            <div id="dialogue-tint"></div>
             <div id="confirm-box" class="overlay">
                 <h2 id="confirm-dialogue">Are you sure?</h2>
                 <button id="yes-btn"> Yes </button>
                 <button id="no-btn"> No </button>
+            </div>
+            <div id="dialogue-box" class="overlay">
+                <h2 id="dialogue"></h2>
+                <button id="ok-btn"> Ok </button>
             </div>
         </div>
         <div id="left-side" onload="searchFilter()">
@@ -54,7 +58,7 @@
                     <input type="text" id="fsearch-bar" class="search-bar"> <!-- friend search bar-->
                     <!--list of friends-->
                     <ul id="friend-list" class="scrollbar user-list">
-                        <li class="left clearfix" v-for="friend in sortedFriends" :key="friend.id">
+                        <li class="left clearfix" v-for="friend in friends" :key="friend.id">
                             <div :id = friend.id class="friend not-selectable new-room-friend searchable">
                                 <h3>{{ friend.name }}</h3>
                                 <img class="add-button" src="/img/plus.png" alt="add friend">
@@ -92,8 +96,8 @@
                 <input type="text" id="asearch-bar" class="search-bar"> <!-- friend search bar-->
                 <!--list of friends that can be added-->
                 <ul id="add-list" class="scrollbar user-list">
-                    <li class="left clearfix" v-for="friend in sortedFriends" :key="friend.id">
-                        <div :id = friend.id class="friend not-selectable new-room-friend searchable">
+                    <li class="left clearfix add-to-room-li" v-for="friend in friendsOutsideRoom" :key="friend.id">
+                        <div :id = friend.id class="friend not-selectable new-room-friend searchable add-to-room">
                             <h3>{{ friend.name }}</h3>
                             <img class="add-button" src="/img/plus.png" alt="add friend">
                             <img class="added-button" src="/img/tick.png" alt="friend added">
@@ -236,6 +240,19 @@ export default {
                 return 0; // maintain the original order
             }
             });
+        },
+        friendsOutsideRoom(){
+            var outside = [];
+            var roomUserIds = [];
+            for(var u of this.roomUsers){
+                roomUserIds.push(u.id);
+            }
+            for(var f of this.friends){
+                if(!roomUserIds.includes(f.id)){
+                    outside.push(f);
+                }
+            }
+            return outside;
         },
         ownerIds(){
             const ownerIds = [];

@@ -19,7 +19,7 @@ body{
     display: none !important;
 }
 
-#confirm-box{
+#confirm-box,#dialogue-box{
     height:fit-content;
     max-height: 300px;
     padding:10px;
@@ -33,7 +33,7 @@ body{
     text-align: center;
 }
 
-#confirm-tint{
+#dialogue-tint{
     position:fixed;
     height:110vh;
     width:100vw;
@@ -718,11 +718,11 @@ ul{
     background-color:#353772;
     border:none;
 }
-.overlay-btn,.overlay>button:hover{
+.overlay-btn:hover,.overlay>button:hover{
     background-color: white;
     color:#353772;
 }
-.overlay-btn,.overlay>button:active{
+.overlay-btn:active,.overlay>button:active{
     background-color:#0C0E3D;
 }
 

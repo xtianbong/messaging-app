@@ -252,6 +252,15 @@ class RoomController extends Controller
         return redirect('/login');
     }
 
+    public function emailQuery(Request $request){
+        $email = $request->input('email');
+        $user = User::where('email',$email)->first();
+        if($user==null){
+            return "Not found";
+        }
+        return json_encode($user);
+    }
+
     public function index2(Request $request, $room_id)//for testing
     {
         $messages = Message::where('room_id', $room_id)->with('user')->get();

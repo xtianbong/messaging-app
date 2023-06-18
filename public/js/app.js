@@ -2398,6 +2398,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -2441,19 +2445,50 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }
       });
     },
-    ownerIds: function ownerIds() {
-      var ownerIds = [];
-      var _iterator = _createForOfIteratorHelper(this.roomOwners),
+    friendsOutsideRoom: function friendsOutsideRoom() {
+      var outside = [];
+      var roomUserIds = [];
+      var _iterator = _createForOfIteratorHelper(this.roomUsers),
         _step;
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var o = _step.value;
-          ownerIds.push(o.id);
+          var u = _step.value;
+          roomUserIds.push(u.id);
         }
       } catch (err) {
         _iterator.e(err);
       } finally {
         _iterator.f();
+      }
+      var _iterator2 = _createForOfIteratorHelper(this.friends),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var f = _step2.value;
+          if (!roomUserIds.includes(f.id)) {
+            outside.push(f);
+          }
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+      return outside;
+    },
+    ownerIds: function ownerIds() {
+      var ownerIds = [];
+      var _iterator3 = _createForOfIteratorHelper(this.roomOwners),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var o = _step3.value;
+          ownerIds.push(o.id);
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
       }
       return ownerIds;
     }
@@ -45360,7 +45395,7 @@ var render = function() {
                 staticClass: "scrollbar user-list",
                 attrs: { id: "friend-list" }
               },
-              _vm._l(_vm.sortedFriends, function(friend) {
+              _vm._l(_vm.friends, function(friend) {
                 return _c(
                   "li",
                   { key: friend.id, staticClass: "left clearfix" },
@@ -45431,16 +45466,16 @@ var render = function() {
           _c(
             "ul",
             { staticClass: "scrollbar user-list", attrs: { id: "add-list" } },
-            _vm._l(_vm.sortedFriends, function(friend) {
+            _vm._l(_vm.friendsOutsideRoom, function(friend) {
               return _c(
                 "li",
-                { key: friend.id, staticClass: "left clearfix" },
+                { key: friend.id, staticClass: "left clearfix add-to-room-li" },
                 [
                   _c(
                     "div",
                     {
                       staticClass:
-                        "friend not-selectable new-room-friend searchable",
+                        "friend not-selectable new-room-friend searchable add-to-room",
                       attrs: { id: friend.id }
                     },
                     [
@@ -45704,7 +45739,7 @@ var staticRenderFns = [
       "div",
       { staticStyle: { position: "relative", "z-index": "1000" } },
       [
-        _c("div", { attrs: { id: "confirm-tint" } }),
+        _c("div", { attrs: { id: "dialogue-tint" } }),
         _vm._v(" "),
         _c("div", { staticClass: "overlay", attrs: { id: "confirm-box" } }, [
           _c("h2", { attrs: { id: "confirm-dialogue" } }, [
@@ -45714,6 +45749,12 @@ var staticRenderFns = [
           _c("button", { attrs: { id: "yes-btn" } }, [_vm._v(" Yes ")]),
           _vm._v(" "),
           _c("button", { attrs: { id: "no-btn" } }, [_vm._v(" No ")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "overlay", attrs: { id: "dialogue-box" } }, [
+          _c("h2", { attrs: { id: "dialogue" } }),
+          _vm._v(" "),
+          _c("button", { attrs: { id: "ok-btn" } }, [_vm._v(" Ok ")])
         ])
       ]
     )
