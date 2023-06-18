@@ -23,7 +23,7 @@ function replace(){
 
 
 function searchFilter(searchBar,targetList){//searchBar,targetList
-    console.log("search ran");
+    //console.log("search ran");
     var allChats = targetList.querySelectorAll(".searchable");
     //make all chats visible if searchBar is empty
     if(searchBar.value==""){
@@ -517,10 +517,12 @@ function addUser(){
             owners.push(parseInt(div.getAttribute("id")))
         }
     }
+    /*
     console.log(roomId);
     console.log(roomName);
     console.log(users);
     console.log(owners);
+    */
     editRoomPHP(roomId,roomName,users,owners)
 }
 const confirmAddUser = document.querySelector("#confirm-add-user");
@@ -687,30 +689,30 @@ confirmLogout.addEventListener('click',function(){
 //make an object appear/disappear when a button is pressed
 var tint = document.querySelector("#tint");
 function displayToggle(target,display='block'){ //change display attribute to whatever is needed
-    console.log("display toggled: "+target.id);
+    //console.log("display toggled: "+target.id);
     if(target.style.display==='none'){
         if(display!='block'){
             target.style.display=display;
             tint.style.display='block';
-            console.log(1);
+            //console.log(1);
         }
         else{
             target.style.display='block';
             tint.style.display='block';
-            console.log(2);
+            //console.log(2);
         }
     }
     else{
         target.style.display='none';
         tint.style.display='none';
-        console.log(3);
+        //console.log(3);
     }
 }
 //funciton that hides all elements in the overlay class
 var targets = document.querySelectorAll(".overlay");
 
 function displayOff(){
-    console.log(targets);
+    //console.log(targets);
     for(var t of targets){
         //console.log(t);
         t.style.display='none';
@@ -858,14 +860,12 @@ settingsButton.addEventListener('click', function() { //apply newRoom function t
 
 
 tint.addEventListener('click', function() { //hide object when you click anywhere outside it
-    console.log("tint clicked");
+    //console.log("tint clicked");
     displayOff();
 });
-console.log("preland");
 
 //customizing the landing page that users go to when they are not in a particular chat room
 var landingRoom = document.querySelector("#landing-room");
-console.log(landingRoom);
 
 //remove the room name and message input box when on the landing page
 if(landingRoom!=null){
