@@ -30,21 +30,50 @@
                 </li>
             </ul>
             <div id="settings-box">
-                <img class="pfp" src="/img/pfp.png">
-                <h3 :id=currentUser.id class="current-user">{{currentUser.name}}</h3>
-                <img id="settings-button" src="/img/settings.png" alt="settings">
+                <div id = "current-user">
+                    <img class="pfp" src="/img/pfp.png">
+                    <h3 :id=currentUser.id class="current-username not-selectable">{{currentUser.name}}</h3>
+                </div>
+
+                <img id="settings-button" src="/img/settings.png" alt="settings" style="display:none">
                 <img id="plus-button" src="/img/plus.png" alt="add chat" >
+
                 <!-- <button id="plus-button"  alt="add chat"> </button> -->
                 <div id="tint"></div>
 
                 <!--hidden divs-->
-                <div id="settings" class="overlay" style="display: none;">
-                    <div id="uname-box" class="name-box">
-                        <input type="text" id="uname" class ="resizing-input" :placeholder=currentUser.name maxlength="20">
-                        <img src="/img/edit.png">
+                <div id = "edit-user" class="overlay friends-mode" style="display:block">
+                    <div id="edit-user-tabs" class="tabs">
+                        <div id="profile-tab" class="tab"> Profile</div>
+                        <div id="friends-tab" class="tab"> Friends</div>
                     </div>
-                    <button id="log-out-btn" class="overlay-btn">Logout</button>
+                    <div id="profile-view" class="tab-view">
+                        <img id="edit-userpfp" src="/img/pfp.png">
+                        <div id="edit-username-box" class="name-box">
+                            <h2>Username:</h2>
+                            <input type="text" id="edit-username" class ="resizing-input" :placeholder=currentUser.name maxlength="20">
+                            <img src="/img/edit.png">
+                        </div>
 
+                    </div>
+
+                    <div id="friends-view" class="tab-view">
+                        <h2>Friends:</h2>
+                        <input type="text" id="efsearch-bar" class="search-bar"> <!-- friend search bar-->
+                        <ul id="edit-user-friend-list" class="scrollbar user-list">
+                            <li class="left clearfix" v-for="friend in friends" :key="friend.id">
+                                <div :id = friend.id class="friend not-selectable edit-user-friend searchable">
+                                    <h3>{{ friend.name }}</h3>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <button id="edit-user-save" class="overlay-btn">Save changes</button>
+                </div>
+                <div id="settings" class="overlay" style="display: none;">
+                    <button id="edit-user-btn" class="overlay-btn">View Profile</button>
+                    <button id="log-out-btn" class="overlay-btn">Logout</button>
                 </div>
                 <div id="select-new" class="overlay" style="display: none;">
                     <button id="add-room-btn" class="overlay-btn">New Room</button>

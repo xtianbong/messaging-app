@@ -121,14 +121,14 @@ mark.highlight {
     width:40px;
     height:40px;
     border-radius: 100%;
-    margin: auto 10px;
+    margin: auto 5px;
     grid-column: 1;
     vertical-align:middle;
 }
 
 .username{
     grid-column: 2;
-    margin: auto 0px auto 0px;
+    margin: auto 5px auto 5px;
     font-size: large;
     font-weight: bold;
 }
@@ -151,7 +151,8 @@ mark.highlight {
     bottom:0px;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto;
+    padding:10px;
 }
 #settings-box>*{
     transform: translateY(-8px);
@@ -159,13 +160,108 @@ mark.highlight {
 #settings-box > .pfp{
     grid-column: 1;
 }
-.current-user{
+#current-user{
+    display: flex;
+    position: relative;
+    height:fit-content;
+    width:fit-content;
+    padding:5px 10px;
+    margin:10px auto;
+    border-radius: 8px;
+}
+#current-user:hover{
+    background-color:#23256A;
+    cursor: pointer;
+}
+.current-username{
     grid-column: 2;
     color:white;
     font-size: 24px;
     height:fit-content;
     margin: auto;
     vertical-align: center;
+}
+#edit-user{
+    top:-600px;
+    left:750px;
+}
+
+#edit-user-tabs{
+    display: flex;
+    width:100%;
+}
+
+
+
+.tab{
+    font-size: 2em;
+    background-color: #2e3174;
+    padding:auto;
+    padding-left: 10px;
+    padding-right:10px;
+}
+.tab:hover{
+    cursor: pointer;
+    background-color: #171a6d;
+}
+
+.tab-view{
+    display: none;
+    padding:10px;
+}
+
+.profile-mode>#edit-user-tabs>#profile-tab{
+    background-color: #06071E
+}
+.profile-mode>#edit-user-tabs>#profile-tab:hover{
+    background-color: #171a6d;
+}
+.profile-mode>#profile-view{
+    display:block;
+}
+
+.friends-mode>#edit-user-tabs>#friends-tab{
+    background-color: #06071E
+}
+.friends-mode>#edit-user-tabs>#friends-tab:hover{
+    background-color: #171a6d;
+}
+.friends-mode>#friends-view{
+    display:block;
+}
+
+#edit-userpfp{
+    height:100px;
+    width:100px;
+    border-radius: 100%;
+    margin: auto;
+    text-align: center;
+    display: block;
+}
+#edit-username-box{
+    display: flex;
+}
+#edit-username-box>h2{
+    font-size: 25px;
+}
+#edit-username{
+    height:40px;
+    font-size: 25px;
+}
+
+#edit-user-friend-list{
+    padding:10px;
+}
+
+.edit-user-friend.removed{
+    background-color: #222573;
+}
+.edit-user-friend.removed:hover{
+    background-color: #2e3174;
+}
+
+#edit-user-save{
+    margin-top:10px;
 }
 #settings-button{
     grid-column: 3;
@@ -527,13 +623,7 @@ body{
 #settings>button{
     width:90%;
 }
-#uname-box{
-    display: none;
-}
-#uname{
-    height:40px;
-    font-size: 30px;
-}
+
 
 .room>.card-body{
     min-width:100%;

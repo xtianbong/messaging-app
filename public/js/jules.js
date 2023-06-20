@@ -82,7 +82,22 @@ document.addEventListener("DOMContentLoaded", function() {
     searchFilter(rSearchBar, chatDivs);
 });
 
-//do that same for the friend search bar
+// search the list of friends in the edit-user div
+var efSearchBar = document.getElementById("efsearch-bar");
+var efDivs = document.getElementById("edit-user-friend-list");
+
+efSearchBar.addEventListener("input", function() {
+    searchFilter(efSearchBar, efDivs);
+});
+
+window.addEventListener("load", function() {
+    searchFilter(efSearchBar, efDivs);
+});
+
+document.addEventListener("load", function() {
+    searchFilter(efSearchBar, efDivs);
+});
+//search list of friends in the #new-room div
 
 var fSearchBar = document.getElementById("fsearch-bar");
 var fDivs = document.querySelector("#friend-list");
@@ -386,8 +401,8 @@ function removeAllEventListeners(element) {
 
 //retrieve data for room creation from the form
 function createNewRoom(){
-    var currentUserId = document.querySelector(".current-user").getAttribute("id");//id of user creating the room
-    var currentUserName = document.querySelector(".current-user").innerHTML;//name of user creating the room
+    var currentUserId = document.querySelector(".current-username").getAttribute("id");//id of user creating the room
+    var currentUserName = document.querySelector(".current-username").innerHTML;//name of user creating the room
     //console.log(currentUserName)
     var name = document.querySelector('#rname').value;//name of room
     var users = []; // list of user ids
@@ -627,7 +642,7 @@ function addFriendPHP(){
     //get email from text input
     var friendEmail = document.querySelector("#new-friend-email").value;
     //get current user id from document
-    var currentUserId = document.querySelector(".current-user").getAttribute("id");
+    var currentUserId = document.querySelector(".current-username").getAttribute("id");
 
     //show error meassge if email is empty
     if(friendEmail.length==""){
@@ -665,11 +680,29 @@ function addFriendPHP(){
 }
 
 const confirmNewFriend = document.querySelector("#confirm-new-friend");
-
 confirmNewFriend.addEventListener('click',addFriendPHP);
 
 
+//let users change their user details and friends list
+function editUser(){
 
+    //get new username
+    var username= document.querySelector("#edit-username").value;
+    console.log(username);
+
+    //get new friends list
+    var friends=[];
+    var fDivs = document.querySelectorAll(".edit-user-friend");//must include .visible here because of the hidden divs hold the old classlists
+    console.log(fDivs);
+    for(var div of fDivs){
+        if(!div.classList.contains("removed")){
+            friends.push(parseInt(div.getAttribute("id")))
+        }
+    }
+    console.log(friends);
+}
+var editUserSave = document.querySelector("#edit-user-save");
+editUserSave.addEventListener('click',editUser);
 //let users log-out with a button press
 function logOutPHP(){
     //run the logout function in the room controller
@@ -851,13 +884,35 @@ addFriendButton.addEventListener('click', function(){
     displayToggle(addFriend);
 });
 
+var currentUserDiv=document.querySelector("#current-user");
+
+currentUserDiv.addEventListener('click', function() { //apply newRoom function to plus button and new room div
+    displayToggle(settingsDiv);
+});
+
 var settingsButton = document.querySelector("#settings-button");
 var settingsDiv = document.querySelector("#settings");
-
 settingsButton.addEventListener('click', function() { //apply newRoom function to plus button and new room div
     displayToggle(settingsDiv);
 });
 
+var editUserButton=document.querySelector("#edit-user-btn");
+var editUserDiv =document.querySelector("#edit-user");
+editUserButton.addEventListener('click', function() { //apply newRoom function to plus button and new room div
+    displayToggle(editUserDiv);
+});
+
+var profileTab=document.querySelector("#profile-tab");
+profileTab.addEventListener("click",function(){
+    editUserDiv.classList.remove("friends-mode");
+    editUserDiv.classList.add("profile-mode");
+});
+
+var friendsTab=document.querySelector("#friends-tab");
+friendsTab.addEventListener("click",function(){
+    editUserDiv.classList.remove("profile-mode");
+    editUserDiv.classList.add("friends-mode");
+});
 
 tint.addEventListener('click', function() { //hide object when you click anywhere outside it
     //console.log("tint clicked");

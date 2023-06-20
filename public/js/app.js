@@ -2402,6 +2402,35 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -45320,15 +45349,21 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { attrs: { id: "settings-box" } }, [
-        _c("img", { staticClass: "pfp", attrs: { src: "/img/pfp.png" } }),
-        _vm._v(" "),
-        _c(
-          "h3",
-          { staticClass: "current-user", attrs: { id: _vm.currentUser.id } },
-          [_vm._v(_vm._s(_vm.currentUser.name))]
-        ),
+        _c("div", { attrs: { id: "current-user" } }, [
+          _c("img", { staticClass: "pfp", attrs: { src: "/img/pfp.png" } }),
+          _vm._v(" "),
+          _c(
+            "h3",
+            {
+              staticClass: "current-username not-selectable",
+              attrs: { id: _vm.currentUser.id }
+            },
+            [_vm._v(_vm._s(_vm.currentUser.name))]
+          )
+        ]),
         _vm._v(" "),
         _c("img", {
+          staticStyle: { display: "none" },
           attrs: {
             id: "settings-button",
             src: "/img/settings.png",
@@ -45345,34 +45380,96 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "overlay",
-            staticStyle: { display: "none" },
-            attrs: { id: "settings" }
+            staticClass: "overlay friends-mode",
+            staticStyle: { display: "block" },
+            attrs: { id: "edit-user" }
           },
           [
-            _c("div", { staticClass: "name-box", attrs: { id: "uname-box" } }, [
-              _c("input", {
-                staticClass: "resizing-input",
-                attrs: {
-                  type: "text",
-                  id: "uname",
-                  placeholder: _vm.currentUser.name,
-                  maxlength: "20"
-                }
-              }),
-              _vm._v(" "),
-              _c("img", { attrs: { src: "/img/edit.png" } })
-            ]),
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "tab-view", attrs: { id: "profile-view" } },
+              [
+                _c("img", {
+                  attrs: { id: "edit-userpfp", src: "/img/pfp.png" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "name-box",
+                    attrs: { id: "edit-username-box" }
+                  },
+                  [
+                    _c("h2", [_vm._v("Username:")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "resizing-input",
+                      attrs: {
+                        type: "text",
+                        id: "edit-username",
+                        placeholder: _vm.currentUser.name,
+                        maxlength: "20"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("img", { attrs: { src: "/img/edit.png" } })
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "tab-view", attrs: { id: "friends-view" } },
+              [
+                _c("h2", [_vm._v("Friends:")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "search-bar",
+                  attrs: { type: "text", id: "efsearch-bar" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  {
+                    staticClass: "scrollbar user-list",
+                    attrs: { id: "edit-user-friend-list" }
+                  },
+                  _vm._l(_vm.friends, function(friend) {
+                    return _c(
+                      "li",
+                      { key: friend.id, staticClass: "left clearfix" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "friend not-selectable edit-user-friend searchable",
+                            attrs: { id: friend.id }
+                          },
+                          [_c("h3", [_vm._v(_vm._s(friend.name))])]
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ]
+            ),
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "overlay-btn", attrs: { id: "log-out-btn" } },
-              [_vm._v("Logout")]
+              { staticClass: "overlay-btn", attrs: { id: "edit-user-save" } },
+              [_vm._v("Save changes")]
             )
           ]
         ),
         _vm._v(" "),
-        _vm._m(2),
+        _vm._m(3),
+        _vm._v(" "),
+        _vm._m(4),
         _vm._v(" "),
         _c(
           "div",
@@ -45382,7 +45479,7 @@ var render = function() {
             attrs: { id: "new-room" }
           },
           [
-            _vm._m(3),
+            _vm._m(5),
             _vm._v(" "),
             _c("input", {
               staticClass: "search-bar",
@@ -45435,11 +45532,11 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm._m(4),
+        _vm._m(6),
         _vm._v(" "),
-        _vm._m(5),
+        _vm._m(7),
         _vm._v(" "),
-        _vm._m(6)
+        _vm._m(8)
       ])
     ]),
     _vm._v(" "),
@@ -45451,7 +45548,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm._m(7),
+        _vm._m(9),
         _vm._v(" "),
         _c("div", { staticClass: "overlay", attrs: { id: "add-users" } }, [
           _c("h2", [_vm._v(_vm._s(_vm.currentRoom.name))]),
@@ -45500,7 +45597,7 @@ var render = function() {
           _vm._v(" "),
           _c("h3", [_vm._v("Add users by email:")]),
           _vm._v(" "),
-          _vm._m(8),
+          _vm._m(10),
           _vm._v(" "),
           _c(
             "button",
@@ -45551,7 +45648,7 @@ var render = function() {
               0
             ),
             _vm._v(" "),
-            _vm._m(9)
+            _vm._m(11)
           ]
         ),
         _vm._v(" "),
@@ -45657,9 +45754,9 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(10, true),
+                _vm._m(12, true),
                 _vm._v(" "),
-                _vm._m(11, true)
+                _vm._m(13, true)
               ])
             }),
             0
@@ -45676,7 +45773,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(12)
+        _vm._m(14)
       ]),
       _vm._v(" "),
       _c(
@@ -45724,7 +45821,7 @@ var render = function() {
         ? _c("div", { attrs: { id: "landing-room" } }, [
             _c("h1", [_vm._v("Welcome!")]),
             _vm._v(" "),
-            _vm._m(13)
+            _vm._m(15)
           ])
         : _vm._e()
     ])
@@ -45769,6 +45866,46 @@ var staticRenderFns = [
         attrs: { type: "text", id: "rsearch-bar" }
       })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "tabs", attrs: { id: "edit-user-tabs" } }, [
+      _c("div", { staticClass: "tab", attrs: { id: "profile-tab" } }, [
+        _vm._v(" Profile")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "tab", attrs: { id: "friends-tab" } }, [
+        _vm._v(" Friends")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "overlay",
+        staticStyle: { display: "none" },
+        attrs: { id: "settings" }
+      },
+      [
+        _c(
+          "button",
+          { staticClass: "overlay-btn", attrs: { id: "edit-user-btn" } },
+          [_vm._v("View Profile")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "overlay-btn", attrs: { id: "log-out-btn" } },
+          [_vm._v("Logout")]
+        )
+      ]
+    )
   },
   function() {
     var _vm = this
