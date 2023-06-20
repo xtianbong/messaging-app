@@ -261,6 +261,26 @@ class RoomController extends Controller
         return json_encode($user);
     }
 
+    public function editUser(Request $request){
+        $userId= $request->input('currentUserId');
+        $username = $request->input('username');
+        $friends = $request->input('friends');
+        //get user from id
+        $user = User::where('id',$userId)->first();
+
+        //change user attributes
+        if($username!=""){
+            $user->name=$username;
+        }
+
+        if($friends!=null){
+            $user->friends = json_encode($friends);
+        }
+
+        //save user
+        $user->save();
+    }
+
     public function index2(Request $request, $room_id)//for testing
     {
         $messages = Message::where('room_id', $room_id)->with('user')->get();

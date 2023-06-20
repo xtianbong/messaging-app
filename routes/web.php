@@ -38,6 +38,7 @@ Route::post('/room/edit-room', [App\Http\Controllers\RoomController::class, 'edi
 Route::post('/room/add-friend', [App\Http\Controllers\RoomController::class, 'addFriend']);//user can add friends
 Route::post('/room/log-out', [App\Http\Controllers\RoomController::class, 'logOut']);//user can logout
 Route::post('/room/email-query',[App\Http\Controllers\RoomController::class, 'emailQuery']);//user can get a user from their email
+Route::post('/room/edit-user',[App\Http\Controllers\RoomController::class, 'editUser']);//user can change their user details and remove friends
 //Route::get('/room/{room_id}', [RoomController::class, 'fetchMessages'])->middleware('auth');
 
 

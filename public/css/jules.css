@@ -8,6 +8,7 @@ html{
     font-family:sans-serif;
 }
 body{
+    position:fixed;
     background: #06071E;
     display: flex;
     padding:0px;
@@ -155,7 +156,7 @@ mark.highlight {
     padding:10px;
 }
 #settings-box>*{
-    transform: translateY(-8px);
+    /*transform: translateY(-8px);*/
 }
 #settings-box > .pfp{
     grid-column: 1;
@@ -251,10 +252,30 @@ mark.highlight {
 
 #edit-user-friend-list{
     padding:10px;
+    max-height: 175px;
 }
 
+.edit-user-friend{
+
+}
+.remove-btn{
+    display:none;
+    height:25px;
+    width:25px;
+    margin:auto 0px;
+    border-radius: 100%;
+}
+.edit-user-friend:hover{
+    cursor: pointer;
+}
+.edit-user-friend:hover>.remove-btn{
+    display:block;
+}
+.remove-btn:hover{
+    background-color: #353772;
+}
 .edit-user-friend.removed{
-    background-color: #222573;
+    display: none;
 }
 .edit-user-friend.removed:hover{
     background-color: #2e3174;
@@ -314,7 +335,15 @@ mark.highlight {
 }
 
 #add-users{
-
+    padding:10px;
+}
+#add-users-room-name{
+    text-align: center;
+    font-size: 2.3rem;
+}
+#friends-all-in{
+    color: #6f6f6f;
+    font-size: 1.2rem;
 }
 #add-with-email{
     display:flex;
@@ -681,14 +710,14 @@ ul{
 .overlay{
     width:350px;
     height:400px;
-    position:absolute;
-    transform: translateY(0px);
-    left:calc(50vw - 175px);
-    bottom:-500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #06071E;
     z-index: 500;
     display:none;
-    transform:translateY(-8px);
+    border-radius: 8px;
 }
 .name-box{
     width:fit-content;

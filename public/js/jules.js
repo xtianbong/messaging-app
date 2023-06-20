@@ -118,9 +118,12 @@ document.addEventListener("load", function() {
 aSearchBar = document.getElementById("asearch-bar");
 aDivs = document.getElementById("add-list");
 
-aSearchBar.addEventListener("input",function(){
-    searchFilter(aSearchBar,aDivs);
-})
+if(aSearchBar!=null){
+    aSearchBar.addEventListener("input",function(){
+        searchFilter(aSearchBar,aDivs);
+    })
+}
+
 
 window.addEventListener("load", function() {
     searchFilter(aSearchBar, aDivs);
@@ -636,7 +639,7 @@ function updateOrder() {
 for(var div of friendDivs){
     //div.addEventListener("click",updateOrder);
 }
-
+var currentUserId = document.querySelector(".current-username").getAttribute("id");
 //take new friend data from the #add-friend form and sends it to the addFriend function in RoomController.php
 function addFriendPHP(){
     //get email from text input
@@ -685,11 +688,9 @@ confirmNewFriend.addEventListener('click',addFriendPHP);
 
 //let users change their user details and friends list
 function editUser(){
-
     //get new username
     var username= document.querySelector("#edit-username").value;
     console.log(username);
-
     //get new friends list
     var friends=[];
     var fDivs = document.querySelectorAll(".edit-user-friend");//must include .visible here because of the hidden divs hold the old classlists
@@ -700,9 +701,54 @@ function editUser(){
         }
     }
     console.log(friends);
+
+    editUserPHP(username,friends);
 }
 var editUserSave = document.querySelector("#edit-user-save");
 editUserSave.addEventListener('click',editUser);
+
+//remove user from current user's friends list
+function removeFriend(fDiv){
+    //get new username
+    var username= document.querySelector("#edit-username").value;
+    console.log(username);
+
+    //remove user from friends list (visually)
+    fDiv.classList.add("removed");
+    fDiv.classList.remove("visible");
+    //get new friends list
+    var friends=[];
+    var fDivs = document.querySelectorAll(".edit-user-friend");//must include .visible here because of the hidden divs hold the old classlists
+    console.log(fDivs);
+    for(var div of fDivs){
+        if(!div.classList.contains("removed")){
+            friends.push(parseInt(div.getAttribute("id")))
+        }
+    }
+    console.log(friends);
+    editUserPHP(username,friends);
+}
+var removeButtons = document.querySelectorAll(".remove-btn");
+for(let r of removeButtons){
+    //pass the parent div into the removeFriend function when the remove-button is clicked
+    r.addEventListener("click",function(){
+        createConfirmBox("Are you sure you want to remove "+r.parentElement.querySelector("h3").innerHTML+" from your friends list?",function(){removeFriend(r.parentElement)});
+    });
+}
+
+function editUserPHP(username,friends){
+    //get the id of the current user
+    var currentUserId = document.querySelector(".current-username").getAttribute("id");
+    //run the edit-user function in the room-controller
+    axios.post('/room/edit-user',{
+        currentUserId:currentUserId,
+        username:username,
+        friends:friends,
+    }).then(function(response){
+        console.log("User edited")
+    })
+}
+
 //let users log-out with a button press
 function logOutPHP(){
     //run the logout function in the room controller
@@ -789,11 +835,13 @@ function createConfirmBox(dialogue="Are you sure?",yesFunction){
     var noButton = document.getElementById("no-btn");
     //run respective functions and hide the dialogue box
     yesButton.addEventListener("click",function(){
+        console.log("yes")
         yesFunction()
         confirmBox.style.display="none";
         confirmTint.style.display="none";
     });
     noButton.addEventListener("click",function(){
+        console.log("no")
         confirmBox.style.display="none";
         confirmTint.style.display="none";
     });
@@ -899,6 +947,7 @@ settingsButton.addEventListener('click', function() { //apply newRoom function t
 var editUserButton=document.querySelector("#edit-user-btn");
 var editUserDiv =document.querySelector("#edit-user");
 editUserButton.addEventListener('click', function() { //apply newRoom function to plus button and new room div
+    displayOff(settingsDiv)
     displayToggle(editUserDiv);
 });
 

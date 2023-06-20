@@ -42,7 +42,7 @@
                 <div id="tint"></div>
 
                 <!--hidden divs-->
-                <div id = "edit-user" class="overlay friends-mode" style="display:block">
+                <div id = "edit-user" class="overlay profile-mode" style="display:none">
                     <div id="edit-user-tabs" class="tabs">
                         <div id="profile-tab" class="tab"> Profile</div>
                         <div id="friends-tab" class="tab"> Friends</div>
@@ -64,6 +64,7 @@
                             <li class="left clearfix" v-for="friend in friends" :key="friend.id">
                                 <div :id = friend.id class="friend not-selectable edit-user-friend searchable">
                                     <h3>{{ friend.name }}</h3>
+                                    <img class="remove-btn" src="/img/remove.png" alt="remove friend">
                                 </div>
                             </li>
 
@@ -120,11 +121,12 @@
                 <img id="room-details-btn" src="/img/options.png" >
             </div>
             <div id="add-users" class="overlay">
-                <h2>{{currentRoom.name}}</h2>
+                <h2 id="add-users-room-name">{{currentRoom.name}}</h2>
                 <h3>Friends: </h3>
-                <input type="text" id="asearch-bar" class="search-bar"> <!-- friend search bar-->
+                <h4 id ="friends-all-in" v-if="friendsOutsideRoom.length== 0">You have no friends who are not in this chat room.</h4>
+                <input type="text" id="asearch-bar" class="search-bar" v-if="friendsOutsideRoom.length!= 0"> <!-- friend search bar-->
                 <!--list of friends that can be added-->
-                <ul id="add-list" class="scrollbar user-list">
+                <ul id="add-list" class="scrollbar user-list" v-if="friendsOutsideRoom.length!= 0">
                     <li class="left clearfix add-to-room-li" v-for="friend in friendsOutsideRoom" :key="friend.id">
                         <div :id = friend.id class="friend not-selectable new-room-friend searchable add-to-room">
                             <h3>{{ friend.name }}</h3>
