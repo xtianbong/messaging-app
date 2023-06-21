@@ -1,5 +1,7 @@
 //const { add } = require("lodash");
 
+//const { stringify } = require("querystring");
+
 //added by jules
 document.addEventListener('DOMContentLoaded', function() {
 function initialize() {
@@ -545,6 +547,48 @@ function addUser(){
 }
 const confirmAddUser = document.querySelector("#confirm-add-user");
 confirmAddUser.addEventListener("click",addUser);
+
+//remove the current user from the room
+function leaveRoom(){
+    var roomId = document.querySelector("#name-box").querySelector("h2").getAttribute("id");
+    var currentUserId = document.querySelector(".current-username").getAttribute("id");
+    var roomName="";
+    var users = [];
+    var owners = [];
+
+    var userDivs = document.querySelectorAll(".member.visible");//must include .visible here because of the hidden divs hold the old classlists
+    console.log(userDivs);
+    for(var div of userDivs){
+        if(div.id!=currentUserId){
+            users.push(parseInt(div.getAttribute("id")))
+        }
+    }
+    for(var div of userDivs){
+        if(div.id!=currentUserId && div.classList.contains("owner")){
+            owners.push(parseInt(div.getAttribute("id")))
+        }
+    }
+    editRoomPHP(roomId,roomName,users,owners);
+    // Delay the redirect to allow time for the database update
+    setTimeout(function() {
+        window.location.href = "/room/0"; // Redirect to the landing page
+    }, 1000);
+    /*
+    var roomDiv = document.querySelector(".roomdiv#"+stringify(roomId));
+    var nameBox = document.querySelector("#name-box");
+    var cardFooter = documet.querySelector(".card-footer");
+    console.log(roomDiv);
+    console.log(nameBox);
+    console.log(cardFooter);
+    roomDiv.style.display="none";
+    nameBox.style.display="none";
+    cardFooter.style.display="none";*/
+}
+
+var leaveRoomButton = document.querySelector("#leave-room-btn");
+leaveRoomButton.addEventListener("click",function(){
+    createConfirmBox("Are you sure you want to leave this chat room?",leaveRoom);
+});
 
 //get all the input from the edit-room div
 function editRoom(){

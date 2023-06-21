@@ -21,7 +21,7 @@
             <ul id="room-list" class="rooms scrollbar chats">
                 <li v-for="room in rooms" v-if="room.id!=0" :key="room.id">
                     <a :href="'../room/' + room.id">
-                        <div class="chat room searchable" id="roomdiv">
+                        <div class="chat room searchable roomdiv" :id="currentUser.id">
                             <img class="pfp" src="\img\pfp.png">
                             <h3 class="username">{{ room.name }}</h3>
                             <img class="alert" src="/img/alert.png">
@@ -160,6 +160,9 @@
                     <img class="crown-icon" src="/img/crown.png" alt="crown icon">
                     Edit Room
                     <img class="crown-icon" src="/img/crown.png" alt="crown icon">
+                </button>
+                <button id="leave-room-btn" class="overlay-btn">
+                    Leave Room
                 </button>
             </div>
 

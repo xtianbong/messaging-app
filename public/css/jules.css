@@ -368,8 +368,6 @@ mark.highlight {
 
 
 #edit-room,#room-details{
-    left: calc(50vw - 350px);
-    bottom: calc(-50vh - 200px);
     width: 350px;
     /*display:inline-block;*/
 }
@@ -638,8 +636,8 @@ body{
 #select-new{
     height: 110px;
     width: 220px;
-    left: 83%;
-    bottom: 56px;
+    left: 22%;
+    top:640px;
     z-index: 999;
     border-radius: 0;
 }

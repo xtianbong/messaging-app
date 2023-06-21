@@ -51,6 +51,10 @@ class RoomController extends Controller
         else{
             $currentRoom = Room::where('id',$room_id)->first();
         }
+
+        if($currentRoom->id==0){
+            //dd($rooms);
+        }
         $roomUsers = User::whereIn("id",json_decode($currentRoom->user_ids))->get();
         $roomOwners = User::whereIn("id",json_decode($currentRoom->owner_ids))->get();
         //dd($roomOwners);
@@ -106,8 +110,8 @@ class RoomController extends Controller
         $owners = $request->input('owners');//json_decode($request->input('owners'), true);
 
         //remove duplicates from user list and owner list
-        $users = array_unique($users);
-        $owners = array_unique($owners);
+        $users = array_values(array_unique($users));//array_values reindexes the array automatically to ensure that the resulting json does not include numeric keys
+        $owners = array_values(array_unique($owners));
 
         //save that room to the database
         $room = new Room();
@@ -210,12 +214,14 @@ class RoomController extends Controller
             if(!in_array($uid,$users)){
                 $user = User::where('id',$uid)->first();
                 $rooms = $user->rooms;
-                $aRooms = json_decode($rooms);
-                $uRooms = "";
+                $aRooms = json_decode($rooms,true); // Decode as associative array
                 $i=array_search($roomId,$aRooms);
-                unset($aRooms[$i]);
-                $uRooms = json_encode($aRooms);
-                User::where('id',$uid)->update(['rooms'=>$uRooms]);
+                if ($i !== false) {
+                    unset($aRooms[$i]);
+                    $aRooms = array_values($aRooms); // Reindex the array numerically
+                    $uRooms = json_encode($aRooms);
+                    User::where('id', $uid)->update(['rooms' => $uRooms]);
+                }
             }
         };
         return $room;
