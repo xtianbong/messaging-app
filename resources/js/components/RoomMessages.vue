@@ -123,7 +123,7 @@
             <div id="add-users" class="overlay">
                 <h2 id="add-users-room-name">{{currentRoom.name}}</h2>
                 <h3>Friends: </h3>
-                <h4 id ="friends-all-in" v-if="friendsOutsideRoom.length== 0">You have no friends who are not in this chat room.</h4>
+                <h4 id ="friends-all-in" v-if="friendsOutsideRoom.length== 0">You have no friends who are not already in this chat room.</h4>
                 <input type="text" id="asearch-bar" class="search-bar" v-if="friendsOutsideRoom.length!= 0"> <!-- friend search bar-->
                 <!--list of friends that can be added-->
                 <ul id="add-list" class="scrollbar user-list" v-if="friendsOutsideRoom.length!= 0">

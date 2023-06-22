@@ -21,6 +21,7 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Contracts\Queue\OnQueue;
+use Carbon\Carbon;
 
 class RoomController extends Controller
 {
@@ -32,14 +33,20 @@ class RoomController extends Controller
 
         //left side
         //get rooms the user is in
+        /*
         $allRooms = Room::with('user')->get();
-        $roomsArr = json_decode($currentUser -> rooms);//get array of room ids that this user is in
+
         $rooms=[];
         foreach($roomsArr as $r){
             array_push($rooms,Room::where('id',$r)->first());
         }
         $rooms=json_encode($rooms);
+        */
+        $roomsArr = json_decode($currentUser -> rooms);//get array of room ids that this user is in
+        $rooms = $this->fetchRooms($currentUser);
+        $rooms = json_encode($rooms);
         $friendsArray = json_decode($currentUser -> friends);
+
         $friends = User::whereIn("id",$friendsArray) ->get();
 
 
@@ -84,21 +91,45 @@ class RoomController extends Controller
     {
         if((int) $request->input('room_id')!=0){
             $user = $request->user();
+            $roomId = (int) $request->input('room_id'); // assign the room_id from the request
             $message = new Message();
             $message->message = $request->input('message');
             //$message->message = "Test";
             $message->user_id = $user->id;
-            $message->room_id = (int) $request->input('room_id'); // assign the room_id from the request
+            $message->room_id = $roomId;
             $message->save();
 
-
             broadcast(new MessageSent($user, $message))->toOthers();
+
+            //update the room's data with the new message
+            $room = Room::where("id",$roomId)->first();
+            $messagesArr = json_decode($room->message_ids);
+            array_push($messagesArr,$message->id);
+            $room->message_ids = json_encode($messagesArr);
+            $room->updated_at = Carbon::now();
+            $room->save();
 
             return ['status' => 'Message Sent!'];
         }
         else{ //do not send messages if the user is in the landing room
             return ['status' => 'Message was not sent, room not specified.'];
         }
+    }
+
+    //get rooms this user is a part of
+    public function fetchRooms($user){
+        $roomIds = json_decode($user->rooms);
+        $rooms = [];
+        foreach($roomIds as $id){
+            array_push($rooms,Room::where("id",$id)->first());
+        }
+        //dd($rooms);
+        //sort rooms so that the most recently updated ones appear first
+        usort($rooms, function ($a, $b) {
+            return $b->updated_at <=> $a->updated_at;
+        });
+        //dd($rooms);
+        return $rooms;
     }
 
     //create new room

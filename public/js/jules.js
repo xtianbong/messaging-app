@@ -120,7 +120,7 @@ document.addEventListener("load", function() {
 aSearchBar = document.getElementById("asearch-bar");
 aDivs = document.getElementById("add-list");
 
-if(aSearchBar!=null){
+if(aSearchBar!=null&&aDivs!=null){
     aSearchBar.addEventListener("input",function(){
         searchFilter(aSearchBar,aDivs);
     })
@@ -128,11 +128,15 @@ if(aSearchBar!=null){
 
 
 window.addEventListener("load", function() {
-    searchFilter(aSearchBar, aDivs);
+    if(aSearchBar!=null&&aDivs!=null){
+        searchFilter(aSearchBar, aDivs);
+    }
 });
 
 document.addEventListener("load", function() {
-    searchFilter(aSearchBar, aDivs);
+    if(aSearchBar!=null&&aDivs!=null){
+        searchFilter(aSearchBar, aDivs);
+    }
 });
 
 //search member list in the edit-room div
@@ -647,7 +651,7 @@ function editRoomPHP(roomId,roomName,users,owners){
         },3000);
     });
 }
-//close all overlays and refresh page when the user discards a room edit
+//close all overlays when the user discards a room edit
 var discardEditButton = document.querySelector("#discard-edit-btn");
 discardEditButton.addEventListener("click",function(){
     var memberDivs = document.querySelectorAll("div.member");
@@ -659,6 +663,7 @@ discardEditButton.addEventListener("click",function(){
             console.log(hiddenMember);
             m.classList = hiddenMember.classList;
             m.classList.remove("hidden");
+            m.classList.add("visible");
         }
     });
     displayOff();
@@ -924,13 +929,41 @@ function searchUserList(list,key){
     return false;
 }
 
+function placeElement(element1, element2, offsetX = 0, offsetY = 0) {
+    const container = element2.parentElement;
+    container.style.position = "relative";
+
+    const containerRect = container.getBoundingClientRect();
+    const element2Rect = element2.getBoundingClientRect();
+
+    const element1Width = element1.offsetWidth;
+    const element1Height = element1.offsetHeight;
+
+    const centerX = element2Rect.left + element2Rect.width / 2 + offsetX - containerRect.left;
+    const centerY = element2Rect.top + element2Rect.height / 2 + offsetY - containerRect.top;
+
+    const element1Left = centerX - element1Width / 2;
+    const element1Top = centerY - element1Height / 2;
+
+    element1.style.position = "absolute";
+    element1.style.left = `${element1Left}px`;
+    element1.style.top = `${element1Top}px`;
+  }
+
+var currentUserDiv = document.querySelector("#current-user");
+var settingsDiv = document.querySelector("#settings");
+//placeElement(settings,currentUserDiv);
+
+var selectEdit = document.querySelector("#select-edit");
+var member2 = document.querySelector('[id="2"].member');
+placeElement(selectEdit,member2);
+
+
 var plusButton = document.querySelector("#plus-button");
 var selectNew = document.querySelector("#select-new");
 plusButton.addEventListener('click', function() { //apply newRoom function to plus button and new room div
     displayToggle(selectNew);
 });
-
-
 
 var addRoomButton = document.querySelector("#add-room-btn");
 var newRoom = document.querySelector("#new-room");
