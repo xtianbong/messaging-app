@@ -32,7 +32,8 @@ Route::post('/messages', [App\Http\Controllers\RoomController::class, 'sendMessa
 use App\Http\Controllers\RoomController;
 Route::get('/room/{room_id}', [App\Http\Controllers\RoomController::class, 'index'])->name('room');
 Route::get('/room/{room_id}/i', [App\Http\Controllers\RoomController::class, 'index2']);//for testing
-Route::get('/room/{room_id}/j', [App\Http\Controllers\RoomController::class, 'fetchMessages']);//so can see the messages in json for troubleshooting
+Route::post('/room/{room_id}/j', [App\Http\Controllers\RoomController::class, 'fetchMessages']);//so can see the messages in json for troubleshooting
+Route::post('/room/{room_id}/r', [App\Http\Controllers\RoomController::class, 'fetchMessagesR']);//let's the webpage check for new messages using js
 Route::post('/room/create-room', [App\Http\Controllers\RoomController::class, 'createRoom']);//user can create new rooms
 Route::post('/room/edit-room', [App\Http\Controllers\RoomController::class, 'editRoom']);//user can edit the current room
 Route::post('/room/add-friend', [App\Http\Controllers\RoomController::class, 'addFriend']);//user can add friends

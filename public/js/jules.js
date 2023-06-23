@@ -287,7 +287,7 @@ window.addEventListener("DOMContentLoaded",friendDivsInput);
 //make edit-room div react to input
 //get array of member divs in the html
 var memberDivs = document.querySelectorAll("div.member");
-var selectEdit = document.querySelector("#select-edit");
+var selectEdit = document.querySelector(".select-edit");
 var makeOwnerButton = document.querySelector("#make-owner-btn");
 var removeUserButton = document.querySelector("#remove-user-btn");
 var undoEdit = document.querySelector("#undo-edit");
@@ -355,6 +355,7 @@ memberDivs.forEach(m => m.addEventListener('click',function(){
         selectEdit.style.left=mPos.left+'px';
         selectEdit.style.top=mPos.top+'px';
         */
+        var selectEdit = document.querySelector("#select-edit-"+m.id);
         displayToggle(selectEdit,"grid");
 
         //remove all listeners that may be on the buttons requires redefining the variables in js
@@ -382,7 +383,7 @@ memberDivs.forEach(m => m.addEventListener('click',function(){
         var undoButton = document.querySelector("#undo-btn");
         removeAllEventListeners(undoButton);
         var undoButton = document.querySelector("#undo-btn");
-
+        var undoEdit = document.querySelector("#undo-edit-"+m.id);
         displayToggle(undoEdit);
         undoButton.addEventListener("click",function(){
             undoHandler(m);
@@ -929,35 +930,6 @@ function searchUserList(list,key){
     return false;
 }
 
-function placeElement(element1, element2, offsetX = 0, offsetY = 0) {
-    const container = element2.parentElement;
-    container.style.position = "relative";
-
-    const containerRect = container.getBoundingClientRect();
-    const element2Rect = element2.getBoundingClientRect();
-
-    const element1Width = element1.offsetWidth;
-    const element1Height = element1.offsetHeight;
-
-    const centerX = element2Rect.left + element2Rect.width / 2 + offsetX - containerRect.left;
-    const centerY = element2Rect.top + element2Rect.height / 2 + offsetY - containerRect.top;
-
-    const element1Left = centerX - element1Width / 2;
-    const element1Top = centerY - element1Height / 2;
-
-    element1.style.position = "absolute";
-    element1.style.left = `${element1Left}px`;
-    element1.style.top = `${element1Top}px`;
-  }
-
-var currentUserDiv = document.querySelector("#current-user");
-var settingsDiv = document.querySelector("#settings");
-//placeElement(settings,currentUserDiv);
-
-var selectEdit = document.querySelector("#select-edit");
-var member2 = document.querySelector('[id="2"].member');
-placeElement(selectEdit,member2);
-
 
 var plusButton = document.querySelector("#plus-button");
 var selectNew = document.querySelector("#select-new");
@@ -1066,6 +1038,12 @@ landingNewRoom.addEventListener('click',function(){
 });
 
 };
+
+//functions that will run every few seconds to make sure the data displayed on site is consistent with the database
+function autoUpdate(){
+    //get list of messages in the current room
+
+}
 
 initialize();
 

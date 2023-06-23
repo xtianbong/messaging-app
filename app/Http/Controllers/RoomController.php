@@ -87,6 +87,12 @@ class RoomController extends Controller
         $messages = Message::where('room_id', $room_id)->with('user')->get();
         return $messages;
     }
+    public function fetchMessagesR(Request $request)
+    {
+        $room_id = $request->input('room_id');
+        $messages = Message::where('room_id', $room_id)->with('user')->get();
+        return $messages;
+    }
     public function sendMessage(Request $request)
     {
         if((int) $request->input('room_id')!=0){
@@ -121,12 +127,18 @@ class RoomController extends Controller
         $roomIds = json_decode($user->rooms);
         $rooms = [];
         foreach($roomIds as $id){
-            array_push($rooms,Room::where("id",$id)->first());
+            $room = Room::where("id", $id)->first();
+            if ($room) {
+                array_push($rooms, $room);
+            }
         }
         //dd($rooms);
         //sort rooms so that the most recently updated ones appear first
         usort($rooms, function ($a, $b) {
-            return $b->updated_at <=> $a->updated_at;
+            if($a!=null and $b!=null){
+                return $b->updated_at <=> $a->updated_at;
+            }
+
         });
         //dd($rooms);
         return $rooms;

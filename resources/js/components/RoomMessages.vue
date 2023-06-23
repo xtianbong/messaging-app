@@ -30,15 +30,25 @@
                 </li>
             </ul>
             <div id="settings-box">
-                <div id = "current-user">
-                    <img class="pfp" src="/img/pfp.png">
-                    <h3 :id=currentUser.id class="current-username not-selectable">{{currentUser.name}}</h3>
+                <div id="current-user-box">
+                    <div id = "current-user">
+                        <img class="pfp" src="/img/pfp.png">
+                        <h3 :id=currentUser.id class="current-username not-selectable">{{currentUser.name}}</h3>
+                    </div>
+                    <div id="settings" class="overlay" style="display: none;">
+                        <button id="edit-user-btn" class="overlay-btn">View Profile</button>
+                        <button id="log-out-btn" class="overlay-btn">Logout</button>
+                    </div>
                 </div>
 
                 <img id="settings-button" src="/img/settings.png" alt="settings" style="display:none">
-                <img id="plus-button" src="/img/plus.png" alt="add chat" >
-
-                <!-- <button id="plus-button"  alt="add chat"> </button> -->
+                <div id="plus-box">
+                    <img id="plus-button" src="/img/plus.png" alt="add chat" >
+                    <div id="select-new" class="overlay" style="display: none;">
+                        <button id="add-room-btn" class="overlay-btn">New Room</button>
+                        <button id="add-friend-btn" class="overlay-btn">Add Friend</button>
+                    </div>
+                </div>
                 <div id="tint"></div>
 
                 <!--hidden divs-->
@@ -72,14 +82,8 @@
                     </div>
                     <button id="edit-user-save" class="overlay-btn">Save changes</button>
                 </div>
-                <div id="settings" class="overlay" style="display: none;">
-                    <button id="edit-user-btn" class="overlay-btn">View Profile</button>
-                    <button id="log-out-btn" class="overlay-btn">Logout</button>
-                </div>
-                <div id="select-new" class="overlay" style="display: none;">
-                    <button id="add-room-btn" class="overlay-btn">New Room</button>
-                    <button id="add-friend-btn" class="overlay-btn">Add Friend</button>
-                </div>
+
+
                 <div id="new-room" class="overlay" style="display: none;">
                     <div id="rname-box" class="name-box">
                         <input type="text" id="rname" class ="resizing-input" placeholder="New Room" maxlength="20">
@@ -187,8 +191,8 @@
                     </ul>
                     <h3> Members: </h3>
                     <ul id="member-list" class="scrollbar user-list">
-                    <li class="left clearfix" v-for="u in roomUsers" :key="u.id">
-                        <div :id = u.id class="friend not-selectable visible member searchable" :class="{ added: currentRoom.user_ids.includes(u.id), owner: ownerIds.includes(u.id) }">
+                    <li class="left clearfix edit-room-li" v-for="u in roomUsers" :key="u.id">
+                        <div :id = u.id class="friend not-selectable visible member searchable edit-room-member" :class="{ added: currentRoom.user_ids.includes(u.id), owner: ownerIds.includes(u.id) }">
                             <!--display a crown icon if the user is an owner of this room -->
                             <img class="crown-icon" src="/img/crown.png" alt="crown icon">
                             <h3>{{ u.name }}</h3>
@@ -197,12 +201,12 @@
                             <img class="added-button"  src="/img/tick.png" alt="friend added">
 
                         </div>
-                        <div id="select-edit" class="overlay">
+                        <div  :id="getUniqueId(u.id,'select-edit-')" class="overlay select-edit">
                             <button id="make-owner-btn" class="overlay-btn select-edit-btn">Make Owner</button>
                             <button id="remove-user-btn" class="overlay-btn select-edit-btn">Remove</button>
                         </div>
-                        <div id="undo-edit" class="overlay">
-                            <button id="undo-btn" class="overlay-btn select-edit-btn">Undo</button>
+                        <div :id="getUniqueId(u.id,'undo-edit-')" class="overlay undo-edit">
+                            <button id="undo-btn" class="overlay-btn undo-edit-btn">Undo</button>
                         </div>
 
                     </li>
@@ -217,7 +221,7 @@
         </div>
         <div :id=currentRoom.id class="room-id-carrier" style="display:none;">Find</div>
         <ul id="message-list" class="scrollbar">
-            <li class="left clearfix" v-for="message in messages" v-if="roomId!=0" :key="message.id">
+            <li class="left clearfix" v-for="message in updatedMessages" v-if="roomId!=0" :key="message.id">
                 <div class="clearfix">
                 <div class="header">
                     <strong>
@@ -255,6 +259,7 @@ export default {
         return {
         // add any component-specific data here
         addedFriends: [], // new data property to track added friends
+        updatedMessages: [],// so the page can instantly be updated with new message from other users
         };
     },
     computed: {
@@ -308,6 +313,34 @@ export default {
             this.addedFriends.push(id);
         }
         },
+        fetchMessages() {
+            const url = `/room/${this.room_id}/r`;
+
+            // Make a POST request to fetch messages
+            axios.post(url,{
+                room_id:this.roomId
+            }).then((response) =>{
+                //console.log("Messages updated");
+                //console.log(response.data);
+                const tempMessages = response.data;
+                this.$set(this, 'updatedMessages', tempMessages);
+            })
+            .catch(error => {
+                console.error('Error fetching messages:', error);
+            });
+        },
+        getUniqueId(id,prefix="",suffix="") {
+            return prefix + id +suffix;
+        },
+    },
+    created() {
+    // Call the fetchMessages function immediately
+    this.fetchMessages();
+
+    // Run the fetchMessages function every 5 seconds
+    setInterval(() => {
+        this.fetchMessages();
+    }, 5000);
     },
     mounted() {
         // add any code to run when the component is mounted here

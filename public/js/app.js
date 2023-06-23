@@ -2433,6 +2433,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -2448,7 +2455,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   data: function data() {
     return {
       // add any component-specific data here
-      addedFriends: [] // new data property to track added friends
+      addedFriends: [],
+      // new data property to track added friends
+      updatedMessages: [] // so the page can instantly be updated with new message from other users
     };
   },
 
@@ -2537,7 +2546,38 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       } else {
         this.addedFriends.push(id);
       }
+    },
+    fetchMessages: function fetchMessages() {
+      var _this3 = this;
+      var url = "/room/".concat(this.room_id, "/r");
+
+      // Make a POST request to fetch messages
+      axios.post(url, {
+        room_id: this.roomId
+      }).then(function (response) {
+        //console.log("Messages updated");
+        //console.log(response.data);
+        var tempMessages = response.data;
+        _this3.$set(_this3, 'updatedMessages', tempMessages);
+      })["catch"](function (error) {
+        console.error('Error fetching messages:', error);
+      });
+    },
+    getUniqueId: function getUniqueId(id) {
+      var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+      var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+      return prefix + id + suffix;
     }
+  },
+  created: function created() {
+    var _this4 = this;
+    // Call the fetchMessages function immediately
+    this.fetchMessages();
+
+    // Run the fetchMessages function every 5 seconds
+    setInterval(function () {
+      _this4.fetchMessages();
+    }, 5000);
   },
   mounted: function mounted() {
     // add any code to run when the component is mounted here
@@ -2621,22 +2661,23 @@ var app = new Vue({
       });
     },
     addMessage: function addMessage(message) {
-        var roomId = document.querySelector("#name-box").querySelector("h2").id; //get room id from the room title's id attribute
-
-        console.log(roomId);
-        if(message.message!=""){
-            this.messages.push(message);
-            axios.post('/messages', {
-                message: message.message,
-                //message: "rtrt",
-                room_id: roomId
-            }).then(function (response) {
-                console.log(response.data);
-            });
-        }
-        else{
-            console.log("Empty message");
-        }
+      var _this3 = this;
+      var roomId = document.querySelector("#name-box").querySelector("h2").id; //get room id from the room title's id attribute
+      console.log(roomId);
+      if (message.message != "") {
+        this.messages.push(message);
+        //this.updatedMessages.push(message);
+        axios.post('/messages', {
+          message: message.message,
+          room_id: roomId
+        }).then(function (response) {
+          console.log(response.data);
+          // Fetch updated messages after successfully sending the message
+          _this3.fetchMessages();
+        });
+      } else {
+        console.log("Empty message");
+      }
     }
   },
   mounted: function mounted() {
@@ -44876,7 +44917,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   null,
   null
-
+  
 )
 
 /* hot reload */
@@ -44915,7 +44956,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   null,
   null
-
+  
 )
 
 /* hot reload */
@@ -44954,7 +44995,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   null,
   null
-
+  
 )
 
 /* hot reload */
@@ -44993,7 +45034,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   null,
   null,
   null
-
+  
 )
 
 /* hot reload */
@@ -45015,7 +45056,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChatForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChatForm.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -45031,7 +45072,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChatMessages.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChatMessages.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -45047,7 +45088,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -45063,7 +45104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RoomMessages.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RoomMessages.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RoomMessages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -45330,8 +45371,8 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "chat room searchable",
-                      attrs: { id: "roomdiv" }
+                      staticClass: "chat room searchable roomdiv",
+                      attrs: { id: _vm.currentUser.id }
                     },
                     [
                       _c("img", {
@@ -45357,17 +45398,21 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { attrs: { id: "settings-box" } }, [
-        _c("div", { attrs: { id: "current-user" } }, [
-          _c("img", { staticClass: "pfp", attrs: { src: "/img/pfp.png" } }),
+        _c("div", { attrs: { id: "current-user-box" } }, [
+          _c("div", { attrs: { id: "current-user" } }, [
+            _c("img", { staticClass: "pfp", attrs: { src: "/img/pfp.png" } }),
+            _vm._v(" "),
+            _c(
+              "h3",
+              {
+                staticClass: "current-username not-selectable",
+                attrs: { id: _vm.currentUser.id }
+              },
+              [_vm._v(_vm._s(_vm.currentUser.name))]
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "h3",
-            {
-              staticClass: "current-username not-selectable",
-              attrs: { id: _vm.currentUser.id }
-            },
-            [_vm._v(_vm._s(_vm.currentUser.name))]
-          )
+          _vm._m(2)
         ]),
         _vm._v(" "),
         _c("img", {
@@ -45379,9 +45424,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("img", {
-          attrs: { id: "plus-button", src: "/img/plus.png", alt: "add chat" }
-        }),
+        _vm._m(3),
         _vm._v(" "),
         _c("div", { attrs: { id: "tint" } }),
         _vm._v(" "),
@@ -45393,7 +45436,7 @@ var render = function() {
             attrs: { id: "edit-user" }
           },
           [
-            _vm._m(2),
+            _vm._m(4),
             _vm._v(" "),
             _c(
               "div",
@@ -45485,10 +45528,6 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm._m(3),
-        _vm._v(" "),
-        _vm._m(4),
-        _vm._v(" "),
         _c(
           "div",
           {
@@ -45577,7 +45616,9 @@ var render = function() {
           _vm._v(" "),
           _vm.friendsOutsideRoom.length == 0
             ? _c("h4", { attrs: { id: "friends-all-in" } }, [
-                _vm._v("You have no friends who are not in this chat room.")
+                _vm._v(
+                  "You have no friends who are not already in this chat room."
+                )
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -45684,7 +45725,13 @@ var render = function() {
               0
             ),
             _vm._v(" "),
-            _vm._m(11)
+            _vm._m(11),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "overlay-btn", attrs: { id: "leave-room-btn" } },
+              [_vm._v("\n                Leave Room\n            ")]
+            )
           ]
         ),
         _vm._v(" "),
@@ -45758,42 +45805,87 @@ var render = function() {
               attrs: { id: "member-list" }
             },
             _vm._l(_vm.roomUsers, function(u) {
-              return _c("li", { key: u.id, staticClass: "left clearfix" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "friend not-selectable visible member searchable",
-                    class: {
-                      added: _vm.currentRoom.user_ids.includes(u.id),
-                      owner: _vm.ownerIds.includes(u.id)
+              return _c(
+                "li",
+                { key: u.id, staticClass: "left clearfix edit-room-li" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "friend not-selectable visible member searchable edit-room-member",
+                      class: {
+                        added: _vm.currentRoom.user_ids.includes(u.id),
+                        owner: _vm.ownerIds.includes(u.id)
+                      },
+                      attrs: { id: u.id }
                     },
-                    attrs: { id: u.id }
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "crown-icon",
-                      attrs: { src: "/img/crown.png", alt: "crown icon" }
-                    }),
-                    _vm._v(" "),
-                    _c("h3", [_vm._v(_vm._s(u.name))]),
-                    _vm._v(" "),
-                    _c("img", {
-                      staticClass: "add-button",
-                      attrs: { src: "/img/plus.png", alt: "add friend" }
-                    }),
-                    _vm._v(" "),
-                    _c("img", {
-                      staticClass: "added-button",
-                      attrs: { src: "/img/tick.png", alt: "friend added" }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(12, true),
-                _vm._v(" "),
-                _vm._m(13, true)
-              ])
+                    [
+                      _c("img", {
+                        staticClass: "crown-icon",
+                        attrs: { src: "/img/crown.png", alt: "crown icon" }
+                      }),
+                      _vm._v(" "),
+                      _c("h3", [_vm._v(_vm._s(u.name))]),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "add-button",
+                        attrs: { src: "/img/plus.png", alt: "add friend" }
+                      }),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "added-button",
+                        attrs: { src: "/img/tick.png", alt: "friend added" }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "overlay select-edit",
+                      attrs: { id: _vm.getUniqueId(u.id, "select-edit-") }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "overlay-btn select-edit-btn",
+                          attrs: { id: "make-owner-btn" }
+                        },
+                        [_vm._v("Make Owner")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "overlay-btn select-edit-btn",
+                          attrs: { id: "remove-user-btn" }
+                        },
+                        [_vm._v("Remove")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "overlay undo-edit",
+                      attrs: { id: _vm.getUniqueId(u.id, "undo-edit-") }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "overlay-btn undo-edit-btn",
+                          attrs: { id: "undo-btn" }
+                        },
+                        [_vm._v("Undo")]
+                      )
+                    ]
+                  )
+                ]
+              )
             }),
             0
           ),
@@ -45809,7 +45901,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(14)
+        _vm._m(12)
       ]),
       _vm._v(" "),
       _c(
@@ -45825,7 +45917,7 @@ var render = function() {
       _c(
         "ul",
         { staticClass: "scrollbar", attrs: { id: "message-list" } },
-        _vm._l(_vm.messages, function(message) {
+        _vm._l(_vm.updatedMessages, function(message) {
           return _vm.roomId != 0
             ? _c("li", { key: message.id, staticClass: "left clearfix" }, [
                 _c("div", { staticClass: "clearfix" }, [
@@ -45857,7 +45949,7 @@ var render = function() {
         ? _c("div", { attrs: { id: "landing-room" } }, [
             _c("h1", [_vm._v("Welcome!")]),
             _vm._v(" "),
-            _vm._m(15)
+            _vm._m(13)
           ])
         : _vm._e()
     ])
@@ -45907,20 +45999,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tabs", attrs: { id: "edit-user-tabs" } }, [
-      _c("div", { staticClass: "tab", attrs: { id: "profile-tab" } }, [
-        _vm._v(" Profile")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "tab", attrs: { id: "friends-tab" } }, [
-        _vm._v(" Friends")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "div",
       {
@@ -45947,27 +46025,47 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "overlay",
-        staticStyle: { display: "none" },
-        attrs: { id: "select-new" }
-      },
-      [
-        _c(
-          "button",
-          { staticClass: "overlay-btn", attrs: { id: "add-room-btn" } },
-          [_vm._v("New Room")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "overlay-btn", attrs: { id: "add-friend-btn" } },
-          [_vm._v("Add Friend")]
-        )
-      ]
-    )
+    return _c("div", { attrs: { id: "plus-box" } }, [
+      _c("img", {
+        attrs: { id: "plus-button", src: "/img/plus.png", alt: "add chat" }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "overlay",
+          staticStyle: { display: "none" },
+          attrs: { id: "select-new" }
+        },
+        [
+          _c(
+            "button",
+            { staticClass: "overlay-btn", attrs: { id: "add-room-btn" } },
+            [_vm._v("New Room")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "overlay-btn", attrs: { id: "add-friend-btn" } },
+            [_vm._v("Add Friend")]
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "tabs", attrs: { id: "edit-user-tabs" } }, [
+      _c("div", { staticClass: "tab", attrs: { id: "profile-tab" } }, [
+        _vm._v(" Profile")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "tab", attrs: { id: "friends-tab" } }, [
+        _vm._v(" Friends")
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -46106,45 +46204,6 @@ var staticRenderFns = [
         })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "overlay", attrs: { id: "select-edit" } }, [
-      _c(
-        "button",
-        {
-          staticClass: "overlay-btn select-edit-btn",
-          attrs: { id: "make-owner-btn" }
-        },
-        [_vm._v("Make Owner")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "overlay-btn select-edit-btn",
-          attrs: { id: "remove-user-btn" }
-        },
-        [_vm._v("Remove")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "overlay", attrs: { id: "undo-edit" } }, [
-      _c(
-        "button",
-        {
-          staticClass: "overlay-btn select-edit-btn",
-          attrs: { id: "undo-btn" }
-        },
-        [_vm._v("Undo")]
-      )
-    ])
   },
   function() {
     var _vm = this
@@ -58360,7 +58419,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -58374,20 +58433,20 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -58420,7 +58479,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -58432,7 +58491,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -58444,12 +58503,12 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -58460,7 +58519,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -58469,11 +58528,11 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/
+/******/ 		
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -58481,19 +58540,19 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
 /******/ 		};
-/******/
+/******/ 		
 /******/ 		// no chunk on demand loading
-/******/
+/******/ 		
 /******/ 		// no prefetching
-/******/
+/******/ 		
 /******/ 		// no preloaded
-/******/
+/******/ 		
 /******/ 		// no HMR
-/******/
+/******/ 		
 /******/ 		// no HMR manifest
-/******/
+/******/ 		
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/
+/******/ 		
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -58518,20 +58577,20 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/
+/******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
-/******/
+/******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/
+/******/ 	
 /******/ })()
 ;

@@ -151,15 +151,21 @@ mark.highlight {
     position:  absolute;
     bottom:0px;
     box-sizing: border-box;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    padding:10px;
+    display: flex;
+    justify-content: space-between;
+    padding:15px;
+    z-index: 1;
 }
-#settings-box>*{
-    /*transform: translateY(-8px);*/
+#settings-box>div{
+    flex: 0 0 auto;
+    margin: 0;
 }
 #settings-box > .pfp{
     grid-column: 1;
+}
+#current-user-box{
+    position: relative;
+    display: inline-block;
 }
 #current-user{
     display: flex;
@@ -182,6 +188,21 @@ mark.highlight {
     margin: auto;
     vertical-align: center;
 }
+#settings{
+    height:fit-content;
+    width:200px;
+    z-index: 1000;
+    border-radius: 0;
+    position: absolute;
+    top: -155px; /* Adjust this value to position the "select-new" div above the "current-user" */
+    left: 85%;
+    transform: translateX(-50%);
+    display: none;
+}
+#settings>button{
+    width:90%;
+}
+
 #edit-user{
 
 }
@@ -290,12 +311,33 @@ mark.highlight {
     margin:auto;
     cursor: pointer;
 }
-#plus-button{
-    grid-column: 4;
-    width:30px;
+#plus-box {
+    position: relative;
+    display: inline-block;
+    height: fit-content;
+    transform: translateY(8px);
+    z-index: 500;
+}
+
+#plus-button {
+    width: 30px;
     height: 30px;
-    margin:auto;
     cursor: pointer;
+}
+
+#select-new {
+    height: 110px;
+    width: 220px;
+    z-index: 1000;
+    border-radius: 0;
+    position: absolute;
+    top: -120px; /* Adjust this value to position the "select-new" div above the "plus-button" */
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+}
+#select-new>button{
+    margin:10px auto;
 }
 
 #right-side{
@@ -633,28 +675,7 @@ body{
     height:100%;
 }
 
-#select-new{
-    height: 110px;
-    width: 220px;
-    left: 22%;
-    top:640px;
-    z-index: 999;
-    border-radius: 0;
-}
 
-#select-new>button{
-    margin:10px auto;
-}
-
-#settings{
-    height:fit-content;
-    width:200px;
-    bottom: 56px;
-    left: 63%;
-}
-#settings>button{
-    width:90%;
-}
 
 
 .room>.card-body{
@@ -814,13 +835,27 @@ ul{
     display:none;
 }
 
-#select-edit,#undo-edit{
+.edit-room-li{
+    position: relative;
+    display: inline-block;
+}
+
+.edit-room-member{
+
+}
+
+.select-edit,.undo-edit{
     height:40px;
     width:fit-content;
     display:grid;
     grid-template-columns: auto auto;
-    left:0vw;
-    bottom:186px;
+    z-index: 999;
+    border-radius: 0;
+    position: absolute;
+    top: -140px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
 }
 
 #select-edit>button,#undo-edit>button{
