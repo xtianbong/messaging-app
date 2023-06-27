@@ -817,10 +817,11 @@ ul{
 
 }
 
-.owner>.crown-icon{
+.owner>div>.crown-icon{
     display: block;
     margin:1px 5px;
-
+    height:30px;
+    width:30px;
 }
 
 .added-button{
@@ -841,7 +842,21 @@ ul{
 }
 
 .edit-room-member{
+    justify-content: space-between;
+}
 
+.edit-room-member-name{
+    display: flex;
+}
+
+.edit-room-member-buttons{
+    display:flex;
+}
+
+.edit-room-member-buttons>button{
+    height: 30px;
+    width: 30px;
+    margin:0px 2.5px;
 }
 
 .select-edit,.undo-edit{

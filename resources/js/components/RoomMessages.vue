@@ -194,12 +194,16 @@
                     <li class="left clearfix edit-room-li" v-for="u in roomUsers" :key="u.id">
                         <div :id = u.id class="friend not-selectable visible member searchable edit-room-member" :class="{ added: currentRoom.user_ids.includes(u.id), owner: ownerIds.includes(u.id) }">
                             <!--display a crown icon if the user is an owner of this room -->
-                            <img class="crown-icon" src="/img/crown.png" alt="crown icon">
-                            <h3>{{ u.name }}</h3>
-                            <!--display either the add button or the added button based on if the user is already in the room or not-->
-                            <img class="add-button"  src="/img/plus.png" alt="add friend">
-                            <img class="added-button"  src="/img/tick.png" alt="friend added">
 
+                            <div class="edit-room-member-name">
+                                <img class="crown-icon" src="/img/crown.png" alt="crown icon">
+                                <h3>{{ u.name }}</h3>
+                            </div>
+                            <div class="edit-room-member-buttons">
+                                <button id="make-owner-btn" class="overlay-btn select-edit-btn">O</button>
+                                <button id="remove-user-btn" class="overlay-btn select-edit-btn">R</button>
+                                <button id="undo-btn" class="overlay-btn undo-edit-btn">U</button>
+                            </div>
                         </div>
                         <div  :id="getUniqueId(u.id,'select-edit-')" class="overlay select-edit">
                             <button id="make-owner-btn" class="overlay-btn select-edit-btn">Make Owner</button>

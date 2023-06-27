@@ -2440,6 +2440,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -45821,22 +45825,16 @@ var render = function() {
                       attrs: { id: u.id }
                     },
                     [
-                      _c("img", {
-                        staticClass: "crown-icon",
-                        attrs: { src: "/img/crown.png", alt: "crown icon" }
-                      }),
+                      _c("div", { staticClass: "edit-room-member-name" }, [
+                        _c("img", {
+                          staticClass: "crown-icon",
+                          attrs: { src: "/img/crown.png", alt: "crown icon" }
+                        }),
+                        _vm._v(" "),
+                        _c("h3", [_vm._v(_vm._s(u.name))])
+                      ]),
                       _vm._v(" "),
-                      _c("h3", [_vm._v(_vm._s(u.name))]),
-                      _vm._v(" "),
-                      _c("img", {
-                        staticClass: "add-button",
-                        attrs: { src: "/img/plus.png", alt: "add friend" }
-                      }),
-                      _vm._v(" "),
-                      _c("img", {
-                        staticClass: "added-button",
-                        attrs: { src: "/img/tick.png", alt: "friend added" }
-                      })
+                      _vm._m(12, true)
                     ]
                   ),
                   _vm._v(" "),
@@ -45901,7 +45899,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(12)
+        _vm._m(13)
       ]),
       _vm._v(" "),
       _c(
@@ -45949,7 +45947,7 @@ var render = function() {
         ? _c("div", { attrs: { id: "landing-room" } }, [
             _c("h1", [_vm._v("Welcome!")]),
             _vm._v(" "),
-            _vm._m(13)
+            _vm._m(14)
           ])
         : _vm._e()
     ])
@@ -46204,6 +46202,36 @@ var staticRenderFns = [
         })
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "edit-room-member-buttons" }, [
+      _c(
+        "button",
+        {
+          staticClass: "overlay-btn select-edit-btn",
+          attrs: { id: "make-owner-btn" }
+        },
+        [_vm._v("O")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "overlay-btn select-edit-btn",
+          attrs: { id: "remove-user-btn" }
+        },
+        [_vm._v("R")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "overlay-btn undo-edit-btn", attrs: { id: "undo-btn" } },
+        [_vm._v("U")]
+      )
+    ])
   },
   function() {
     var _vm = this
