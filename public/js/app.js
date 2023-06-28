@@ -2444,6 +2444,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -45949,6 +45953,14 @@ var render = function() {
             _vm._v(" "),
             _vm._m(14)
           ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.currentRoom.id == 0
+        ? _c("div", { attrs: { id: "landing-room" } }, [
+            _c("h1", [_vm._v("Welcome!")]),
+            _vm._v(" "),
+            _vm._m(15)
+          ])
         : _vm._e()
     ])
   ])
@@ -46208,29 +46220,20 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "edit-room-member-buttons" }, [
-      _c(
-        "button",
-        {
-          staticClass: "overlay-btn select-edit-btn",
-          attrs: { id: "make-owner-btn" }
-        },
-        [_vm._v("O")]
-      ),
+      _c("button", {
+        staticClass: "overlay-btn select-edit-btn",
+        attrs: { id: "make-owner-btn" }
+      }),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "overlay-btn select-edit-btn",
-          attrs: { id: "remove-user-btn" }
-        },
-        [_vm._v("R")]
-      ),
+      _c("button", {
+        staticClass: "overlay-btn select-edit-btn",
+        attrs: { id: "remove-user-btn" }
+      }),
       _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "overlay-btn undo-edit-btn", attrs: { id: "undo-btn" } },
-        [_vm._v("U")]
-      )
+      _c("button", {
+        staticClass: "overlay-btn undo-edit-btn",
+        attrs: { id: "undo-btn" }
+      })
     ])
   },
   function() {
@@ -46256,6 +46259,17 @@ var staticRenderFns = [
         _c("h1", [_vm._v("Changes saved")])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", [
+      _vm._v("Please select a chat room on the left side of the screen or "),
+      _c("a", { attrs: { id: "landing-new-room" } }, [
+        _vm._v("create a new room.")
+      ])
+    ])
   },
   function() {
     var _vm = this

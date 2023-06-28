@@ -200,9 +200,9 @@
                                 <h3>{{ u.name }}</h3>
                             </div>
                             <div class="edit-room-member-buttons">
-                                <button id="make-owner-btn" class="overlay-btn select-edit-btn">O</button>
-                                <button id="remove-user-btn" class="overlay-btn select-edit-btn">R</button>
-                                <button id="undo-btn" class="overlay-btn undo-edit-btn">U</button>
+                                <button id="make-owner-btn" class="overlay-btn select-edit-btn"></button>
+                                <button id="remove-user-btn" class="overlay-btn select-edit-btn"></button>
+                                <button id="undo-btn" class="overlay-btn undo-edit-btn"></button>
                             </div>
                         </div>
                         <div  :id="getUniqueId(u.id,'select-edit-')" class="overlay select-edit">
@@ -238,6 +238,10 @@
                 </div>
             </li>
         </ul>
+        <div id="landing-room" v-if="currentRoom.id == 0">
+            <h1>Welcome!</h1>
+            <h2>Please select a chat room on the left side of the screen or <a id="landing-new-room">create a new room.</a></h2>
+        </div>
         <div id="landing-room" v-if="currentRoom.id == 0">
             <h1>Welcome!</h1>
             <h2>Please select a chat room on the left side of the screen or <a id="landing-new-room">create a new room.</a></h2>

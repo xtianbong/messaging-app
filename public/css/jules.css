@@ -220,6 +220,8 @@ mark.highlight {
     padding:auto;
     padding-left: 10px;
     padding-right:10px;
+    width:50%;
+    text-align: center;
 }
 .tab:hover{
     cursor: pointer;
@@ -232,10 +234,11 @@ mark.highlight {
 }
 
 .profile-mode>#edit-user-tabs>#profile-tab{
-    background-color: #06071E
+    background-color: #06071E;
 }
 .profile-mode>#edit-user-tabs>#profile-tab:hover{
-    background-color: #171a6d;
+    background-color: #06071E;
+    cursor:default;
 }
 .profile-mode>#profile-view{
     display:block;
@@ -245,7 +248,8 @@ mark.highlight {
     background-color: #06071E
 }
 .friends-mode>#edit-user-tabs>#friends-tab:hover{
-    background-color: #171a6d;
+    background-color: #06071E;
+    cursor:default;
 }
 .friends-mode>#friends-view{
     display:block;
@@ -411,6 +415,7 @@ mark.highlight {
 
 #edit-room,#room-details{
     width: 350px;
+    height: 550px;
     /*display:inline-block;*/
 }
 
@@ -782,8 +787,9 @@ ul{
     justify-content: space-between;
 }
 
-#member-list{
+#member-list,#details-member-list{
     float:left;
+    max-height: 280px;
 }
 
 .friend{
@@ -852,11 +858,52 @@ ul{
 .edit-room-member-buttons{
     display:flex;
 }
+.owner>.edit-room-member-buttons{
+    display: none;
+}
+.changed.owner>.edit-room-member-buttons{
+    display:flex;
+}
 
 .edit-room-member-buttons>button{
     height: 30px;
     width: 30px;
     margin:0px 2.5px;
+}
+#make-owner-btn{
+    display:block;
+    background-image: url("../img/crown.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#remove-user-btn{
+    display:block;
+    background-image: url("../img/remove.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#undo-btn{
+    display: none;
+    background-image: url("../img/undo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.changed>.edit-room-member-buttons>#make-owner-btn{
+    display: none;
+}
+
+.changed>.edit-room-member-buttons>#remove-user-btn{
+    display: none;
+}
+
+.changed>.edit-room-member-buttons>#undo-btn{
+    display: block;
 }
 
 .select-edit,.undo-edit{

@@ -27,7 +27,11 @@ class RoomController extends Controller
 {
     public function index(Request $request, $room_id)
     {
+        //verify room_id
+        $currentUser = $request->user();
+        if(!in_array($room_id, json_decode(($currentUser->rooms)))){
 
+        }
 
         $currentUser = $request->user();
 
@@ -59,9 +63,7 @@ class RoomController extends Controller
             $currentRoom = Room::where('id',$room_id)->first();
         }
 
-        if($currentRoom->id==0){
-            //dd($rooms);
-        }
+
         $roomUsers = User::whereIn("id",json_decode($currentRoom->user_ids))->get();
         $roomOwners = User::whereIn("id",json_decode($currentRoom->owner_ids))->get();
         //dd($roomOwners);
