@@ -72,7 +72,7 @@
                             <input type="text" id="edit-username" class ="resizing-input" :placeholder=currentUser.name maxlength="12">
                             <img src="/img/edit.png">
                         </div>
-
+                        <button id="edit-user-save" class="overlay-btn">Save changes</button>
                     </div>
 
                     <div id="friends-view" class="tab-view">
@@ -88,7 +88,7 @@
 
                         </ul>
                     </div>
-                    <button id="edit-user-save" class="overlay-btn">Save changes</button>
+
                 </div>
 
 

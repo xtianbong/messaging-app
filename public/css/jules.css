@@ -243,6 +243,7 @@ mark.highlight {
 }
 .profile-mode>#profile-view{
     display:block;
+    height:100%;
 }
 
 .friends-mode>#edit-user-tabs>#friends-tab{

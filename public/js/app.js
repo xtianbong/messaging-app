@@ -45485,6 +45485,15 @@ var render = function() {
                     _vm._v(" "),
                     _c("img", { attrs: { src: "/img/edit.png" } })
                   ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "overlay-btn",
+                    attrs: { id: "edit-user-save" }
+                  },
+                  [_vm._v("Save changes")]
                 )
               ]
             ),
@@ -45536,12 +45545,6 @@ var render = function() {
                   0
                 )
               ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "overlay-btn", attrs: { id: "edit-user-save" } },
-              [_vm._v("Save changes")]
             )
           ]
         ),
