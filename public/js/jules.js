@@ -241,7 +241,7 @@ function resizeInputs() {
     // Loop through all input elements
     inputs.forEach((input) => {
       // Get the width of the input's placeholder
-      let placeholderWidth = input.placeholder.length * 12.5;
+      let placeholderWidth = input.placeholder.length * 15.3;
 
       // Set the initial width of the input to the placeholder width
     input.style.width = `${placeholderWidth}px`;
@@ -313,7 +313,9 @@ function makeOwnerHandler(m){
         m.classList.add("changed");//keep track of what divs were changed in this session so it can be easily undone
         displayOff(selectEdit);
     };
-    createConfirmBox("Are you sure you want to make "+m.querySelector("h3").innerHTML+" an owner of this room.",ownerYes);
+    //createConfirmBox("Are you sure you want to make "+m.querySelector("h3").innerHTML+" an owner of this room.",ownerYes);
+    ownerYes();
+
 }
 
 function removeUserHandler(m){
@@ -396,6 +398,24 @@ function removeAllEventListeners(element) {
     // If the element doesn't have a parent node, return the element itself
     return element;
 }
+//creates a room with only that user in it when you click on a user in your friends list
+function createPrivateRoom(friendId){
+    var currentUserId = parseInt(document.querySelector(".current-username").getAttribute("id"));//id of user creating the room
+    var name = friendId;
+    friendId=parseInt(friendId);
+    var users = [currentUserId,friendId];
+    var owners = [currentUserId,friendId];
+    createRoomPHP(currentUserId,name, users, owners);
+}
+var editUserFriends = document.querySelectorAll(".edit-user-friend");
+for(var e of editUserFriends){
+    e.addEventListener('click',function(){
+        console.log(e);
+        createConfirmBox("Would you like to create a chat room with "+e.querySelector("h3").innerHTML+"?" ,function(){
+            createPrivateRoom(e.id);
+        });
+    });
+}
 
 //retrieve data for room creation from the form
 function createNewRoom(){
@@ -468,33 +488,45 @@ function addByEmail (){
     }).then(function (response){
         var user = response.data;
 
-        //user is already in the friends list above
-        if(searchUserList(document.querySelector("#add-list"),user.id)){
-            createDialogueBox("The user "+ user.name +" is already in your friends list");
-        }
-        //user is already in the room
-        else if(searchUserList(document.querySelector("#room-details"),user.id)){
-            createDialogueBox("The user "+ user.name +" is already in this chat room.");
-        }
         //user did not enter an email address
-        else if(email==""){
+        if(email==""){
+            console.log(1);
         }
+
         //no user with that email address
         else if(response.data=="Not found"){
             createDialogueBox("We could not find a user at the email address: \n"+email);
         }
 
+        //user is already in the friends list above
+        if(searchUserList(document.querySelector("#add-list"),user.id)){
+            createDialogueBox("The user "+ user.name +" is already in your friends list");
+        }
+
+        //user is already in the room
+        else if(searchUserList(document.querySelector("#room-details"),user.id)){
+            createDialogueBox("The user "+ user.name +" is already in this chat room.");
+        }
+
+
         else{
             //create a div using the data from this object then add it to the add list
             //get base from the other list items in add-list
             var base = document.querySelector(".add-to-room-li");
+            console.log(base);
             var newLi = base.cloneNode(true);
+            newLi.style.display="block";
             var newDiv = newLi.querySelector("div");
             newDiv.id = user.id;
-            newDiv.classList.add("added","changed");
+            newDiv.classList.add("added","changed","visible");
+
             var newName = newDiv.querySelector("h3");
             newName.innerHTML = user.name;
 
+            //hide the friends-all-in message
+            if(document.querySelector("#friends-all-in")!=null){
+                document.querySelector("#friends-all-in").style.display="none";
+            }
             document.getElementById("add-list").appendChild(newLi);
             //run this so that the div is interactive
             friendDivsInput();
@@ -739,8 +771,13 @@ function editUser(){
         }
     }
     console.log(friends);
+    if(username.length<13){
+        editUserPHP(username,friends);
+    }
+    else{
+        createDialogueBox("Your username cannot exceed 12 characters in length.");
+    }
 
-    editUserPHP(username,friends);
 }
 var editUserSave = document.querySelector("#edit-user-save");
 editUserSave.addEventListener('click',editUser);
@@ -764,7 +801,9 @@ function removeFriend(fDiv){
         }
     }
     console.log(friends);
-    editUserPHP(username,friends);
+    setTimeout(function() {
+        editUserPHP(username, friends);
+      }, 10);
 }
 var removeButtons = document.querySelectorAll(".remove-btn");
 for(let r of removeButtons){
@@ -784,6 +823,18 @@ function editUserPHP(username,friends){
         friends:friends,
     }).then(function(response){
         console.log("User edited")
+        displayOff();//remove create room overlay
+        var userEditAlert = document.querySelector("#user-edit-alert");
+        displayToggle(userEditAlert);//show new room alert
+        console.log(userEditAlert);
+
+        //remove alert after a few seconds and refresh
+        setTimeout(function(){
+            if(userEditAlert.style.display!="none"){
+                displayOff();
+                location.reload();
+            }
+        },3000);
     })
 }
 
@@ -907,6 +958,30 @@ function createDialogueBox(dialogue="Default dialogue",option="Ok"){
         dialogueTint.style.display="none";
     });
 }
+
+//create a dialogue box with no options that reloads the page or redirects to a new one after a while
+function createAlertBox(THIS_DOES_NOT_WORK,dialogue="Default dialogue",option="Ok",redirect="here",duration=3000){
+    var dialogueBox = document.getElementById("dialogue-box");
+    var dialogueText = document.getElementById("dialogue");
+    var dialogueTint = document.getElementById("dialogue-tint");
+    var okButton = document.getElementById("ok-btn");
+    dialogueText.innerHTML = dialogue;
+    okButton.innerHTML = option;
+
+    //display dialogue box
+    dialogueBox.style.display="block";
+    dialogueTint.style.display = "block";
+
+    //close dialogue box
+    dialogueTint.addEventListener("click",function(){
+        dialogueBox.style.display="none";
+        dialogueTint.style.display="none";
+    });
+    okButton.addEventListener("click",function(){
+        dialogueBox.style.display="none";
+        dialogueTint.style.display="none";
+    });
+}
 //determines whether a user-list contains a user with the specified id (key)
 function searchUserList(list,key){
     var divs = list.querySelectorAll("div");
@@ -918,10 +993,23 @@ function searchUserList(list,key){
     return false;
 }
 
+function getUserFromId(DOESNOTWORK,id) {
+    return new Promise((resolve, reject) => {
+      axios.post('/room/user-from-id', {
+        id: id,
+      }).then(function(response) {
+        resolve(response.data);
+      }).catch(function(error) {
+        reject(error);
+      });
+    });
+}
+
 
 var plusButton = document.querySelector("#plus-button");
 var selectNew = document.querySelector("#select-new");
 plusButton.addEventListener('click', function() { //apply newRoom function to plus button and new room div
+    displayOff();
     displayToggle(selectNew);
 });
 

@@ -173,7 +173,7 @@ mark.highlight {
     height:fit-content;
     width:fit-content;
     padding:5px 10px;
-    margin:10px auto;
+    margin: auto;
     border-radius: 8px;
 }
 #current-user:hover{
@@ -198,6 +198,7 @@ mark.highlight {
     left: 85%;
     transform: translateX(-50%);
     display: none;
+    margin: auto 20px;
 }
 #settings>button{
     width:90%;
@@ -378,7 +379,15 @@ mark.highlight {
     margin-left:5px;
     cursor: pointer;
 }
+/*
+#add-users-btn:hover{
+    content: url("/img/add-user-purp.png");
+}
 
+#room-details-btn:hover{
+    content:url("/img/edit-room-purp.png");
+}
+*/
 #add-users{
     padding:10px;
 }
@@ -870,6 +879,9 @@ ul{
     width: 30px;
     margin:0px 2.5px;
 }
+.edit-room-member-buttons>button:hover{
+    background-color: #1d2059;
+}
 #make-owner-btn{
     display:block;
     background-image: url("../img/crown.png");
@@ -892,6 +904,11 @@ ul{
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    background-color: inherit;
+}
+#undo-btn:hover{
+    background-color: white;
+    background-image: url("../img/undo-purp.png");
 }
 
 .changed>.edit-room-member-buttons>#make-owner-btn{
@@ -961,7 +978,7 @@ ul{
     height:120px;
     display:block;
     left: 83%;
-    bottom: 56px;
+    top:-276%;
     padding:10px;
 }
 
@@ -985,8 +1002,6 @@ ul{
     border-radius: 14px;
 }
 #edit-room-alert{
-    bottom:-50vh;
-    left: 24vw;
 }
 .room-alert>*{
     height:100px;

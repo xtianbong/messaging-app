@@ -39,6 +39,10 @@
                         <button id="edit-user-btn" class="overlay-btn">View Profile</button>
                         <button id="log-out-btn" class="overlay-btn">Logout</button>
                     </div>
+                    <div id="user-edit-alert" class="overlay room-alert" style="display: none;">
+                        <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the user has been edited">
+                        <h1>Changes saved</h1>
+                    </div>
                 </div>
 
                 <img id="settings-button" src="/img/settings.png" alt="settings" style="display:none">
@@ -47,6 +51,10 @@
                     <div id="select-new" class="overlay" style="display: none;">
                         <button id="add-room-btn" class="overlay-btn">New Room</button>
                         <button id="add-friend-btn" class="overlay-btn">Add Friend</button>
+                    </div>
+                    <div id="add-friend" class="overlay" style="display: none;">
+                        <input type="text" id="new-friend-email" class="email-bar" placeholder="E-mail">
+                        <button id="confirm-new-friend" class="overlay-btn">Add Friend</button>
                     </div>
                 </div>
                 <div id="tint"></div>
@@ -61,7 +69,7 @@
                         <img id="edit-userpfp" src="/img/pfp.png">
                         <div id="edit-username-box" class="name-box">
                             <h2>Username:</h2>
-                            <input type="text" id="edit-username" class ="resizing-input" :placeholder=currentUser.name maxlength="20">
+                            <input type="text" id="edit-username" class ="resizing-input" :placeholder=currentUser.name maxlength="12">
                             <img src="/img/edit.png">
                         </div>
 
@@ -107,10 +115,6 @@
                     <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the room  has been created">
                     <h1>New room created</h1>
                 </div>
-                <div id="add-friend" class="overlay" style="display: none;">
-                    <input type="text" id="new-friend-email" class="email-bar" placeholder="E-mail">
-                    <button id="confirm-new-friend" class="overlay-btn">Add Friend</button>
-                </div>
                 <div id="add-friend-alert" class="overlay room-alert" style="display: none;">
                     <img class="confirm-tick" src="/img/tick.png" alt="tick to siginify that the friend has been added">
                     <h1>New friend addded</h1>
@@ -130,7 +134,15 @@
                 <h4 id ="friends-all-in" v-if="friendsOutsideRoom.length== 0">You have no friends who are not already in this chat room.</h4>
                 <input type="text" id="asearch-bar" class="search-bar" v-if="friendsOutsideRoom.length!= 0"> <!-- friend search bar-->
                 <!--list of friends that can be added-->
-                <ul id="add-list" class="scrollbar user-list" v-if="friendsOutsideRoom.length!= 0">
+                <ul id="add-list" class="scrollbar user-list" >
+                    <!--invisible list item that can be used as a template for new ones (addByEmail) even when the list is "empty"-->
+                    <li class="left clearfix add-to-room-li" style="display: none;">
+                        <div class="friend not-selectable new-room-friend searchable add-to-room">
+                            <h3>Base</h3>
+                            <img class="add-button" src="/img/plus.png" alt="add friend">
+                            <img class="added-button" src="/img/tick.png" alt="friend added">
+                        </div>
+                    </li>
                     <li class="left clearfix add-to-room-li" v-for="friend in friendsOutsideRoom" :key="friend.id">
                         <div :id = friend.id class="friend not-selectable new-room-friend searchable add-to-room">
                             <h3>{{ friend.name }}</h3>
@@ -238,10 +250,6 @@
                 </div>
             </li>
         </ul>
-        <div id="landing-room" v-if="currentRoom.id == 0">
-            <h1>Welcome!</h1>
-            <h2>Please select a chat room on the left side of the screen or <a id="landing-new-room">create a new room.</a></h2>
-        </div>
         <div id="landing-room" v-if="currentRoom.id == 0">
             <h1>Welcome!</h1>
             <h2>Please select a chat room on the left side of the screen or <a id="landing-new-room">create a new room.</a></h2>

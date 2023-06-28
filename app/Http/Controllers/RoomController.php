@@ -30,7 +30,7 @@ class RoomController extends Controller
         //verify room_id
         $currentUser = $request->user();
         if(!in_array($room_id, json_decode(($currentUser->rooms)))){
-
+            return view('notfound');
         }
 
         $currentUser = $request->user();
@@ -158,13 +158,21 @@ class RoomController extends Controller
         $users = array_values(array_unique($users));//array_values reindexes the array automatically to ensure that the resulting json does not include numeric keys
         $owners = array_values(array_unique($owners));
 
-        //save that room to the database
+        //create new room
         $room = new Room();
         $room -> name = $name;
         $room->user_ids = json_encode($users);
         $room->owner_ids = json_encode($owners);
         $room->message_ids = json_encode([]);
 
+        //check if there are no identical rooms then add the room to the database
+        $matchingRooms = Room::where('name',$room->name)->get();
+        forEach($matchingRooms as $m){
+            if($room->user_ids==$m->user_ids & $room->owner_ids==$m->owner_ids){
+                //if there is a room with the same name, and the same users in it, the user is redirected to that one instead
+                return $m;
+            }
+        }
         $room->save();
 
         //add room to the rooms array of every user involved
@@ -312,6 +320,11 @@ class RoomController extends Controller
         return json_encode($user);
     }
 
+    public function userFromId(Request $request){
+        $id = $request->input('id');
+        $user = User::where('id',$id)->first();
+        return $user;
+    }
     public function editUser(Request $request){
         $userId= $request->input('currentUserId');
         $username = $request->input('username');
@@ -327,6 +340,7 @@ class RoomController extends Controller
         if($friends!=null){
             $user->friends = json_encode($friends);
         }
+        $user->friends = json_encode($friends);
 
         //save user
         $user->save();

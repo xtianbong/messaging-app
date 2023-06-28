@@ -40,6 +40,7 @@ Route::post('/room/add-friend', [App\Http\Controllers\RoomController::class, 'ad
 Route::post('/room/log-out', [App\Http\Controllers\RoomController::class, 'logOut']);//user can logout
 Route::post('/room/email-query',[App\Http\Controllers\RoomController::class, 'emailQuery']);//user can get a user from their email
 Route::post('/room/edit-user',[App\Http\Controllers\RoomController::class, 'editUser']);//user can change their user details and remove friends
+Route::post('/room/user-from-id',[App\Http\Controllers\RoomController::class, 'userFromId']);//allows me to easily get a username from their id
 //Route::get('/room/{room_id}', [RoomController::class, 'fetchMessages'])->middleware('auth');
 
 
