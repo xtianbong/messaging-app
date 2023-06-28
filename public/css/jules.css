@@ -25,7 +25,7 @@ body{
     max-height: 300px;
     padding:10px;
     z-index: 1001;
-    top:calc(100vh - 600px );
+    top:calc(100vh - 400px );
     border: solid 1.5px white;
 }
 

@@ -399,9 +399,8 @@ function removeAllEventListeners(element) {
     return element;
 }
 //creates a room with only that user in it when you click on a user in your friends list
-function createPrivateRoom(friendId){
+function createPrivateRoom(friendId,name){
     var currentUserId = parseInt(document.querySelector(".current-username").getAttribute("id"));//id of user creating the room
-    var name = friendId;
     friendId=parseInt(friendId);
     var users = [currentUserId,friendId];
     var owners = [currentUserId,friendId];
@@ -412,7 +411,8 @@ for(var e of editUserFriends){
     e.addEventListener('click',function(){
         console.log(e);
         createConfirmBox("Would you like to create a chat room with "+e.querySelector("h3").innerHTML+"?" ,function(){
-            createPrivateRoom(e.id);
+            //shelved until i can dynamically display the room name for different users
+            //createPrivateRoom(e.id,e.querySelector("h3").innerHTML);
         });
     });
 }
@@ -474,7 +474,7 @@ function createRoomPHP(currentUserId,name, users, owners){
                 displayOff();
                 window.location.href="/room/"+createRoomResponse.id;//get room id from the response to the post request
             }
-        },3000);
+        },3);
     });
 }
 
