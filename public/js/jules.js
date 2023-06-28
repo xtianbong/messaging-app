@@ -410,10 +410,13 @@ var editUserFriends = document.querySelectorAll(".edit-user-friend");
 for(var e of editUserFriends){
     e.addEventListener('click',function(){
         console.log(e);
+        //shelved until i can dynamically display the room name for different users
+        /*
         createConfirmBox("Would you like to create a chat room with "+e.querySelector("h3").innerHTML+"?" ,function(){
-            //shelved until i can dynamically display the room name for different users
-            //createPrivateRoom(e.id,e.querySelector("h3").innerHTML);
+
+            createPrivateRoom(e.id,e.querySelector("h3").innerHTML);
         });
+        */
     });
 }
 
